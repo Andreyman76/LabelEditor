@@ -1,6 +1,4 @@
 using LabelTemplate;
-using System.Diagnostics;
-using System.Xml.Serialization;
 
 namespace LabelEditor
 {
@@ -12,12 +10,9 @@ namespace LabelEditor
         public Form1()
         {
             InitializeComponent();
-            _labelEditor.CurrentLabel = new()
-            {
-                Size = new(22, 22)
-            };
 
             propertyGrid2.SelectedObject = _labelEditor.CurrentLabel;
+            Redraw();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -45,9 +40,8 @@ namespace LabelEditor
 
             if (result == DialogResult.OK)
             {
-                //var xml = _labelEditor.SaveLabelToXml();
-                //File.WriteAllText(dialog.FileName, xml);
-                pictureBox1.Image.Save(dialog.FileName);
+                var xml = _labelEditor.SaveLabelToXml();
+                File.WriteAllText(dialog.FileName, xml);
             }
         }
 
@@ -62,6 +56,9 @@ namespace LabelEditor
                 var xml = File.ReadAllText(dialog.FileName);
                 _labelEditor.LoadLabelFromXml(xml);
             }
+
+            UpdateListOfObjects();
+            Redraw();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,7 +66,7 @@ namespace LabelEditor
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void OnAddTextButtonClick(object sender, EventArgs e)
         {
             _labelEditor.CurrentLabel.Elements.Add(
                 new LabelText()
@@ -78,26 +75,26 @@ namespace LabelEditor
                     Text = "1234567890"
                 }
                 );
-            AddItemsToListOfObjects();
+            UpdateListOfObjects();
             Redraw();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void OnAddDmButtonClick(object sender, EventArgs e)
         {
             _labelEditor.CurrentLabel.Elements.Add(
                new LabelDataMatrix()
                {
-                   Name = "DM",
+                   Name = "DataMatrix",
                    Code = "0105449000203359215gHAvnw6TXwN4\u001d93dGVz",
-                   Size = 50
+                   Size = 20
                }
                );
 
-            AddItemsToListOfObjects();
+            UpdateListOfObjects();
             Redraw();
         }
 
-        private void AddItemsToListOfObjects()
+        private void UpdateListOfObjects()
         {
             listBox1.Items.Clear();
 
@@ -113,7 +110,7 @@ namespace LabelEditor
             pictureBox1.Image = _labelEditor.CurrentLabel.GetImage();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void OnAddCode128ButtonClick(object sender, EventArgs e)
         {
             _labelEditor.CurrentLabel.Elements.Add(
                new LabelCode128()
@@ -124,21 +121,21 @@ namespace LabelEditor
                }
                );
 
-            AddItemsToListOfObjects();
+            UpdateListOfObjects();
             Redraw();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void OnAddImageButtonClick(object sender, EventArgs e)
         {
             _labelEditor.CurrentLabel.Elements.Add(
               new LabelImage()
               {
                   Name = "Image",
-                  Size = new(50, 50)
+                  Size = new(20, 20)
               }
               );
 
-            AddItemsToListOfObjects();
+            UpdateListOfObjects();
             Redraw();
         }
 

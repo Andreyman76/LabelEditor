@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
 using System.Xml.Serialization;
 
@@ -12,7 +13,7 @@ public class PrinterLabel : ICloneable
     [Browsable(true)]
     [Description("Размер этикетки")]
     [DisplayName("Размер"), Category("Этикетка")]
-    public Size Size { get; set; }
+    public PrintingSize Size { get; set; }
 
     [Browsable(false)]
     public int Count => Elements.Count;
@@ -44,6 +45,8 @@ public class PrinterLabel : ICloneable
 
         g.Clear(Color.White);
 
+        g.PageUnit = GraphicsUnit.Millimeter;
+        
         foreach (var element in Elements)
         {
             element.Draw(g);
@@ -52,13 +55,20 @@ public class PrinterLabel : ICloneable
 
     public Bitmap GetImage()
     {
-        var sizePx = LabelGraphicsConvert.MillimetersToPixels(Size);
-        var image = new Bitmap((int)sizePx.Width, (int)sizePx.Height);
-
+        var dotsPerMm = 120.0f / 25.4f;
+        var width = dotsPerMm * Size.Width;
+        var height = dotsPerMm * Size.Height;
+        var image = new Bitmap((int)width, (int)height);
         using var g = Graphics.FromImage(image);
-        g.FillRectangle(Brushes.White, new RectangleF(0, 0, sizePx.Width, sizePx.Height));
 
-        foreach(var element in Elements)
+        g.PageUnit = GraphicsUnit.Millimeter;
+        g.SmoothingMode = SmoothingMode.None;
+        g.CompositingQuality = CompositingQuality.HighSpeed;
+        g.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+        g.FillRectangle(Brushes.White, new RectangleF(0, 0, Size.Width, Size.Height));
+
+        foreach (var element in Elements)
         {
             element.Draw(g);
         }
@@ -72,11 +82,11 @@ public class PrinterLabel : ICloneable
         _document.Print();
     }
 
-    public void BindData(string variableName, string data)
+    public void Replace(string variableName, string data)
     {
         foreach (var element in Elements)
         {
-            element.BindData(variableName, data);
+            element.Replace(variableName, data);
         }
     }
 

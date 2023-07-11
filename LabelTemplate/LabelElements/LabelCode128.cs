@@ -16,28 +16,24 @@ public class LabelCode128 : LabelElementBase
     public string Code { get; set; } = string.Empty;
 
     [Browsable(true)]
-    [Description("Размер кода")]
+    [Description("Размер кода в мм")]
     [DisplayName("Размер"), Category("Code128")]
-    public SizeF Size { get; set; }
+    public PrintingSize Size { get; set; }
 
     public override void Draw(Graphics g)
     {
-        var positionPx = LabelGraphicsConvert.MillimetersToPixels(Position);
-        var sizePx = LabelGraphicsConvert.MillimetersToPixels(Size);
-
-        var code128 = CreateCode128Image(Code, sizePx);
-        g.DrawImage(code128, new RectangleF(positionPx.X, positionPx.Y, sizePx.Width, sizePx.Height), new Rectangle(0, 0, code128.Width, code128.Height), GraphicsUnit.Point);
+        var code128 = CreateCode128Image(Code);
+        g.DrawImage(code128, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
     }
 
-    private static Bitmap CreateCode128Image(string code, SizeF size)
+    private static Bitmap CreateCode128Image(string code)
     {
         var writer = new BarcodeWriter
         {
             Format = BarcodeFormat.CODE_128,
             Options = new Code128EncodingOptions
             {
-                Height = (int)size.Height,
-                Width = (int)size.Width,
+                Height = 50,
                 PureBarcode = true,
                 GS1Format = true,
                 Margin = 0
@@ -60,9 +56,9 @@ public class LabelCode128 : LabelElementBase
         };
     }
 
-    public override void BindData(string variableName, string data)
+    public override void Replace(string from, string to)
     {
-        Code = Code.Replace(variableName, data);
+        Code = Code.Replace(from, to);
     }
 
     public override RectangleF GetComputedBounds(Graphics g)

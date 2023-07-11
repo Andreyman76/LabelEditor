@@ -9,21 +9,18 @@ public class LabelImage : LabelElementBase
     public byte[] ImageBytes { get; set; } = Array.Empty<byte>();
 
     [Browsable(true)]
-    [Description("Размер изображения")]
+    [Description("Размер изображения в мм")]
     [DisplayName("Размер"), Category("Изображение")]
-    public SizeF Size { get; set; }
+    public PrintingSize Size { get; set; }
 
     public override void Draw(Graphics g)
     {
-        var positionPx = LabelGraphicsConvert.MillimetersToPixels(Position);
-        var sizePx = LabelGraphicsConvert.MillimetersToPixels(Size);
-
         using var stream = new MemoryStream(ImageBytes);
         using var img = new Bitmap(stream);
-        g.DrawImage(img, positionPx.X, positionPx.Y, sizePx.Width, sizePx.Height);
+        g.DrawImage(img, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
     }
 
-    public override void BindData(string variableName, string data)
+    public override void Replace(string from, string to)
     {
         return;
     }

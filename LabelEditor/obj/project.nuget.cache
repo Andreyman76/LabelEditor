@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "i2Z4PppfOqbqV02glKTyHedTxs9rAoY2uxKm6x/rwPiLLhRoKUdtQPzxc0YudzvpIkQoC6psGAAnszaFcqZ0qw==",
+  "dgSpecHash": "qS6JmjFSnnOcRMTbM0Q6bEOXbR6s51Yijv4Q2YWf1Wzr2gL1cZvDYFIqu0PdLc4nEjikP/E42mnWIQZsEW6BvQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj",
+  "projectFilePath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\VP\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0-preview.5.23280.8\\microsoft.win32.systemevents.8.0.0-preview.5.23280.8.nupkg.sha512",
-    "C:\\Users\\VP\\.nuget\\packages\\skiasharp\\2.88.4-preview.84\\skiasharp.2.88.4-preview.84.nupkg.sha512",
-    "C:\\Users\\VP\\.nuget\\packages\\skiasharp.nativeassets.macos\\2.88.4-preview.84\\skiasharp.nativeassets.macos.2.88.4-preview.84.nupkg.sha512",
-    "C:\\Users\\VP\\.nuget\\packages\\skiasharp.nativeassets.win32\\2.88.4-preview.84\\skiasharp.nativeassets.win32.2.88.4-preview.84.nupkg.sha512",
-    "C:\\Users\\VP\\.nuget\\packages\\system.drawing.common\\8.0.0-preview.5.23280.5\\system.drawing.common.8.0.0-preview.5.23280.5.nupkg.sha512",
-    "C:\\Users\\VP\\.nuget\\packages\\zxing.net\\0.16.9\\zxing.net.0.16.9.nupkg.sha512",
-    "C:\\Users\\VP\\.nuget\\packages\\zxing.net.bindings.skiasharp\\0.16.13\\zxing.net.bindings.skiasharp.0.16.13.nupkg.sha512"
+    "C:\\Users\\Andrey\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0-preview.5.23280.8\\microsoft.win32.systemevents.8.0.0-preview.5.23280.8.nupkg.sha512",
+    "C:\\Users\\Andrey\\.nuget\\packages\\skiasharp\\2.88.4-preview.84\\skiasharp.2.88.4-preview.84.nupkg.sha512",
+    "C:\\Users\\Andrey\\.nuget\\packages\\skiasharp.nativeassets.macos\\2.88.4-preview.84\\skiasharp.nativeassets.macos.2.88.4-preview.84.nupkg.sha512",
+    "C:\\Users\\Andrey\\.nuget\\packages\\skiasharp.nativeassets.win32\\2.88.4-preview.84\\skiasharp.nativeassets.win32.2.88.4-preview.84.nupkg.sha512",
+    "C:\\Users\\Andrey\\.nuget\\packages\\system.drawing.common\\8.0.0-preview.5.23280.5\\system.drawing.common.8.0.0-preview.5.23280.5.nupkg.sha512",
+    "C:\\Users\\Andrey\\.nuget\\packages\\zxing.net\\0.16.9\\zxing.net.0.16.9.nupkg.sha512",
+    "C:\\Users\\Andrey\\.nuget\\packages\\zxing.net.bindings.skiasharp\\0.16.13\\zxing.net.bindings.skiasharp.0.16.13.nupkg.sha512"
   ],
   "logs": []
 }

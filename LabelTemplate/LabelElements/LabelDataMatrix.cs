@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Xml.Serialization;
 using ZXing;
 using ZXing.Datamatrix;
 using ZXing.Datamatrix.Encoder;
@@ -18,20 +19,14 @@ public class LabelDataMatrix : LabelElementBase
     public string Code { get; set; } = string.Empty;
 
     [Browsable(true)]
-    [Description("Размер кода")]
+    [Description("Размер кода в мм")]
     [DisplayName("Размер"), Category("Datamatrix")]
     public int Size { get; set; }
 
     public override void Draw(Graphics g)
     {
-        var positionPx = LabelGraphicsConvert.MillimetersToPixels(Position);
-        var sizePx = LabelGraphicsConvert.MillimetersToPixels(Size);
         var dm = CreateDMImage(Code);
-        dm.Save("C:/Users/VP/Desktop/dm.png");
-        g.SmoothingMode = SmoothingMode.HighSpeed;
-        g.CompositingQuality = CompositingQuality.HighSpeed;
-        g.InterpolationMode = InterpolationMode.NearestNeighbor;
-        g.DrawImage(dm, new RectangleF(positionPx.X, positionPx.Y, sizePx, sizePx), new Rectangle(0, 0, dm.Width, dm.Height), GraphicsUnit.Pixel);
+        g.DrawImage(dm, new RectangleF(Position.X, Position.Y, Size, Size));
     }
 
     private static Bitmap CreateDMImage(string code)
@@ -41,24 +36,23 @@ public class LabelDataMatrix : LabelElementBase
             Format = BarcodeFormat.DATA_MATRIX,
             Options = new DatamatrixEncodingOptions
             {
-                //Height = 56,
-                //Width = 56,
                 PureBarcode = true,
                 SymbolShape = SymbolShapeHint.FORCE_SQUARE,
                 GS1Format = true,
                 Margin = 0,
-            },
+            }
         };
 
         using var bitmap = writer.Write(code);
         using var stream = new MemoryStream();
         bitmap.Encode(stream, SKEncodedImageFormat.Png, 100);
+
         return new Bitmap(stream);
     }
 
-    public override void BindData(string variableName, string data)
+    public override void Replace(string from, string to)
     {
-        Code = Code.Replace(variableName, data);
+        Code = Code.Replace(from, to);
     }
 
     public override RectangleF GetComputedBounds(Graphics g)

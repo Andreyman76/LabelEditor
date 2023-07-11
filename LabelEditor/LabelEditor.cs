@@ -8,7 +8,11 @@ public class LabelEditor
     /// <summary>
     /// Текущая этикетка редактора
     /// </summary>
-    public PrinterLabel? CurrentLabel { get; set; }
+    public PrinterLabel CurrentLabel { get; set; } = new()
+    {
+        Size = new(22, 22)
+    };
+
     private XmlSerializer _serializer = new(typeof(PrinterLabel));
 
     /// <summary>
@@ -17,9 +21,11 @@ public class LabelEditor
     /// <returns>XML текст текущей этикетки</returns>
     public string SaveLabelToXml()
     {
-        using var stream = new MemoryStream();
+        var label = CurrentLabel.Clone() as PrinterLabel;
+        label.Replace("\u001d", "$GS");
 
-        _serializer.Serialize(stream, CurrentLabel);
+        using var stream = new MemoryStream();
+        _serializer.Serialize(stream, label);
 
         return Encoding.UTF8.GetString(stream.ToArray());
     }
@@ -33,6 +39,7 @@ public class LabelEditor
         using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xmlText));
 
         CurrentLabel = _serializer.Deserialize(stream) as PrinterLabel;
+        CurrentLabel.Replace("$GS", "\u001d");
     }
 
     /// <summary>

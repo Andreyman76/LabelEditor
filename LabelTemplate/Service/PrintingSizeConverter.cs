@@ -6,9 +6,9 @@ using System.Reflection;
 
 namespace LabelTemplate;
 
-internal class PositionConverter : ExpandableObjectConverter
+internal class PrintingSizeConverter : ExpandableObjectConverter
 {
-    public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+    public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
     {
         if (sourceType == typeof(String))
             return true;
@@ -21,7 +21,7 @@ internal class PositionConverter : ExpandableObjectConverter
     /// <param name="context">context</param>
     /// <param name="destinationType">destinationType</param>
     /// <returns>value</returns>
-    public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
     {
         if (destinationType == typeof(InstanceDescriptor))
             return true;
@@ -35,7 +35,7 @@ internal class PositionConverter : ExpandableObjectConverter
     /// <param name="culture">culture</param>
     /// <param name="value">value</param>
     /// <returns>result</returns>
-    public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+    public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
     {
         if (value is string)
         {
@@ -48,18 +48,18 @@ internal class PositionConverter : ExpandableObjectConverter
                     culture = CultureInfo.CurrentCulture;
                 string[] strs = ((string)value).Split(culture.TextInfo.ListSeparator[0]);
                 if (strs.Length != 2)
-                    throw new ArgumentException("Can not convert '" + (string)value + "' to type Position");
+                    throw new ArgumentException("Can not convert '" + (string)value + $"' to type {nameof(PrintingSize)}");
 
                 var nums = new float[strs.Length];
                 TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(float));
                 for (int i = 0; i < nums.Length; i++)
                     nums[i] = (float)typeConverter.ConvertFromString(context, culture, strs[i]);
 
-                return new Position(nums[0], nums[1]);
+                return new PrintingSize(nums[0], nums[1]);
             }
             catch
             {
-                throw new ArgumentException("Can not convert '" + (string)value + "' to type SpaceSize");
+                throw new ArgumentException("Can not convert '" + (string)value + $"' to type {nameof(PrintingSize)}");
             }
         }
         return base.ConvertFrom(context, culture, value);
@@ -73,11 +73,11 @@ internal class PositionConverter : ExpandableObjectConverter
     /// <param name="value">value</param>
     /// <param name="destinationType">destinationType</param>
     /// <returns>result</returns>
-    public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, System.Type destinationType)
+    public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destinationType)
     {
-        if (destinationType == typeof(string) && value is Position)
+        if (destinationType == typeof(string) && value is PrintingSize)
         {
-            var position = (Position)value;
+            var size = (PrintingSize)value;
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
 
@@ -85,27 +85,27 @@ internal class PositionConverter : ExpandableObjectConverter
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(int));
             string[] strs = new string[2];
             int i = 0;
-            strs[i++] = typeConverter.ConvertToString(context, culture, position.X);
-            strs[i++] = typeConverter.ConvertToString(context, culture, position.Y);
-            
+            strs[i++] = typeConverter.ConvertToString(context, culture, size.Width);
+            strs[i++] = typeConverter.ConvertToString(context, culture, size.Height);
+
             return String.Join(str, strs);
         }
-        if (destinationType == typeof(InstanceDescriptor) && value is Position)
+        if (destinationType == typeof(InstanceDescriptor) && value is PrintingSize)
         {
-            var position = (Position)value;
-            ConstructorInfo constructorInfo = typeof(Position).GetConstructor(new Type[] { typeof(int), typeof(int), typeof(int), typeof(int) });
+            var size = (PrintingSize)value;
+            ConstructorInfo constructorInfo = typeof(PrintingSize).GetConstructor(new Type[] { typeof(float), typeof(float) });
             if (constructorInfo != null)
-                return new InstanceDescriptor(constructorInfo, new object[] { position.X, position.Y });
+                return new InstanceDescriptor(constructorInfo, new object[] { size.Width, size.Height });
         }
         return base.ConvertTo(context, culture, value, destinationType);
     }
 
-    public override object CreateInstance(ITypeDescriptorContext context, IDictionary propertyValues)
+    public override object CreateInstance(ITypeDescriptorContext? context, IDictionary? propertyValues)
     {
-        return new Position((float)propertyValues["X"], (float)propertyValues["Y"]);
+        return new PrintingSize((float)propertyValues["Width"], (float)propertyValues["Height"]);
     }
 
-    public override bool GetCreateInstanceSupported(ITypeDescriptorContext context)
+    public override bool GetCreateInstanceSupported(ITypeDescriptorContext? context)
     {
         return true;
     }
@@ -117,12 +117,12 @@ internal class PositionConverter : ExpandableObjectConverter
     /// <param name="value">value</param>
     /// <param name="attributes">attributes</param>
     /// <returns>result</returns>
-    public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
+    public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext? context, object value, Attribute[]? attributes)
     {
-        return TypeDescriptor.GetProperties(typeof(Position), attributes).Sort(new string[] { "X", "Y"});
+        return TypeDescriptor.GetProperties(typeof(PrintingSize), attributes).Sort(new string[] { "Width", "Height" });
     }
 
-    public override bool GetPropertiesSupported(ITypeDescriptorContext context)
+    public override bool GetPropertiesSupported(ITypeDescriptorContext? context)
     {
         return true;
     }

@@ -26,7 +26,7 @@ public abstract class LabelElementBase : ICloneable
     [Browsable(true)]
     [Description("Положение объекта в мм")]
     [DisplayName("Расположение"), Category("Основные свойства")]
-    public Position Position { get; set; }
+    public PrintingPosition Position { get; set; }
 
     /// <summary>
     /// Метод отрисовки элемента этикетки
@@ -37,9 +37,9 @@ public abstract class LabelElementBase : ICloneable
     /// <summary>
     /// Задать значение для переменной по ее имени
     /// </summary>
-    /// <param name="variableName">Имя переменной</param>
-    /// <param name="data">Значение переменной</param>
-    public abstract void BindData(string variableName, string data);
+    /// <param name="from">Имя переменной</param>
+    /// <param name="to">Значение переменной</param>
+    public abstract void Replace(string from, string to);
 
     public abstract object Clone();
 }
