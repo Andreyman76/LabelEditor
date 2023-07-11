@@ -1,0 +1,12 @@
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\bin\Debug\net6.0\LabelTemplate.deps.json
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\bin\Debug\net6.0\LabelTemplate.dll
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\bin\Debug\net6.0\LabelTemplate.pdb
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\LabelTemplate.csproj.AssemblyReference.cache
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\LabelTemplate.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\LabelTemplate.AssemblyInfoInputs.cache
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\LabelTemplate.AssemblyInfo.cs
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\LabelTemplate.csproj.CoreCompileInputs.cache
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\LabelTemplate.dll
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\refint\LabelTemplate.dll
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\LabelTemplate.pdb
+C:\Users\VP\source\repos\LabelEditor\LabelTemplate\obj\Debug\net6.0\ref\LabelTemplate.dll

@@ -1,0 +1,177 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "LabelEditor/1.0.0": {
+        "dependencies": {
+          "LabelTemplate": "1.0.0"
+        },
+        "runtime": {
+          "LabelEditor.dll": {}
+        }
+      },
+      "Microsoft.Win32.SystemEvents/8.0.0-preview.5.23280.8": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.28008"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.28008"
+          }
+        }
+      },
+      "SkiaSharp/2.88.4-preview.84": {
+        "dependencies": {
+          "SkiaSharp.NativeAssets.Win32": "2.88.4-preview.84",
+          "SkiaSharp.NativeAssets.macOS": "2.88.4-preview.84"
+        },
+        "runtime": {
+          "lib/net6.0/SkiaSharp.dll": {
+            "assemblyVersion": "2.88.0.0",
+            "fileVersion": "2.88.3.0"
+          }
+        }
+      },
+      "SkiaSharp.NativeAssets.macOS/2.88.4-preview.84": {
+        "runtimeTargets": {
+          "runtimes/osx/native/libSkiaSharp.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "SkiaSharp.NativeAssets.Win32/2.88.4-preview.84": {
+        "runtimeTargets": {
+          "runtimes/win-arm64/native/libSkiaSharp.dll": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/libSkiaSharp.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/libSkiaSharp.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "System.Drawing.Common/8.0.0-preview.5.23280.5": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "8.0.0-preview.5.23280.8"
+        },
+        "runtime": {
+          "lib/net6.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.28005"
+          }
+        }
+      },
+      "ZXing.Net/0.16.9": {
+        "runtime": {
+          "lib/net6.0/zxing.dll": {
+            "assemblyVersion": "0.16.9.0",
+            "fileVersion": "0.16.9.0"
+          }
+        }
+      },
+      "ZXing.Net.Bindings.SkiaSharp/0.16.13": {
+        "dependencies": {
+          "SkiaSharp": "2.88.4-preview.84",
+          "ZXing.Net": "0.16.9"
+        },
+        "runtime": {
+          "lib/net6.0/ZXing.SkiaSharp.dll": {
+            "assemblyVersion": "0.16.13.0",
+            "fileVersion": "0.16.13.0"
+          }
+        }
+      },
+      "LabelTemplate/1.0.0": {
+        "dependencies": {
+          "SkiaSharp": "2.88.4-preview.84",
+          "System.Drawing.Common": "8.0.0-preview.5.23280.5",
+          "ZXing.Net.Bindings.SkiaSharp": "0.16.13"
+        },
+        "runtime": {
+          "LabelTemplate.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LabelEditor/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Win32.SystemEvents/8.0.0-preview.5.23280.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-w4Tedw8E1Il5bsnwh8ji1XllwsaHAJKFew2XAQe+iYX5NmDdYkYb193a/Rw7uxGv0wvgB+gmmx+OsMcy7nMrKQ==",
+      "path": "microsoft.win32.systemevents/8.0.0-preview.5.23280.8",
+      "hashPath": "microsoft.win32.systemevents.8.0.0-preview.5.23280.8.nupkg.sha512"
+    },
+    "SkiaSharp/2.88.4-preview.84": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eJViz734hXDd6O+Glng6s9mVFHGkFlwAWZYylAygF6bJ2u6wd08jiuraDIBqpmAngOYtXsoJNAkXX9sMGD9WEw==",
+      "path": "skiasharp/2.88.4-preview.84",
+      "hashPath": "skiasharp.2.88.4-preview.84.nupkg.sha512"
+    },
+    "SkiaSharp.NativeAssets.macOS/2.88.4-preview.84": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CWuG8DVuXOllOs0zV11Ttc9LyzSSxjExWA7/VqCGIo1ZNBri/xghpPs9Bmv3lVrZqA3fO7CMM+zg8lE2AR+qeQ==",
+      "path": "skiasharp.nativeassets.macos/2.88.4-preview.84",
+      "hashPath": "skiasharp.nativeassets.macos.2.88.4-preview.84.nupkg.sha512"
+    },
+    "SkiaSharp.NativeAssets.Win32/2.88.4-preview.84": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zGKMHKToZMFE4pwlOf7YsJAgeHjkASYT45EBzxhpZiJ33h0QM9jf67fgppzpxstf8JvFePNJkq7QqDE6Le+jOQ==",
+      "path": "skiasharp.nativeassets.win32/2.88.4-preview.84",
+      "hashPath": "skiasharp.nativeassets.win32.2.88.4-preview.84.nupkg.sha512"
+    },
+    "System.Drawing.Common/8.0.0-preview.5.23280.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IXr24809lxmyNGU7y7qK8utQVGzTBSafEjg3+brUVvNyRBfCLvc88L+TRW1TnhpKK/4Q25K+UpdWhDFLkezNzA==",
+      "path": "system.drawing.common/8.0.0-preview.5.23280.5",
+      "hashPath": "system.drawing.common.8.0.0-preview.5.23280.5.nupkg.sha512"
+    },
+    "ZXing.Net/0.16.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7WaVMHklpT3Ye2ragqRIwlFRsb6kOk63BOGADV0fan3ulVfGLUYkDi5yNUsZS/7FVNkWbtHAlDLmu4WnHGfqvQ==",
+      "path": "zxing.net/0.16.9",
+      "hashPath": "zxing.net.0.16.9.nupkg.sha512"
+    },
+    "ZXing.Net.Bindings.SkiaSharp/0.16.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+eRgnM6utt+05IXJJjSdTgT2RvRpGjg1JbA2VhI+P3bQxR1QCsJCOJ4/csbfdvVvTfDDGkxB781UKZHk2iCYvA==",
+      "path": "zxing.net.bindings.skiasharp/0.16.13",
+      "hashPath": "zxing.net.bindings.skiasharp.0.16.13.nupkg.sha512"
+    },
+    "LabelTemplate/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
