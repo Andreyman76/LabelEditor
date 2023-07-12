@@ -54,29 +54,6 @@ public class PrinterLabel : ICloneable
         }
     }
 
-    public Bitmap GetImage()
-    {
-        var dotsPerMm = 120.0f / 25.4f;
-        var width = dotsPerMm * Size.Width;
-        var height = dotsPerMm * Size.Height;
-        var image = new Bitmap((int)width, (int)height);
-        using var g = Graphics.FromImage(image);
-
-        g.PageUnit = GraphicsUnit.Millimeter;
-        g.SmoothingMode = SmoothingMode.None;
-        g.CompositingQuality = CompositingQuality.HighSpeed;
-        g.InterpolationMode = InterpolationMode.NearestNeighbor;
-
-        g.FillRectangle(Brushes.White, new RectangleF(0, 0, Size.Width, Size.Height));
-
-        foreach (var element in Elements)
-        {
-            element.Draw(g);
-        }
-
-        return image;
-    }
-
     public void Print(string printerName)
     {
         _document.PrinterSettings.PrinterName = printerName;

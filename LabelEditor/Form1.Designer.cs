@@ -35,19 +35,19 @@
             loadToolStripMenuItem = new ToolStripMenuItem();
             printerToolStripMenuItem = new ToolStripMenuItem();
             tableLayoutPanel1 = new TableLayoutPanel();
-            propertyGrid2 = new PropertyGrid();
-            pictureBox1 = new PictureBox();
+            labelPropertyGrid = new PropertyGrid();
+            renderedLabelPictureBox = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
+            deleteElementButton = new Button();
             addImageButton = new Button();
             addCode128Button = new Button();
             addDmButton = new Button();
             addTextButton = new Button();
-            listBox1 = new ListBox();
-            propertyGrid1 = new PropertyGrid();
-            deleteElementButton = new Button();
+            labelElementsListBox = new ListBox();
+            labelElementPropertyGrid = new PropertyGrid();
             menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)renderedLabelPictureBox).BeginInit();
             tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -103,39 +103,39 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Controls.Add(propertyGrid2, 0, 0);
-            tableLayoutPanel1.Controls.Add(pictureBox1, 1, 0);
+            tableLayoutPanel1.Controls.Add(labelPropertyGrid, 0, 0);
+            tableLayoutPanel1.Controls.Add(renderedLabelPictureBox, 1, 0);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 2, 0);
-            tableLayoutPanel1.Controls.Add(listBox1, 3, 0);
-            tableLayoutPanel1.Controls.Add(propertyGrid1, 3, 1);
+            tableLayoutPanel1.Controls.Add(labelElementsListBox, 3, 0);
+            tableLayoutPanel1.Controls.Add(labelElementPropertyGrid, 3, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 24);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(1264, 657);
+            tableLayoutPanel1.Size = new Size(1264, 610);
             tableLayoutPanel1.TabIndex = 3;
             // 
-            // propertyGrid2
+            // labelPropertyGrid
             // 
-            propertyGrid2.Dock = DockStyle.Fill;
-            propertyGrid2.Location = new Point(3, 3);
-            propertyGrid2.Name = "propertyGrid2";
-            propertyGrid2.Size = new Size(246, 322);
-            propertyGrid2.TabIndex = 4;
-            propertyGrid2.PropertyValueChanged += propertyGrid1_PropertyValueChanged;
+            labelPropertyGrid.Dock = DockStyle.Fill;
+            labelPropertyGrid.Location = new Point(3, 3);
+            labelPropertyGrid.Name = "labelPropertyGrid";
+            labelPropertyGrid.Size = new Size(246, 299);
+            labelPropertyGrid.TabIndex = 4;
+            labelPropertyGrid.PropertyValueChanged += OnPropertyGridPropertyValueChanged;
             // 
-            // pictureBox1
+            // renderedLabelPictureBox
             // 
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Location = new Point(255, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(626, 322);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            renderedLabelPictureBox.BorderStyle = BorderStyle.FixedSingle;
+            renderedLabelPictureBox.Dock = DockStyle.Fill;
+            renderedLabelPictureBox.Location = new Point(255, 3);
+            renderedLabelPictureBox.Name = "renderedLabelPictureBox";
+            renderedLabelPictureBox.Size = new Size(626, 299);
+            renderedLabelPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            renderedLabelPictureBox.TabIndex = 0;
+            renderedLabelPictureBox.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
@@ -155,15 +155,26 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel2.Size = new Size(120, 322);
+            tableLayoutPanel2.Size = new Size(120, 299);
             tableLayoutPanel2.TabIndex = 1;
+            // 
+            // deleteElementButton
+            // 
+            deleteElementButton.Dock = DockStyle.Fill;
+            deleteElementButton.Location = new Point(3, 239);
+            deleteElementButton.Name = "deleteElementButton";
+            deleteElementButton.Size = new Size(114, 57);
+            deleteElementButton.TabIndex = 4;
+            deleteElementButton.Text = "Delete";
+            deleteElementButton.UseVisualStyleBackColor = true;
+            deleteElementButton.Click += OnDeleteElementButtonClick;
             // 
             // addImageButton
             // 
             addImageButton.Dock = DockStyle.Fill;
-            addImageButton.Location = new Point(3, 195);
+            addImageButton.Location = new Point(3, 180);
             addImageButton.Name = "addImageButton";
-            addImageButton.Size = new Size(114, 58);
+            addImageButton.Size = new Size(114, 53);
             addImageButton.TabIndex = 3;
             addImageButton.Text = "Image";
             addImageButton.UseVisualStyleBackColor = true;
@@ -172,9 +183,9 @@
             // addCode128Button
             // 
             addCode128Button.Dock = DockStyle.Fill;
-            addCode128Button.Location = new Point(3, 131);
+            addCode128Button.Location = new Point(3, 121);
             addCode128Button.Name = "addCode128Button";
-            addCode128Button.Size = new Size(114, 58);
+            addCode128Button.Size = new Size(114, 53);
             addCode128Button.TabIndex = 2;
             addCode128Button.Text = "Code128";
             addCode128Button.UseVisualStyleBackColor = true;
@@ -183,9 +194,9 @@
             // addDmButton
             // 
             addDmButton.Dock = DockStyle.Fill;
-            addDmButton.Location = new Point(3, 67);
+            addDmButton.Location = new Point(3, 62);
             addDmButton.Name = "addDmButton";
-            addDmButton.Size = new Size(114, 58);
+            addDmButton.Size = new Size(114, 53);
             addDmButton.TabIndex = 1;
             addDmButton.Text = "Datamatrix";
             addDmButton.UseVisualStyleBackColor = true;
@@ -196,57 +207,46 @@
             addTextButton.Dock = DockStyle.Fill;
             addTextButton.Location = new Point(3, 3);
             addTextButton.Name = "addTextButton";
-            addTextButton.Size = new Size(114, 58);
+            addTextButton.Size = new Size(114, 53);
             addTextButton.TabIndex = 0;
             addTextButton.Text = "Text";
             addTextButton.UseVisualStyleBackColor = true;
             addTextButton.Click += OnAddTextButtonClick;
             // 
-            // listBox1
+            // labelElementsListBox
             // 
-            listBox1.Dock = DockStyle.Fill;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(1013, 3);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(248, 322);
-            listBox1.TabIndex = 2;
-            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            labelElementsListBox.Dock = DockStyle.Fill;
+            labelElementsListBox.FormattingEnabled = true;
+            labelElementsListBox.ItemHeight = 15;
+            labelElementsListBox.Location = new Point(1013, 3);
+            labelElementsListBox.Name = "labelElementsListBox";
+            labelElementsListBox.Size = new Size(248, 299);
+            labelElementsListBox.TabIndex = 2;
+            labelElementsListBox.SelectedIndexChanged += OnLabelElementsListBoxSelectedIndexChanged;
             // 
-            // propertyGrid1
+            // labelElementPropertyGrid
             // 
-            propertyGrid1.Dock = DockStyle.Fill;
-            propertyGrid1.Location = new Point(1013, 331);
-            propertyGrid1.Name = "propertyGrid1";
-            propertyGrid1.Size = new Size(248, 323);
-            propertyGrid1.TabIndex = 3;
-            propertyGrid1.PropertyValueChanged += propertyGrid1_PropertyValueChanged;
-            // 
-            // deleteElementButton
-            // 
-            deleteElementButton.Dock = DockStyle.Fill;
-            deleteElementButton.Location = new Point(3, 259);
-            deleteElementButton.Name = "deleteElementButton";
-            deleteElementButton.Size = new Size(114, 60);
-            deleteElementButton.TabIndex = 4;
-            deleteElementButton.Text = "Delete";
-            deleteElementButton.UseVisualStyleBackColor = true;
-            deleteElementButton.Click += OnDeleteElementButtonClick;
+            labelElementPropertyGrid.Dock = DockStyle.Fill;
+            labelElementPropertyGrid.Location = new Point(1013, 308);
+            labelElementPropertyGrid.Name = "labelElementPropertyGrid";
+            labelElementPropertyGrid.Size = new Size(248, 299);
+            labelElementPropertyGrid.TabIndex = 3;
+            labelElementPropertyGrid.PropertyValueChanged += OnPropertyGridPropertyValueChanged;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1264, 681);
+            ClientSize = new Size(1264, 634);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
-            Text = "е";
+            Text = "Label editor";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)renderedLabelPictureBox).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -261,15 +261,15 @@
         private ToolStripMenuItem loadToolStripMenuItem;
         private ToolStripMenuItem printerToolStripMenuItem;
         private TableLayoutPanel tableLayoutPanel1;
-        private PictureBox pictureBox1;
+        private PictureBox renderedLabelPictureBox;
         private TableLayoutPanel tableLayoutPanel2;
         private Button addImageButton;
         private Button addCode128Button;
         private Button addDmButton;
         private Button addTextButton;
-        private PropertyGrid propertyGrid2;
-        private ListBox listBox1;
-        private PropertyGrid propertyGrid1;
+        private PropertyGrid labelPropertyGrid;
+        private ListBox labelElementsListBox;
+        private PropertyGrid labelElementPropertyGrid;
         private Button deleteElementButton;
     }
 }

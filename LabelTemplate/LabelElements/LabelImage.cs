@@ -31,6 +31,9 @@ public class LabelImage : LabelElementBase
         return new LabelImage()
         {
             ImageBytes = ImageBytes.Clone() as byte[],
+            Name = Name,
+            Position = Position,
+            Size = Size
         };
     }
 

@@ -1,5 +1,4 @@
 using LabelTemplate;
-using System.Text;
 
 namespace LabelEditor
 {
@@ -12,16 +11,8 @@ namespace LabelEditor
         {
             InitializeComponent();
 
-            propertyGrid2.SelectedObject = _labelEditor.CurrentLabel;
+            labelPropertyGrid.SelectedObject = _labelEditor.CurrentLabel;
             Redraw();
-
-            using var stream = new FileStream("C:/Users/VP/Desktop/fonts.txt", FileMode.Create);
-
-            foreach(var f in FontFamily.Families)
-            {
-                stream.Write(Encoding.UTF8.GetBytes($"{f.Name}\n"));
-            }
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,7 +28,7 @@ namespace LabelEditor
             if (result == DialogResult.OK)
             {
                 _printerName = dialog.PrinterSettings.PrinterName;
-                _labelEditor.CurrentLabel.Print(_printerName);
+                _labelEditor.PrintCurrentLabel(_printerName);
             }
         }
 
@@ -94,29 +85,13 @@ namespace LabelEditor
                new LabelDataMatrix()
                {
                    Name = "DataMatrix",
-                   Code = "0105449000203359215gHAvnw6TXwN4\u001d93dGVz",
+                   Code = "${gs}0105449000203359215gHAvnw6TXwN4${gs}93dGVz",
                    Size = 20
                }
                );
 
             UpdateListOfObjects();
             Redraw();
-        }
-
-        private void UpdateListOfObjects()
-        {
-            listBox1.Items.Clear();
-
-            foreach (var element in _labelEditor.CurrentLabel.Elements)
-            {
-                listBox1.Items.Add(element.Name);
-            }
-        }
-
-        private void Redraw()
-        {
-            pictureBox1.BackColor = Color.Gray;
-            pictureBox1.Image = _labelEditor.CurrentLabel.GetImage();
         }
 
         private void OnAddCode128ButtonClick(object sender, EventArgs e)
@@ -126,7 +101,7 @@ namespace LabelEditor
                {
                    Name = "Code128",
                    Code = "0123456789",
-                   Size = new(100, 50)
+                   Size = new(20, 10)
                }
                );
 
@@ -158,28 +133,44 @@ namespace LabelEditor
             }
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBox1.SelectedIndex >= 0)
-            {
-                propertyGrid1.SelectedObject = _labelEditor.CurrentLabel.Elements[listBox1.SelectedIndex];
-            }
-        }
-
-        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            Redraw();
-        }
-
         private void OnDeleteElementButtonClick(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex >= 0)
+            if (labelElementsListBox.SelectedIndex >= 0)
             {
-                propertyGrid1.SelectedObject = null;
-                _labelEditor.CurrentLabel.Elements.RemoveAt(listBox1.SelectedIndex);
+                labelElementPropertyGrid.SelectedObject = null;
+                _labelEditor.CurrentLabel.Elements.RemoveAt(labelElementsListBox.SelectedIndex);
             }
 
             UpdateListOfObjects();
+            Redraw();
+        }
+
+        private void UpdateListOfObjects()
+        {
+            labelElementsListBox.Items.Clear();
+
+            foreach (var element in _labelEditor.CurrentLabel.Elements)
+            {
+                labelElementsListBox.Items.Add(element.Name);
+            }
+        }
+
+        private void Redraw()
+        {
+            renderedLabelPictureBox.BackColor = Color.Gray;
+            renderedLabelPictureBox.Image = _labelEditor.GetCurrentLabelImage();
+        }
+
+        private void OnLabelElementsListBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (labelElementsListBox.SelectedIndex >= 0)
+            {
+                labelElementPropertyGrid.SelectedObject = _labelEditor.CurrentLabel.Elements[labelElementsListBox.SelectedIndex];
+            }
+        }
+
+        private void OnPropertyGridPropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
             Redraw();
         }
     }

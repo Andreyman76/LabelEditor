@@ -52,7 +52,8 @@ public class LabelCode128 : LabelElementBase
         {
             Position = Position,
             Code = Code,
-            Size = Size
+            Size = Size,
+            Name = Name
         };
     }
 

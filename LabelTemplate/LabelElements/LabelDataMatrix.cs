@@ -66,7 +66,8 @@ public class LabelDataMatrix : LabelElementBase
         {
             Position = Position,
             Code = Code,
-            Size = Size
+            Size = Size,
+            Name = Name
         };
     }
 }

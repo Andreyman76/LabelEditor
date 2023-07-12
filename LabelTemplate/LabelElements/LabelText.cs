@@ -44,7 +44,8 @@ public class LabelText : LabelElementBase
             FontFamily = FontFamily,
             FontSize = FontSize,
             FontStyle = FontStyle,
-            Text = Text
+            Text = Text,
+            Name = Name
         };
     }
 
