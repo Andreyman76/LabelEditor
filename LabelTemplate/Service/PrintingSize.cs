@@ -22,9 +22,9 @@ public struct PrintingSize
         Height = 0;
     }
 
-    public PrintingSize(float x, float y)
+    public PrintingSize(float width, float height)
     {
-        Width = x;
-        Height = y;
+        Width = width;
+        Height = height;
     }
 }

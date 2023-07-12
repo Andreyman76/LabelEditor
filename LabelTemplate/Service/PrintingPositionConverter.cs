@@ -82,7 +82,7 @@ internal class PrintingPositionConverter : ExpandableObjectConverter
                 culture = CultureInfo.CurrentCulture;
 
             string str = String.Concat(culture.TextInfo.ListSeparator, " ");
-            TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(int));
+            TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(float));
             string[] strs = new string[2];
             int i = 0;
             strs[i++] = typeConverter.ConvertToString(context, culture, position.X);

@@ -11,8 +11,9 @@ namespace LabelTemplate;
 public class PrinterLabel : ICloneable
 {
     [Browsable(true)]
-    [Description("Размер этикетки")]
+    [Description("Размер этикетки в мм")]
     [DisplayName("Размер"), Category("Этикетка")]
+    [XmlElement]
     public PrintingSize Size { get; set; }
 
     [Browsable(false)]
@@ -92,7 +93,10 @@ public class PrinterLabel : ICloneable
 
     public object Clone()
     {
-        var result = new PrinterLabel();
+        var result = new PrinterLabel()
+        {
+            Size = Size
+        };
 
         foreach (var element in Elements)
         {

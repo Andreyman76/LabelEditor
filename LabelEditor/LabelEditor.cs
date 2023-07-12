@@ -42,26 +42,26 @@ public class LabelEditor
         CurrentLabel.Replace("$GS", "\u001d");
     }
 
-    /// <summary>
-    /// <para>Возвращает элемент этикетки по заданным координатам</para>
-    /// <para>Элемент считается найденным, если указанные координаты находятся внутри границы элемента</para>
-    /// </summary>
-    /// <param name="g"></param>
-    /// <param name="position">Координаты для поиска</param>
-    /// <returns></returns>
-    public LabelElementBase? FindElementByPosition(Graphics g, Point position)
-    {
-        if (CurrentLabel != null)
-        {
-            foreach (var element in CurrentLabel.Elements)
-            {
-                if (element.GetComputedBounds(g).Contains(position))
-                {
-                    return element;
-                }
-            }
-        }
+    ///// <summary>
+    ///// <para>Возвращает элемент этикетки по заданным координатам</para>
+    ///// <para>Элемент считается найденным, если указанные координаты находятся внутри границы элемента</para>
+    ///// </summary>
+    ///// <param name="g"></param>
+    ///// <param name="position">Координаты для поиска</param>
+    ///// <returns></returns>
+    //public LabelElementBase? FindElementByPosition(Graphics g, Point position)
+    //{
+    //    if (CurrentLabel != null)
+    //    {
+    //        foreach (var element in CurrentLabel.Elements)
+    //        {
+    //            if (element.GetComputedBounds(g).Contains(position))
+    //            {
+    //                return element;
+    //            }
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 }

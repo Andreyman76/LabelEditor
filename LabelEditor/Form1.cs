@@ -1,4 +1,5 @@
 using LabelTemplate;
+using System.Text;
 
 namespace LabelEditor
 {
@@ -13,6 +14,14 @@ namespace LabelEditor
 
             propertyGrid2.SelectedObject = _labelEditor.CurrentLabel;
             Redraw();
+
+            using var stream = new FileStream("C:/Users/VP/Desktop/fonts.txt", FileMode.Create);
+
+            foreach(var f in FontFamily.Families)
+            {
+                stream.Write(Encoding.UTF8.GetBytes($"{f.Name}\n"));
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -127,16 +136,26 @@ namespace LabelEditor
 
         private void OnAddImageButtonClick(object sender, EventArgs e)
         {
-            _labelEditor.CurrentLabel.Elements.Add(
-              new LabelImage()
-              {
-                  Name = "Image",
-                  Size = new(20, 20)
-              }
-              );
+            var dialog = new OpenFileDialog();
 
-            UpdateListOfObjects();
-            Redraw();
+            var result = dialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                var imageBytes = File.ReadAllBytes(dialog.FileName);
+
+                _labelEditor.CurrentLabel.Elements.Add(
+                new LabelImage()
+                {
+                    Name = "Image",
+                    Size = new(20, 20),
+                    ImageBytes = imageBytes
+                }
+                );
+
+                UpdateListOfObjects();
+                Redraw();
+            }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,6 +168,18 @@ namespace LabelEditor
 
         private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
+            Redraw();
+        }
+
+        private void OnDeleteElementButtonClick(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex >= 0)
+            {
+                propertyGrid1.SelectedObject = null;
+                _labelEditor.CurrentLabel.Elements.RemoveAt(listBox1.SelectedIndex);
+            }
+
+            UpdateListOfObjects();
             Redraw();
         }
     }

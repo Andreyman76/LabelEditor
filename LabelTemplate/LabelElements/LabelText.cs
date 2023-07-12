@@ -9,7 +9,7 @@ public class LabelText : LabelElementBase
     [Browsable(true)]
     [Description("Семейство шрифта")]
     [DisplayName("Семейство"), Category("Шрифт")]
-    public FontFamilies FontFamily { get; set; } = FontFamilies.Calibri;
+    public string FontFamily { get; set; } = "Calibri";
 
     [Browsable(true)]
     [Description("Размер шрифта")]
@@ -28,7 +28,7 @@ public class LabelText : LabelElementBase
 
     public override void Draw(Graphics g)
     {
-        g.DrawString(Text, new Font(System.Drawing.FontFamily.Families[(int)FontFamily], FontSize, FontStyle), Brushes.Black, Position.X, Position.Y);
+        g.DrawString(Text, new Font(FontFamily, FontSize, FontStyle), Brushes.Black, Position.X, Position.Y);
     }
 
     public override void Replace(string from, string to)
@@ -50,7 +50,7 @@ public class LabelText : LabelElementBase
 
     public override RectangleF GetComputedBounds(Graphics g)
     {
-        var size = g.MeasureString(Text, new Font(System.Drawing.FontFamily.Families[(int)FontFamily], FontSize, FontStyle));
+        var size = g.MeasureString(Text, new Font(FontFamily, FontSize, FontStyle));
         return new(Position.X, Position.Y, (int)size.Width, (int)size.Height);
     }
 }

@@ -6,6 +6,7 @@ namespace LabelTemplate;
 
 public class LabelImage : LabelElementBase
 {
+    [Browsable(false)]
     public byte[] ImageBytes { get; set; } = Array.Empty<byte>();
 
     [Browsable(true)]
