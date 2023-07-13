@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj": {}
+    "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj": {
+    "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj",
+        "projectUniqueName": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj",
         "projectName": "LabelEditor",
-        "projectPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj",
-        "packagesPath": "C:\\Users\\Andrey\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelEditor\\obj\\",
+        "projectPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelEditor\\LabelEditor.csproj",
+        "packagesPath": "C:\\Users\\VP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelEditor\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Andrey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\VP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj": {
-                "projectPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj"
+              "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj": {
+                "projectPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj"
               }
             }
           }
@@ -43,6 +48,12 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "PDFtoZPL": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -62,21 +73,25 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj": {
+    "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
+        "projectUniqueName": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
         "projectName": "LabelTemplate",
-        "projectPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
-        "packagesPath": "C:\\Users\\Andrey\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\obj\\",
+        "projectPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
+        "packagesPath": "C:\\Users\\VP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Andrey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\VP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -84,6 +99,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -131,7 +147,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

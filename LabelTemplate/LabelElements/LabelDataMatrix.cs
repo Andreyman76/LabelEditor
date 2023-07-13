@@ -62,7 +62,7 @@ public class LabelDataMatrix : LabelElementBase
 
     public override object Clone()
     {
-        return new LabelDataMatrix()
+        return new LabelDataMatrix
         {
             Position = Position,
             Code = Code,

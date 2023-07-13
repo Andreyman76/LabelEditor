@@ -28,7 +28,7 @@ public class LabelImage : LabelElementBase
 
     public override object Clone()
     {
-        return new LabelImage()
+        return new LabelImage
         {
             ImageBytes = ImageBytes.Clone() as byte[],
             Name = Name,

@@ -48,7 +48,7 @@ public class LabelCode128 : LabelElementBase
 
     public override object Clone()
     {
-        return new LabelCode128()
+        return new LabelCode128
         {
             Position = Position,
             Code = Code,

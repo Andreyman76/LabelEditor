@@ -38,7 +38,7 @@ public class LabelText : LabelElementBase
 
     public override object Clone()
     {
-        return new LabelText()
+        return new LabelText
         {
             Position = Position,
             FontFamily = FontFamily,

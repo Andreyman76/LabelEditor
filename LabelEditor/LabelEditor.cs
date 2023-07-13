@@ -1,8 +1,6 @@
 ﻿namespace LabelEditor;
 using LabelTemplate;
-using System.Drawing.Drawing2D;
 using System.Text;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 public class LabelEditor
@@ -10,18 +8,18 @@ public class LabelEditor
     /// <summary>
     /// Текущая этикетка редактора
     /// </summary>
-    public PrinterLabel CurrentLabel { get; set; } = new()
+    public PrinterLabel LabelTemplate { get; set; } = new()
     {
         Size = new(22, 22)
     };
 
-    private LabelVariableBinder _binder = new();
+    public LabelVariableBinder Binder { get; set; } = new();
     private XmlSerializer _serializer = new(typeof(PrinterLabel));
 
     public LabelEditor()
     {
-        _binder.AddVariable("date", typeof(Utils), "DateTime", "dd.MM.yyyy");
-        _binder.AddVariable("gs", typeof(Utils), "GS");
+        Binder.AddVariable("date", typeof(LabelUtils), "DateTime", "dd.MM.yyyy");
+        Binder.AddVariable("gs", typeof(LabelUtils), "GS");
     }
 
     /// <summary>
@@ -30,7 +28,7 @@ public class LabelEditor
     /// <returns>XML текст текущей этикетки</returns>
     public string SaveLabelToXml()
     {
-        var label = CurrentLabel.Clone() as PrinterLabel;
+        var label = LabelTemplate.Clone() as PrinterLabel;
         label.Replace("\u001d", "${gs}");
 
         using var stream = new MemoryStream();
@@ -47,37 +45,13 @@ public class LabelEditor
     {
         using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xmlText));
 
-        CurrentLabel = _serializer.Deserialize(stream) as PrinterLabel;
+        LabelTemplate = _serializer.Deserialize(stream) as PrinterLabel;
     }
 
-    public Bitmap GetCurrentLabelImage()
+    public PrinterLabel GetCurrentLabel()
     {
-        var label = _binder.BindAllVariables(CurrentLabel, new Utils());
-       
-        var dotsPerMm = 120.0f / 25.4f;
-        var width = dotsPerMm * label.Size.Width;
-        var height = dotsPerMm * label.Size.Height;
-        var image = new Bitmap((int)width, (int)height);
-        using var g = Graphics.FromImage(image);
+        var label = Binder.BindAllVariables(LabelTemplate, new LabelUtils());
 
-        g.PageUnit = GraphicsUnit.Millimeter;
-        g.SmoothingMode = SmoothingMode.None;
-        g.CompositingQuality = CompositingQuality.HighSpeed;
-        g.InterpolationMode = InterpolationMode.NearestNeighbor;
-
-        g.FillRectangle(Brushes.White, new RectangleF(0, 0, label.Size.Width, label.Size.Height));
-
-        foreach (var element in label.Elements)
-        {
-            element.Draw(g);
-        }
-
-        return image;
-    }
-
-    public void PrintCurrentLabel(string printerName)
-    {
-        var label = _binder.BindAllVariables(CurrentLabel, new Utils());
-        label.Print(printerName);
+        return label;
     }
 }

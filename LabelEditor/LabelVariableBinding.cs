@@ -1,34 +1,82 @@
-﻿namespace LabelEditor;
+﻿using System.ComponentModel;
+using System.Text;
+
+namespace LabelEditor;
 
 public class LabelVariableBinding
 {
+    [Browsable(true)]
+    [Description("Отображаемое имя")]
+    [DisplayName("Имя переменной"), Category("Переменная")]
+    public string Name { get; set; } = "var";
+
+    [Browsable(true)]
+    [Description("Формат преобразования")]
+    [DisplayName("Формат"), Category("Переменная")]
     public string? Format { get; set; }
+
+    [Browsable(true)]
+    [Description("Свойство целевого объекта")]
+    [DisplayName("Свойство"), Category("Переменная")]
     public string PropertyName { get; set; } = string.Empty;
+
+    [Browsable(true)]
+    [Description("Тип целевого объекта")]
+    [DisplayName("Тип оъекта"), Category("Переменная")]
     public Type TargetType { get; set; } = typeof(string);
 
     public string? GetStringFrom(object value)
     {
-        var property = TargetType.GetProperty(PropertyName) 
+        var property = TargetType.GetProperty(PropertyName)
             ?? throw new Exception($"Property {PropertyName} not found in {TargetType.FullName}");
 
         var propertyValue = property.GetValue(value);
 
-        if(propertyValue == null)
+        if (propertyValue == null)
         {
             return null;
         }
-   
-        if(string.IsNullOrEmpty(Format))
+
+        if (string.IsNullOrEmpty(Format))
         {
             return propertyValue.ToString();
         }
-        else
-        {
-            var propertyType = propertyValue.GetType();
-            var toStringMethod = propertyType.GetMethod("ToString", new[] { typeof(string) }) 
-                ?? throw new Exception($"{propertyType.FullName} does not have a formatted ToString method");
 
-            return toStringMethod.Invoke(propertyValue, new object[] { Format })?.ToString();
+        var propertyType = propertyValue.GetType();
+
+        if (propertyType == typeof(string))
+        {
+            return FormatString(propertyValue as string, Format);
         }
+
+        var toStringMethod = propertyType.GetMethod("ToString", new[] { typeof(string) });
+
+        if (toStringMethod == null)
+        {
+            throw new Exception($"{propertyType.FullName} does not have a formatted ToString method");
+        }
+
+        return toStringMethod.Invoke(propertyValue, new object[] { Format })?.ToString();
+
+    }
+
+    private static string FormatString(string src, string format)
+    {
+        var sb = new StringBuilder();
+        var i = src.Length - 1;
+
+        foreach(var c in format.Reverse())
+        {
+            if(c == '0' && i > 0)
+            {
+                sb.Insert(0, src[i--]);
+            }
+            else
+            {
+                sb.Insert(0, c);
+            }
+        }
+
+        return sb.ToString();
     }
 }
