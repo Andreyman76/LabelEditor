@@ -5,18 +5,20 @@ namespace LabelEditor
     public partial class LabelEditorForm : Form
     {
         private string _printerName = string.Empty;
-        private LabelEditor _labelEditor = new();
-        private List<Type> _registeredTypes = new ()
+        private LabelEditor _labelEditor = new()
+        {
+            RegisteredTypes = new()
             {
                 typeof(LabelUtils),
                 typeof(Gtin),
                 typeof(Pallet)
-            };
+            }
+        };
 
         public LabelEditorForm()
         {
             InitializeComponent();
-
+            _labelEditor.LoadVariablesFromJson();
             labelPropertyGrid.SelectedObject = _labelEditor.LabelTemplate;
             Redraw();
         }
@@ -33,9 +35,13 @@ namespace LabelEditor
             }
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnSaveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var dialog = new SaveFileDialog();
+            var dialog = new SaveFileDialog()
+            {
+                DefaultExt = "xml",
+                Filter = "XML Files|*.xml;"
+            };
 
             var result = dialog.ShowDialog(this);
 
@@ -46,9 +52,13 @@ namespace LabelEditor
             }
         }
 
-        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnLoadToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog()
+            {
+                DefaultExt = "xml",
+                Filter = "XML Files|*.xml;"
+            };
 
             var result = dialog.ShowDialog(this);
 
@@ -62,9 +72,18 @@ namespace LabelEditor
             Redraw();
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
         {
+            _labelEditor.LabelTemplate = new()
+            {
+                Size = new(22, 22),
+                Dpi = 203
+            };
 
+            labelPropertyGrid.SelectedObject = _labelEditor.LabelTemplate;
+            labelElementPropertyGrid.SelectedObject = null;
+            UpdateListOfObjects();
+            Redraw();
         }
 
         private void OnAddTextButtonClick(object sender, EventArgs e)
@@ -205,7 +224,8 @@ namespace LabelEditor
 
         private void OnEditVariablesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var varEditor = new VariableEditorForm(_registeredTypes, _labelEditor.Binder);
+            var varEditor = new VariableEditorForm(_labelEditor);
+
             varEditor.ShowDialog();
         }
     }

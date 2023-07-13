@@ -1,20 +1,20 @@
-﻿using System.Reflection;
+﻿using System.Text.Json;
 
 namespace LabelEditor;
 
 public partial class VariableEditorForm : Form
 {
-    private List<Type> _registeredTypes;
-    private LabelVariableBinder _binder;
+    private LabelEditor _editor;
 
-    public VariableEditorForm(List<Type> registeredTypes, LabelVariableBinder binder)
+    public VariableEditorForm(LabelEditor editor)
     {
         InitializeComponent();
+        objectPropertiesGridView.Columns.Add("Name", "Имя");
+        objectPropertiesGridView.Columns.Add("Type", "Тип");
 
-        _registeredTypes = registeredTypes;
-        _binder = binder;
+        _editor = editor;
 
-        foreach (var type in _registeredTypes)
+        foreach (var type in _editor.RegisteredTypes)
         {
             classesListBox.Items.Add(type.FullName);
         }
@@ -24,14 +24,26 @@ public partial class VariableEditorForm : Form
 
     private void OnCreateVariableButtonClick(object sender, EventArgs e)
     {
-        if (classesListBox.SelectedIndex >= 0 && propertiesListBox.SelectedIndex >= 0)
+        if (classesListBox.SelectedIndex >= 0 && objectPropertiesGridView.SelectedCells.Count != 0)
         {
-            var type = _registeredTypes[classesListBox.SelectedIndex];
-            var properties = type.GetProperties();
-            var property = properties[propertiesListBox.SelectedIndex];
+            var row = objectPropertiesGridView.SelectedCells[0].OwningRow;
+            var name = row.Cells["Name"].EditedFormattedValue.ToString();
+            var type = _editor.RegisteredTypes[classesListBox.SelectedIndex];
+            _editor.AddVariable(_editor.GetNewVariableName(), type, name);
+            UpdateVariablesListBox();
+            variablesListBox.SelectedIndex = variablesListBox.Items.Count - 1;
+        }
+    }
 
-            _binder.AddVariable("var", type, property.Name);
+    private void OnDeleteVariableButtonClick(object sender, EventArgs e)
+    {
+        var item = variablePropertyGrid.SelectedGridItem;
+        var name = item.PropertyDescriptor?.Name;
 
+        if (variablesListBox.SelectedIndex >= 0)
+        {
+            _editor.RemoveVariable(variablesListBox.Items[variablesListBox.SelectedIndex].ToString());
+            variablePropertyGrid.SelectedObject= null;
             UpdateVariablesListBox();
         }
     }
@@ -40,7 +52,7 @@ public partial class VariableEditorForm : Form
     {
         variablesListBox.Items.Clear();
 
-        foreach (var variable in _binder.Variables)
+        foreach (var variable in _editor.Variables)
         {
             variablesListBox.Items.Add(variable.Name);
         }
@@ -50,14 +62,14 @@ public partial class VariableEditorForm : Form
     {
         if (classesListBox.SelectedIndex >= 0)
         {
-            var type = _registeredTypes[classesListBox.SelectedIndex];
+            var type = _editor.RegisteredTypes[classesListBox.SelectedIndex];
 
             var properties = type.GetProperties();
-            propertiesListBox.Items.Clear();
+            objectPropertiesGridView.Rows.Clear();
 
             foreach (var property in properties)
             {
-                propertiesListBox.Items.Add(property.Name);
+                objectPropertiesGridView.Rows.Add(property.Name, property.PropertyType);
             }
         }
     }
@@ -66,12 +78,29 @@ public partial class VariableEditorForm : Form
     {
         if (variablesListBox.SelectedIndex >= 0)
         {
-            variablePropertyGrid.SelectedObject = _binder.Variables[variablesListBox.SelectedIndex];
+            variablePropertyGrid.SelectedObject = _editor.Variables[variablesListBox.SelectedIndex];
         }
     }
 
     private void OnVariablePropertyGridPropertyValueChanged(object s, PropertyValueChangedEventArgs e)
     {
-        UpdateVariablesListBox();
+        try
+        {
+            _editor.RenameDublicates();
+        }
+        finally
+        {
+            UpdateVariablesListBox();
+        }
+    }
+
+    private void OnVariableEditorFormFormClosing(object sender, FormClosingEventArgs e)
+    {
+        var json = JsonSerializer.Serialize(_editor.Variables, new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        });
+
+        File.WriteAllText("LabelVariables.json", json);
     }
 }

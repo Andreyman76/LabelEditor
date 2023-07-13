@@ -1,10 +1,15 @@
-﻿namespace LabelEditor;
-using LabelTemplate;
+﻿using LabelTemplate;
 using System.Text;
+using System.Text.Json;
 using System.Xml.Serialization;
+
+namespace LabelEditor;
 
 public class LabelEditor
 {
+    public List<LabelVariableBinding> Variables { get; set; } = new();
+    public List<Type> RegisteredTypes { get; set; } = new();
+
     /// <summary>
     /// Текущая этикетка редактора
     /// </summary>
@@ -13,13 +18,33 @@ public class LabelEditor
         Size = new(22, 22)
     };
 
-    public LabelVariableBinder Binder { get; set; } = new();
     private XmlSerializer _serializer = new(typeof(PrinterLabel));
 
     public LabelEditor()
     {
-        Binder.AddVariable("date", typeof(LabelUtils), "DateTime", "dd.MM.yyyy");
-        Binder.AddVariable("gs", typeof(LabelUtils), "GS");
+        AddVariable("date", typeof(LabelUtils), "DateTime", "dd.MM.yyyy");
+        AddVariable("gs", typeof(LabelUtils), "GS");
+    }
+
+    public void LoadVariablesFromJson()
+    {
+        if (File.Exists("LabelVariables.json"))
+        {
+            var json = File.ReadAllText("LabelVariables.json", Encoding.UTF8);
+            var variables = JsonSerializer.Deserialize<List<LabelVariableBinding>>(json);
+
+            Variables = variables;
+        }
+    }
+
+    public void SaveVariablesToJson()
+    {
+        var json = JsonSerializer.Serialize(Variables, new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        });
+
+        File.WriteAllText("LabelVariables.json", json);
     }
 
     /// <summary>
@@ -50,8 +75,77 @@ public class LabelEditor
 
     public PrinterLabel GetCurrentLabel()
     {
-        var label = Binder.BindAllVariables(LabelTemplate, new LabelUtils());
+        var label = BindAllVariables(LabelTemplate, new LabelUtils());
 
         return label;
+    }
+
+    public void AddVariable(string variableName, Type targetType, string propertyName, string? format = null)
+    {
+        Variables.Add(new()
+        {
+            Name = variableName,
+            TargetType = targetType.FullName,
+            PropertyName = propertyName,
+            Format = format
+        });
+
+        RenameDublicates();
+    }
+
+    public void RemoveVariable(string variableName)
+    {
+        Variables.RemoveAll(x => x.Name == variableName);
+    }
+
+    public void RenameDublicates()
+    {
+        foreach (var variable in Variables)
+        {
+            if (Variables.Count(x => x.Name == variable.Name) != 1)
+            {
+                var newName = GetNewVariableName();
+                Variables.Last(x => x.Name == variable.Name).Name = newName;
+
+                throw new Exception($"Variable with name \"{variable.Name}\" is already exists (renamed to {newName})");
+            }
+        }
+    }
+
+    public string InsertVariable(string data, int position, string variableName)
+    {
+        return data.Insert(position, $"${{{variableName}}}");
+    }
+
+    public PrinterLabel BindAllVariables(PrinterLabel template, object target)
+    {
+        var label = template.Clone() as PrinterLabel;
+
+        foreach (var variable in Variables)
+        {
+            if (variable.TargetType == target.GetType().FullName)
+            {
+                label.Replace($"${{{variable.Name}}}", variable.GetStringFrom(target) ?? string.Empty);
+            }
+        }
+
+        return label;
+    }
+
+    public string GetNewVariableName()
+    {
+        var i = Variables.Count - 1;
+
+        while (true)
+        {
+            var name = "var" + i;
+
+            if (Variables.Count(x => x.Name == name) == 0)
+            {
+                return name;
+            }
+
+            i++;
+        }
     }
 }

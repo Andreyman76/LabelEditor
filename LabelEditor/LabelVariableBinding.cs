@@ -15,20 +15,28 @@ public class LabelVariableBinding
     [DisplayName("Формат"), Category("Переменная")]
     public string? Format { get; set; }
 
+    [ReadOnly(true)]
     [Browsable(true)]
     [Description("Свойство целевого объекта")]
     [DisplayName("Свойство"), Category("Переменная")]
-    public string PropertyName { get; set; } = string.Empty;
+    public string PropertyName { get; init; } = string.Empty;
 
+    [ReadOnly(true)]
     [Browsable(true)]
     [Description("Тип целевого объекта")]
     [DisplayName("Тип оъекта"), Category("Переменная")]
-    public Type TargetType { get; set; } = typeof(string);
+    public string TargetType { get; set; } = "System.String";
+
+    [Browsable(true)]
+    [Description("Описание переменной")]
+    [DisplayName("Описание"), Category("Переменная")]
+    public string Description { get; set; } = string.Empty;
 
     public string? GetStringFrom(object value)
     {
-        var property = TargetType.GetProperty(PropertyName)
-            ?? throw new Exception($"Property {PropertyName} not found in {TargetType.FullName}");
+        var type = Type.GetType(TargetType);
+        var property = type.GetProperty(PropertyName)
+            ?? throw new Exception($"Property {PropertyName} not found in {TargetType}");
 
         var propertyValue = property.GetValue(value);
 
@@ -57,7 +65,6 @@ public class LabelVariableBinding
         }
 
         return toStringMethod.Invoke(propertyValue, new object[] { Format })?.ToString();
-
     }
 
     private static string FormatString(string src, string format)

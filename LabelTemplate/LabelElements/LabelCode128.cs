@@ -26,6 +26,22 @@ public class LabelCode128 : LabelElementBase
         g.DrawImage(code128, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
     }
 
+    public override void Replace(string from, string to)
+    {
+        Code = Code.Replace(from, to);
+    }
+
+    public override object Clone()
+    {
+        return new LabelCode128
+        {
+            Position = Position,
+            Code = Code,
+            Size = Size,
+            Name = Name
+        };
+    }
+
     private static Bitmap CreateCode128Image(string code)
     {
         var writer = new BarcodeWriter
@@ -44,27 +60,6 @@ public class LabelCode128 : LabelElementBase
         using var stream = new MemoryStream();
         bitmap.Encode(stream, SKEncodedImageFormat.Png, 100);
         return new Bitmap(stream);
-    }
-
-    public override object Clone()
-    {
-        return new LabelCode128
-        {
-            Position = Position,
-            Code = Code,
-            Size = Size,
-            Name = Name
-        };
-    }
-
-    public override void Replace(string from, string to)
-    {
-        Code = Code.Replace(from, to);
-    }
-
-    public override RectangleF GetComputedBounds(Graphics g)
-    {
-        return new(Position.X, Position.Y, Size.Width, Size.Height);
     }
 }
 

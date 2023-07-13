@@ -36,11 +36,6 @@ public class LabelImage : LabelElementBase
             Size = Size
         };
     }
-
-    public override RectangleF GetComputedBounds(Graphics g)
-    {
-        return new(Position.X, Position.Y, Size.Width, Size.Height);
-    }
 }
 
 #pragma warning restore CA1416 // Проверка совместимости платформы

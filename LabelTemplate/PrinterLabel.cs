@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace LabelTemplate;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
-[XmlRoot(ElementName = nameof(PrinterLabel))]
+[XmlRoot("Label")]
 public class PrinterLabel : ICloneable
 {
     [Browsable(true)]
@@ -38,25 +38,6 @@ public class PrinterLabel : ICloneable
     public PrinterLabel()
     {
         _document.PrintPage += PrintPageHandler;
-    }
-
-    private void PrintPageHandler(object sender, PrintPageEventArgs e)
-    {
-        var g = e.Graphics;
-
-        if (g == null)
-        {
-            throw new Exception("PrintPageEventArgs contains Graphics with null value");
-        }
-
-        g.Clear(Color.White);
-
-        g.PageUnit = GraphicsUnit.Millimeter;
-        
-        foreach (var element in Elements)
-        {
-            element.Draw(g);
-        }
     }
 
     public void Print(string printerName)
@@ -111,6 +92,24 @@ public class PrinterLabel : ICloneable
         }
 
         return result;
+    }
+
+    private void PrintPageHandler(object sender, PrintPageEventArgs e)
+    {
+        var g = e.Graphics;
+
+        if (g == null)
+        {
+            throw new Exception("PrintPageEventArgs contains Graphics with null value");
+        }
+
+        g.Clear(Color.White);
+        g.PageUnit = GraphicsUnit.Millimeter;
+
+        foreach (var element in Elements)
+        {
+            element.Draw(g);
+        }
     }
 }
 

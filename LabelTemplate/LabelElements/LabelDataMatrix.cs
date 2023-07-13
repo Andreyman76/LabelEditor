@@ -1,8 +1,6 @@
 ﻿using SkiaSharp;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Xml.Serialization;
 using ZXing;
 using ZXing.Datamatrix;
 using ZXing.Datamatrix.Encoder;
@@ -29,6 +27,22 @@ public class LabelDataMatrix : LabelElementBase
         g.DrawImage(dm, new RectangleF(Position.X, Position.Y, Size, Size));
     }
 
+    public override void Replace(string from, string to)
+    {
+        Code = Code.Replace(from, to);
+    }
+
+    public override object Clone()
+    {
+        return new LabelDataMatrix
+        {
+            Position = Position,
+            Code = Code,
+            Size = Size,
+            Name = Name
+        };
+    }
+
     private static Bitmap CreateDMImage(string code)
     {
         var writer = new BarcodeWriter
@@ -48,27 +62,6 @@ public class LabelDataMatrix : LabelElementBase
         bitmap.Encode(stream, SKEncodedImageFormat.Png, 100);
 
         return new Bitmap(stream);
-    }
-
-    public override void Replace(string from, string to)
-    {
-        Code = Code.Replace(from, to);
-    }
-
-    public override RectangleF GetComputedBounds(Graphics g)
-    {
-        return new (Position.X, Position.Y, Size, Size);
-    }
-
-    public override object Clone()
-    {
-        return new LabelDataMatrix
-        {
-            Position = Position,
-            Code = Code,
-            Size = Size,
-            Name = Name
-        };
     }
 }
 

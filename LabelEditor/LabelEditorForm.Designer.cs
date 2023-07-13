@@ -76,21 +76,21 @@
             newToolStripMenuItem.Name = "newToolStripMenuItem";
             newToolStripMenuItem.Size = new Size(100, 22);
             newToolStripMenuItem.Text = "New";
-            newToolStripMenuItem.Click += newToolStripMenuItem_Click;
+            newToolStripMenuItem.Click += OnNewToolStripMenuItemClick;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.Size = new Size(100, 22);
             saveToolStripMenuItem.Text = "Save";
-            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
+            saveToolStripMenuItem.Click += OnSaveToolStripMenuItemClick;
             // 
             // loadToolStripMenuItem
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.Size = new Size(100, 22);
             loadToolStripMenuItem.Text = "Load";
-            loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
+            loadToolStripMenuItem.Click += OnLoadToolStripMenuItemClick;
             // 
             // printerToolStripMenuItem
             // 

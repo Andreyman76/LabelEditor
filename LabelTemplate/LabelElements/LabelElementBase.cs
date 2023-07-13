@@ -6,13 +6,6 @@ namespace LabelTemplate;
 public abstract class LabelElementBase : ICloneable
 {
     /// <summary>
-    /// Получить границы элемента этикетки
-    /// </summary>
-    /// <param name="g"></param>
-    /// <returns>Границы элемента этикетки</returns>
-    public abstract RectangleF GetComputedBounds(Graphics g);
-
-    /// <summary>
     /// Имя элемента этикетки
     /// </summary>
     [Browsable(true)]
