@@ -1,0 +1,38 @@
+[
+  {
+    "Name": "TSC ML240P",
+    "Usb": true,
+    "Address": null,
+    "Port": null,
+    "PrinterName": "TSC ML240P",
+    "Dpi": {
+      "IsEmpty": false,
+      "X": 203,
+      "Y": 203
+    }
+  },
+  {
+    "Name": "TSC Net",
+    "Usb": false,
+    "Address": "192.168.10.13",
+    "Port": 9100,
+    "PrinterName": null,
+    "Dpi": {
+      "IsEmpty": false,
+      "X": 203,
+      "Y": 203
+    }
+  },
+  {
+    "Name": "toPDF",
+    "Usb": true,
+    "Address": null,
+    "Port": null,
+    "PrinterName": "toPDF",
+    "Dpi": {
+      "IsEmpty": false,
+      "X": 600,
+      "Y": 600
+    }
+  }
+]

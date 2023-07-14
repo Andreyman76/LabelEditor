@@ -8,8 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "LabelEditor/1.0.0": {
         "dependencies": {
-          "LabelTemplate": "1.0.0",
-          "PDFtoZPL": "3.3.0"
+          "LabelTemplate": "1.0.0"
         },
         "runtime": {
           "LabelEditor.dll": {}
@@ -235,6 +234,7 @@
       },
       "LabelTemplate/1.0.0": {
         "dependencies": {
+          "PDFtoZPL": "3.3.0",
           "SkiaSharp": "2.88.4-preview.84",
           "System.Drawing.Common": "8.0.0-preview.5.23280.5",
           "ZXing.Net.Bindings.SkiaSharp": "0.16.13"

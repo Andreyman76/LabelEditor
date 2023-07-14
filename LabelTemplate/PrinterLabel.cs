@@ -15,11 +15,6 @@ public class PrinterLabel : ICloneable
     [DisplayName("Размер"), Category("Этикетка")]
     public PrintingSize Size { get; set; }
 
-    [Browsable(true)]
-    [Description("Разрешение печати (точек на дюйм)")]
-    [DisplayName("Разрешение"), Category("Этикетка")]
-    public int Dpi { get; set; } = 203;
-
     [Browsable(false)]
     public int Count => Elements.Count;
 
@@ -30,29 +25,19 @@ public class PrinterLabel : ICloneable
     [XmlArrayItem(typeof(LabelEllipse))]
     [Browsable(false)]
     public List<LabelElementBase> Elements { get; set; } = new();
-    private PrintDocument _document = new();
+    
 
     [Browsable(false)]
     public bool IsReadOnly => false;
 
-    public PrinterLabel()
+    public Bitmap GetImage(Point dpi)
     {
-        _document.PrintPage += PrintPageHandler;
-    }
-
-    public void Print(string printerName)
-    {
-        _document.PrinterSettings.PrinterName = printerName;
-        _document.Print();
-    }
-
-    public Bitmap GetImage()
-    {
-        var dotsPerMm = Dpi / 25.4f;
-        var width = dotsPerMm * Size.Width;
-        var height = dotsPerMm * Size.Height;
+        var dotsPerMmX = dpi.X / 25.4f;
+        var dotsPerMmY = dpi.Y / 25.4f;
+        var width = dotsPerMmX * Size.Width;
+        var height = dotsPerMmY * Size.Height;
         var image = new Bitmap((int)width, (int)height);
-        image.SetResolution(Dpi, Dpi);
+        image.SetResolution(dpi.X, dpi.Y);
 
         using var g = Graphics.FromImage(image);
         g.Clear(Color.White);
@@ -82,8 +67,7 @@ public class PrinterLabel : ICloneable
     {
         var result = new PrinterLabel()
         {
-            Size = Size,
-            Dpi = Dpi
+            Size = Size
         };
 
         foreach (var element in Elements)
@@ -92,6 +76,25 @@ public class PrinterLabel : ICloneable
         }
 
         return result;
+    }
+
+    public string GetZpl(Point dpi)
+    {
+        using var image = GetImage(dpi);
+        using var stream = new MemoryStream();
+
+        image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+        var zpl = PDFtoZPL.Conversion.ConvertBitmap(stream.ToArray());
+
+        return zpl;
+    }
+
+    public void PrintToPdf(string printerName)
+    {
+        using var document = new PrintDocument();
+        document.PrintPage += PrintPageHandler;
+        document.PrinterSettings.PrinterName = printerName;
+        document.Print();
     }
 
     private void PrintPageHandler(object sender, PrintPageEventArgs e)

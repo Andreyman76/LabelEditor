@@ -43,7 +43,7 @@ public partial class VariableEditorForm : Form
         if (variablesListBox.SelectedIndex >= 0)
         {
             _editor.RemoveVariable(variablesListBox.Items[variablesListBox.SelectedIndex].ToString());
-            variablePropertyGrid.SelectedObject= null;
+            variablePropertyGrid.SelectedObject = null;
             UpdateVariablesListBox();
         }
     }
@@ -96,11 +96,6 @@ public partial class VariableEditorForm : Form
 
     private void OnVariableEditorFormFormClosing(object sender, FormClosingEventArgs e)
     {
-        var json = JsonSerializer.Serialize(_editor.Variables, new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        });
-
-        File.WriteAllText("LabelVariables.json", json);
+        _editor.SaveVariablesToJson();
     }
 }

@@ -96,3 +96,5 @@ C:\Users\Andrey\source\repos\LabelEditor\LabelEditor\bin\Debug\net6.0-windows\ru
 C:\Users\Andrey\source\repos\LabelEditor\LabelEditor\bin\Debug\net6.0-windows\runtimes\linux-x64\native\libSkiaSharp.so
 C:\Users\Andrey\source\repos\LabelEditor\LabelEditor\obj\Debug\net6.0-windows\LabelEditor.LabelEditorForm.resources
 C:\Users\Andrey\source\repos\LabelEditor\LabelEditor\obj\Debug\net6.0-windows\LabelEditor.VariableEditorForm.resources
+C:\Users\VP\source\repos\LabelEditor\LabelEditor\obj\Debug\net6.0-windows\LabelEditor.PrintersEditorForm.resources
+C:\Users\VP\source\repos\LabelEditor\LabelEditor\obj\Debug\net6.0-windows\LabelEditor.DataSourceSelectionForm.resources

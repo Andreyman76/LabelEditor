@@ -20,9 +20,14 @@ public class LabelCode128 : LabelElementBase
     [DisplayName("Размер"), Category("Code128")]
     public PrintingSize Size { get; set; }
 
+    [Browsable(true)]
+    [Description("Формат GS1")]
+    [DisplayName("GS1"), Category("Code128")]
+    public bool GS1 { get; set; } = false;
+
     public override void Draw(Graphics g)
     {
-        var code128 = CreateCode128Image(Code);
+        var code128 = CreateCode128Image(Code, GS1);
         g.DrawImage(code128, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
     }
 
@@ -38,11 +43,12 @@ public class LabelCode128 : LabelElementBase
             Position = Position,
             Code = Code,
             Size = Size,
-            Name = Name
+            Name = Name,
+            GS1 = GS1
         };
     }
 
-    private static Bitmap CreateCode128Image(string code)
+    private static Bitmap CreateCode128Image(string code, bool gs1)
     {
         var writer = new BarcodeWriter
         {
@@ -51,7 +57,7 @@ public class LabelCode128 : LabelElementBase
             {
                 Height = 50,
                 PureBarcode = true,
-                GS1Format = true,
+                GS1Format = gs1,
                 Margin = 0
             },
         };

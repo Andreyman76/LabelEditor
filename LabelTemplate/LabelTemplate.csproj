@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PDFtoZPL" Version="3.3.0" />
     <PackageReference Include="SkiaSharp" Version="2.88.4-preview.84" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0-preview.5.23280.5" />
     <PackageReference Include="ZXing.Net.Bindings.SkiaSharp" Version="0.16.13" />

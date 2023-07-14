@@ -47,12 +47,11 @@
             // 
             classesListBox.Dock = DockStyle.Fill;
             classesListBox.FormattingEnabled = true;
-            classesListBox.ItemHeight = 20;
-            classesListBox.Location = new Point(3, 64);
-            classesListBox.Margin = new Padding(3, 4, 3, 4);
+            classesListBox.ItemHeight = 15;
+            classesListBox.Location = new Point(3, 48);
             classesListBox.Name = "classesListBox";
             tableLayoutPanel1.SetRowSpan(classesListBox, 2);
-            classesListBox.Size = new Size(131, 532);
+            classesListBox.Size = new Size(114, 399);
             classesListBox.TabIndex = 0;
             classesListBox.SelectedIndexChanged += OnClassesListBoxSelectedIndexChanged;
             // 
@@ -61,34 +60,31 @@
             tableLayoutPanel1.SetColumnSpan(variablesListBox, 2);
             variablesListBox.Dock = DockStyle.Fill;
             variablesListBox.FormattingEnabled = true;
-            variablesListBox.ItemHeight = 20;
-            variablesListBox.Location = new Point(459, 124);
-            variablesListBox.Margin = new Padding(3, 4, 3, 4);
+            variablesListBox.ItemHeight = 15;
+            variablesListBox.Location = new Point(403, 93);
             variablesListBox.Name = "variablesListBox";
-            variablesListBox.Size = new Size(222, 472);
+            variablesListBox.Size = new Size(194, 354);
             variablesListBox.TabIndex = 2;
             variablesListBox.SelectedIndexChanged += OnVariablesListBoxSelectedIndexChanged;
             // 
             // variablePropertyGrid
             // 
             variablePropertyGrid.Dock = DockStyle.Fill;
-            variablePropertyGrid.Location = new Point(687, 64);
-            variablePropertyGrid.Margin = new Padding(3, 4, 3, 4);
+            variablePropertyGrid.Location = new Point(603, 48);
             variablePropertyGrid.Name = "variablePropertyGrid";
             tableLayoutPanel1.SetRowSpan(variablePropertyGrid, 2);
-            variablePropertyGrid.Size = new Size(224, 532);
+            variablePropertyGrid.Size = new Size(194, 399);
             variablePropertyGrid.TabIndex = 3;
             variablePropertyGrid.PropertyValueChanged += OnVariablePropertyGridPropertyValueChanged;
             // 
             // createVariableButton
             // 
             createVariableButton.Dock = DockStyle.Fill;
-            createVariableButton.Location = new Point(459, 64);
-            createVariableButton.Margin = new Padding(3, 4, 3, 4);
+            createVariableButton.Location = new Point(403, 48);
             createVariableButton.Name = "createVariableButton";
-            createVariableButton.Size = new Size(108, 52);
+            createVariableButton.Size = new Size(94, 39);
             createVariableButton.TabIndex = 4;
-            createVariableButton.Text = "Create";
+            createVariableButton.Text = "Добавить";
             createVariableButton.UseVisualStyleBackColor = true;
             createVariableButton.Click += OnCreateVariableButtonClick;
             // 
@@ -112,23 +108,23 @@
             tableLayoutPanel1.Controls.Add(objectPropertiesGridView, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel1.Size = new Size(914, 600);
+            tableLayoutPanel1.Size = new Size(800, 450);
             tableLayoutPanel1.TabIndex = 6;
             // 
             // deleteVariableButton
             // 
             deleteVariableButton.Dock = DockStyle.Fill;
-            deleteVariableButton.Location = new Point(573, 64);
-            deleteVariableButton.Margin = new Padding(3, 4, 3, 4);
+            deleteVariableButton.Location = new Point(503, 48);
             deleteVariableButton.Name = "deleteVariableButton";
-            deleteVariableButton.Size = new Size(108, 52);
+            deleteVariableButton.Size = new Size(94, 39);
             deleteVariableButton.TabIndex = 12;
-            deleteVariableButton.Text = "Delete";
+            deleteVariableButton.Text = "Удалить";
             deleteVariableButton.UseVisualStyleBackColor = true;
             deleteVariableButton.Click += OnDeleteVariableButtonClick;
             // 
@@ -136,11 +132,11 @@
             // 
             label5.AutoSize = true;
             label5.Dock = DockStyle.Fill;
-            label5.Location = new Point(687, 0);
+            label5.Location = new Point(603, 0);
             label5.Name = "label5";
-            label5.Size = new Size(224, 60);
+            label5.Size = new Size(194, 45);
             label5.TabIndex = 10;
-            label5.Text = "Variable properties";
+            label5.Text = "Переменная";
             label5.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label4
@@ -148,22 +144,22 @@
             label4.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(label4, 2);
             label4.Dock = DockStyle.Fill;
-            label4.Location = new Point(459, 0);
+            label4.Location = new Point(403, 0);
             label4.Name = "label4";
-            label4.Size = new Size(222, 60);
+            label4.Size = new Size(194, 45);
             label4.TabIndex = 9;
-            label4.Text = "Variables";
+            label4.Text = "Переменные";
             label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(140, 0);
+            label2.Location = new Point(123, 0);
             label2.Name = "label2";
-            label2.Size = new Size(313, 60);
+            label2.Size = new Size(274, 45);
             label2.TabIndex = 7;
-            label2.Text = "Property of object";
+            label2.Text = "Свойство объекта";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label1
@@ -172,9 +168,9 @@
             label1.Dock = DockStyle.Fill;
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(131, 60);
+            label1.Size = new Size(114, 45);
             label1.TabIndex = 6;
-            label1.Text = "Class of object";
+            label1.Text = "Целевой объект";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // objectPropertiesGridView
@@ -185,23 +181,23 @@
             objectPropertiesGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             objectPropertiesGridView.Dock = DockStyle.Fill;
             objectPropertiesGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
-            objectPropertiesGridView.Location = new Point(140, 63);
+            objectPropertiesGridView.Location = new Point(123, 47);
+            objectPropertiesGridView.Margin = new Padding(3, 2, 3, 2);
             objectPropertiesGridView.Name = "objectPropertiesGridView";
             objectPropertiesGridView.ReadOnly = true;
             objectPropertiesGridView.RowHeadersWidth = 51;
             tableLayoutPanel1.SetRowSpan(objectPropertiesGridView, 2);
             objectPropertiesGridView.RowTemplate.Height = 29;
             objectPropertiesGridView.ShowEditingIcon = false;
-            objectPropertiesGridView.Size = new Size(313, 534);
+            objectPropertiesGridView.Size = new Size(274, 401);
             objectPropertiesGridView.TabIndex = 13;
             // 
             // VariableEditorForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(tableLayoutPanel1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "VariableEditorForm";
             Text = "Variable editor";
             FormClosing += OnVariableEditorFormFormClosing;

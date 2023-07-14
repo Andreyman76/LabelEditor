@@ -10,6 +10,8 @@ public class LabelEditor
     public List<LabelVariableBinding> Variables { get; set; } = new();
     public List<Type> RegisteredTypes { get; set; } = new();
 
+    public List<IPrinterDescription> Printers { get; set; } = new();
+
     /// <summary>
     /// Текущая этикетка редактора
     /// </summary>
@@ -47,6 +49,29 @@ public class LabelEditor
         File.WriteAllText("LabelVariables.json", json);
     }
 
+    public void SavePrintersToJson()
+    {
+        var printers = Printers.Select(x => x.GetPrinterDescription()).ToList();
+
+        var json = JsonSerializer.Serialize(printers, new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        });
+
+        File.WriteAllText("Printers.json", json);
+    }
+
+    public void LoadPrintersFromJson()
+    {
+        if (File.Exists("Printers.json"))
+        {
+            var json = File.ReadAllText("Printers.json", Encoding.UTF8);
+            var printers = JsonSerializer.Deserialize<List<PrinterDescription>>(json);
+
+            Printers = printers.Select( x => x.GetPrinterDescription()).ToList();
+        }
+    }
+
     /// <summary>
     /// Получить XML текст для текущей этикетки
     /// </summary>
@@ -73,9 +98,9 @@ public class LabelEditor
         LabelTemplate = _serializer.Deserialize(stream) as PrinterLabel;
     }
 
-    public PrinterLabel GetCurrentLabel()
+    public PrinterLabel GetCurrentLabel(IEnumerable<object> targetObjects)
     {
-        var label = BindAllVariables(LabelTemplate, new LabelUtils());
+        var label = BindAllVariables(LabelTemplate, targetObjects);
 
         return label;
     }
@@ -117,13 +142,15 @@ public class LabelEditor
         return data.Insert(position, $"${{{variableName}}}");
     }
 
-    public PrinterLabel BindAllVariables(PrinterLabel template, object target)
+    public PrinterLabel BindAllVariables(PrinterLabel template, IEnumerable<object> targetObjects)
     {
         var label = template.Clone() as PrinterLabel;
 
-        foreach (var variable in Variables)
+        foreach(var target in targetObjects)
         {
-            if (variable.TargetType == target.GetType().FullName)
+            var variables = Variables.Where(x => x.TargetType == target.GetType().FullName);
+
+            foreach(var variable in variables)
             {
                 label.Replace($"${{{variable.Name}}}", variable.GetStringFrom(target) ?? string.Empty);
             }

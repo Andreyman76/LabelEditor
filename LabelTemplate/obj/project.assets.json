@@ -2,6 +2,71 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "bblanchon.PDFium.Linux/112.0.5567": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/linux-arm/native/libpdfium.so": {
+            "assetType": "native",
+            "rid": "linux-arm"
+          },
+          "runtimes/linux-arm64/native/libpdfium.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          },
+          "runtimes/linux-musl-x64/native/libpdfium.so": {
+            "assetType": "native",
+            "rid": "linux-musl-x64"
+          },
+          "runtimes/linux-musl-x86/native/libpdfium.so": {
+            "assetType": "native",
+            "rid": "linux-musl-x86"
+          },
+          "runtimes/linux-x64/native/libpdfium.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/linux-x86/native/libpdfium.so": {
+            "assetType": "native",
+            "rid": "linux-x86"
+          }
+        }
+      },
+      "bblanchon.PDFium.macOS/112.0.5567": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/osx-arm64/native/libpdfium.dylib": {
+            "assetType": "native",
+            "rid": "osx-arm64"
+          },
+          "runtimes/osx-x64/native/libpdfium.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          }
+        }
+      },
+      "bblanchon.PDFium.Win32/112.0.5567": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win-arm64/native/pdfium.dll": {
+            "assetType": "native",
+            "rid": "win-arm64"
+          },
+          "runtimes/win-x64/native/pdfium.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/pdfium.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
       "Microsoft.Win32.SystemEvents/8.0.0-preview.5.23280.8": {
         "type": "package",
         "compile": {
@@ -24,6 +89,58 @@
           }
         }
       },
+      "PDFtoImage/2.2.0": {
+        "type": "package",
+        "dependencies": {
+          "SkiaSharp": "2.88.3",
+          "SkiaSharp.NativeAssets.Linux.NoDependencies": "2.88.3",
+          "SkiaSharp.NativeAssets.Win32": "2.88.3",
+          "SkiaSharp.NativeAssets.macOS": "2.88.3",
+          "bblanchon.PDFium.Linux": "112.0.5567",
+          "bblanchon.PDFium.Win32": "112.0.5567",
+          "bblanchon.PDFium.macOS": "112.0.5567"
+        },
+        "compile": {
+          "lib/net6.0/PDFtoImage.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/PDFtoImage.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "PDFtoZPL/3.3.0": {
+        "type": "package",
+        "dependencies": {
+          "PDFtoImage": "2.2.0",
+          "SharpZipLib": "1.4.2"
+        },
+        "compile": {
+          "lib/net6.0/PDFtoZPL.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/PDFtoZPL.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "SharpZipLib/1.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/ICSharpCode.SharpZipLib.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ICSharpCode.SharpZipLib.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "SkiaSharp/2.88.4-preview.84": {
         "type": "package",
         "dependencies": {
@@ -38,6 +155,36 @@
         "runtime": {
           "lib/net6.0/SkiaSharp.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.3": {
+        "type": "package",
+        "dependencies": {
+          "SkiaSharp": "2.88.3"
+        },
+        "compile": {
+          "lib/net5.0/_._": {}
+        },
+        "runtime": {
+          "lib/net5.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-arm/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-arm"
+          },
+          "runtimes/linux-arm64/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          },
+          "runtimes/linux-musl-x64/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-musl-x64"
+          },
+          "runtimes/linux-x64/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
           }
         }
       },
@@ -131,6 +278,56 @@
     }
   },
   "libraries": {
+    "bblanchon.PDFium.Linux/112.0.5567": {
+      "sha512": "gRWmlKf+m3h9Pld4i/5SenqDASyInxwsUPYS4L7j48M9qGTdEPSOyIhuwspFrLYiDPLz9CBeMYqOlwNp1tpsPg==",
+      "type": "package",
+      "path": "bblanchon.pdfium.linux/112.0.5567",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bblanchon.pdfium.linux.112.0.5567.nupkg.sha512",
+        "bblanchon.pdfium.linux.nuspec",
+        "icon.png",
+        "runtimes/linux-arm/native/libpdfium.so",
+        "runtimes/linux-arm64/native/libpdfium.so",
+        "runtimes/linux-musl-x64/native/libpdfium.so",
+        "runtimes/linux-musl-x86/native/libpdfium.so",
+        "runtimes/linux-x64/native/libpdfium.so",
+        "runtimes/linux-x86/native/libpdfium.so"
+      ]
+    },
+    "bblanchon.PDFium.macOS/112.0.5567": {
+      "sha512": "VNm7Qh+nADyLbCUCszF8SKuUYsL8FfMuSMdoQS9WTUDWL9pyO7pGI646TEEK8jLg9ItOdibbU6a/I/3eXj6VdA==",
+      "type": "package",
+      "path": "bblanchon.pdfium.macos/112.0.5567",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bblanchon.pdfium.macos.112.0.5567.nupkg.sha512",
+        "bblanchon.pdfium.macos.nuspec",
+        "icon.png",
+        "runtimes/osx-arm64/native/libpdfium.dylib",
+        "runtimes/osx-x64/native/libpdfium.dylib"
+      ]
+    },
+    "bblanchon.PDFium.Win32/112.0.5567": {
+      "sha512": "YBFLqbuVPoChIIPuBEznf6f1HSEkteP96MO9Ckfm3THHO/eynfAEGj6vFelydFLCyHqJAzarFPizUQVjHP48zg==",
+      "type": "package",
+      "path": "bblanchon.pdfium.win32/112.0.5567",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bblanchon.pdfium.win32.112.0.5567.nupkg.sha512",
+        "bblanchon.pdfium.win32.nuspec",
+        "build/net461/bblanchon.PDFium.Win32.targets",
+        "buildTransitive/net461/bblanchon.PDFium.Win32.targets",
+        "icon.png",
+        "lib/netstandard2.0/_._",
+        "runtimes/win-arm64/native/pdfium.dll",
+        "runtimes/win-x64/native/pdfium.dll",
+        "runtimes/win-x86/native/pdfium.dll"
+      ]
+    },
     "Microsoft.Win32.SystemEvents/8.0.0-preview.5.23280.8": {
       "sha512": "w4Tedw8E1Il5bsnwh8ji1XllwsaHAJKFew2XAQe+iYX5NmDdYkYb193a/Rw7uxGv0wvgB+gmmx+OsMcy7nMrKQ==",
       "type": "package",
@@ -164,6 +361,73 @@
         "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.dll",
         "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.xml",
         "useSharedDesignerContext.txt"
+      ]
+    },
+    "PDFtoImage/2.2.0": {
+      "sha512": "kJMLenOcanyivy1ttZ4LeV+pLYnWr3YR9D8vxI5YcmHHOPWfBGH6eAchPwUVsQ0J8CIS2Kt0vcDxODIXVcGSMQ==",
+      "type": "package",
+      "path": "pdftoimage/2.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon_128.png",
+        "README.md",
+        "lib/monoandroid10.0/PDFtoImage.dll",
+        "lib/monoandroid10.0/PDFtoImage.xml",
+        "lib/net462/PDFtoImage.dll",
+        "lib/net462/PDFtoImage.xml",
+        "lib/net481/PDFtoImage.dll",
+        "lib/net481/PDFtoImage.xml",
+        "lib/net6.0-android31.0/PDFtoImage.dll",
+        "lib/net6.0-android31.0/PDFtoImage.xml",
+        "lib/net6.0/PDFtoImage.dll",
+        "lib/net6.0/PDFtoImage.xml",
+        "pdftoimage.2.2.0.nupkg.sha512",
+        "pdftoimage.nuspec"
+      ]
+    },
+    "PDFtoZPL/3.3.0": {
+      "sha512": "AF5EGUbKI9xFWtSb4Ggwfh+Wx6KqpoA/F56yi1wuiaGBLcP1tUPMEK6t4/G18w7P+UMOi6K5fvy9PLdYFJCf1A==",
+      "type": "package",
+      "path": "pdftozpl/3.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon_128.png",
+        "README.md",
+        "lib/monoandroid10.0/PDFtoZPL.dll",
+        "lib/monoandroid10.0/PDFtoZPL.xml",
+        "lib/net462/PDFtoZPL.dll",
+        "lib/net462/PDFtoZPL.xml",
+        "lib/net481/PDFtoZPL.dll",
+        "lib/net481/PDFtoZPL.xml",
+        "lib/net6.0-android31.0/PDFtoZPL.dll",
+        "lib/net6.0-android31.0/PDFtoZPL.xml",
+        "lib/net6.0/PDFtoZPL.dll",
+        "lib/net6.0/PDFtoZPL.xml",
+        "pdftozpl.3.3.0.nupkg.sha512",
+        "pdftozpl.nuspec"
+      ]
+    },
+    "SharpZipLib/1.4.2": {
+      "sha512": "yjj+3zgz8zgXpiiC3ZdF/iyTBbz2fFvMxZFEBPUcwZjIvXOf37Ylm+K58hqMfIBt5JgU/Z2uoUS67JmTLe973A==",
+      "type": "package",
+      "path": "sharpziplib/1.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "images/sharpziplib-nuget-256x256.png",
+        "lib/net6.0/ICSharpCode.SharpZipLib.dll",
+        "lib/net6.0/ICSharpCode.SharpZipLib.pdb",
+        "lib/net6.0/ICSharpCode.SharpZipLib.xml",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.dll",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.pdb",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.xml",
+        "lib/netstandard2.1/ICSharpCode.SharpZipLib.dll",
+        "lib/netstandard2.1/ICSharpCode.SharpZipLib.pdb",
+        "lib/netstandard2.1/ICSharpCode.SharpZipLib.xml",
+        "sharpziplib.1.4.2.nupkg.sha512",
+        "sharpziplib.nuspec"
       ]
     },
     "SkiaSharp/2.88.4-preview.84": {
@@ -238,6 +502,29 @@
         "lib/xamarinwatchos1.0/SkiaSharp.xml",
         "skiasharp.2.88.4-preview.84.nupkg.sha512",
         "skiasharp.nuspec"
+      ]
+    },
+    "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.3": {
+      "sha512": "jBDBOw1Xwqi+1fRRDLNhBwiREvYMDM1N+A2FvjJ7F1Bg37PFrQIKOfYpf7RKD6vvMzS2oTvSQMC7RN1rfKbMrg==",
+      "type": "package",
+      "path": "skiasharp.nativeassets.linux.nodependencies/2.88.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "THIRD-PARTY-NOTICES.txt",
+        "build/net462/SkiaSharp.NativeAssets.Linux.NoDependencies.targets",
+        "buildTransitive/net462/SkiaSharp.NativeAssets.Linux.NoDependencies.targets",
+        "lib/net462/_._",
+        "lib/net5.0/_._",
+        "lib/netcoreapp3.1/_._",
+        "lib/netstandard1.3/_._",
+        "runtimes/linux-arm/native/libSkiaSharp.so",
+        "runtimes/linux-arm64/native/libSkiaSharp.so",
+        "runtimes/linux-musl-x64/native/libSkiaSharp.so",
+        "runtimes/linux-x64/native/libSkiaSharp.so",
+        "skiasharp.nativeassets.linux.nodependencies.2.88.3.nupkg.sha512",
+        "skiasharp.nativeassets.linux.nodependencies.nuspec"
       ]
     },
     "SkiaSharp.NativeAssets.macOS/2.88.4-preview.84": {
@@ -447,25 +734,31 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "PDFtoZPL >= 3.3.0",
       "SkiaSharp >= 2.88.4-preview.84",
       "System.Drawing.Common >= 8.0.0-preview.5.23280.5",
       "ZXing.Net.Bindings.SkiaSharp >= 0.16.13"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Andrey\\.nuget\\packages\\": {}
+    "C:\\Users\\VP\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
+      "projectUniqueName": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
       "projectName": "LabelTemplate",
-      "projectPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
-      "packagesPath": "C:\\Users\\Andrey\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelTemplate\\obj\\",
+      "projectPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\LabelTemplate.csproj",
+      "packagesPath": "C:\\Users\\VP\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelTemplate\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Andrey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\VP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -473,6 +766,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -491,6 +785,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "PDFtoZPL": {
+            "target": "Package",
+            "version": "[3.3.0, )"
+          },
           "SkiaSharp": {
             "target": "Package",
             "version": "[2.88.4-preview.84, )"
@@ -520,7 +818,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
