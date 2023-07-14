@@ -1,0 +1,15 @@
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\PrintingApi.deps.json
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\PrintingApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\PrintingApi.pdb
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.csproj.AssemblyReference.cache
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.AssemblyInfoInputs.cache
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.AssemblyInfo.cs
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.csproj.CoreCompileInputs.cache
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.csproj.CopyComplete
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\refint\PrintingApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.pdb
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\ref\PrintingApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\LabelApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\LabelApi.pdb

@@ -1,0 +1,17 @@
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\LabelEditorApi.deps.json
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\LabelEditorApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\LabelEditorApi.pdb
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\PrintingApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\PrintingApi.pdb
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.csproj.AssemblyReference.cache
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.AssemblyInfoInputs.cache
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.AssemblyInfo.cs
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.csproj.CoreCompileInputs.cache
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.csproj.CopyComplete
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\refint\LabelEditorApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditorApi.pdb
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\ref\LabelEditorApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\LabelApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\LabelApi.pdb

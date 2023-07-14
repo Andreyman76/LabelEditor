@@ -1,0 +1,18 @@
+﻿[
+  {
+    "Name": "var-1",
+    "Format": null,
+    "PropertyName": "CurrentDateTime",
+    "TargetType": "LabelEditorApi.BuiltInVariables",
+    "Description": "",
+    "IsBuiltIn": false
+  },
+  {
+    "Name": "var0",
+    "Format": null,
+    "PropertyName": "GS",
+    "TargetType": "LabelEditorApi.BuiltInVariables",
+    "Description": "",
+    "IsBuiltIn": false
+  }
+]
