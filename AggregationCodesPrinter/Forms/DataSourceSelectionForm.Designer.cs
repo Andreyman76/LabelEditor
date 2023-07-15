@@ -30,9 +30,9 @@
         {
             selectButton = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
-            objectPropertiesGridView = new DataGridView();
+            dataSourceGridView = new DataGridView();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)objectPropertiesGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataSourceGridView).BeginInit();
             SuspendLayout();
             // 
             // selectButton
@@ -53,7 +53,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            tableLayoutPanel1.Controls.Add(objectPropertiesGridView, 0, 0);
+            tableLayoutPanel1.Controls.Add(dataSourceGridView, 0, 0);
             tableLayoutPanel1.Controls.Add(selectButton, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
@@ -66,25 +66,25 @@
             tableLayoutPanel1.Size = new Size(914, 600);
             tableLayoutPanel1.TabIndex = 1;
             // 
-            // objectPropertiesGridView
+            // dataSourceGridView
             // 
-            objectPropertiesGridView.AllowUserToAddRows = false;
-            objectPropertiesGridView.AllowUserToDeleteRows = false;
-            objectPropertiesGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            objectPropertiesGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel1.SetColumnSpan(objectPropertiesGridView, 3);
-            objectPropertiesGridView.Dock = DockStyle.Fill;
-            objectPropertiesGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
-            objectPropertiesGridView.Location = new Point(3, 3);
-            objectPropertiesGridView.MultiSelect = false;
-            objectPropertiesGridView.Name = "objectPropertiesGridView";
-            objectPropertiesGridView.ReadOnly = true;
-            objectPropertiesGridView.RowHeadersWidth = 51;
-            objectPropertiesGridView.RowTemplate.Height = 29;
-            objectPropertiesGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            objectPropertiesGridView.ShowEditingIcon = false;
-            objectPropertiesGridView.Size = new Size(908, 534);
-            objectPropertiesGridView.TabIndex = 14;
+            dataSourceGridView.AllowUserToAddRows = false;
+            dataSourceGridView.AllowUserToDeleteRows = false;
+            dataSourceGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataSourceGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tableLayoutPanel1.SetColumnSpan(dataSourceGridView, 3);
+            dataSourceGridView.Dock = DockStyle.Fill;
+            dataSourceGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dataSourceGridView.Location = new Point(3, 3);
+            dataSourceGridView.MultiSelect = false;
+            dataSourceGridView.Name = "dataSourceGridView";
+            dataSourceGridView.ReadOnly = true;
+            dataSourceGridView.RowHeadersWidth = 51;
+            dataSourceGridView.RowTemplate.Height = 29;
+            dataSourceGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataSourceGridView.ShowEditingIcon = false;
+            dataSourceGridView.Size = new Size(908, 534);
+            dataSourceGridView.TabIndex = 14;
             // 
             // DataSourceSelectionForm
             // 
@@ -97,7 +97,7 @@
             Text = "Data source selection";
             FormClosing += OnDataSourceSelectionFormClosing;
             tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)objectPropertiesGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataSourceGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -105,6 +105,6 @@
 
         private Button selectButton;
         private TableLayoutPanel tableLayoutPanel1;
-        private DataGridView objectPropertiesGridView;
+        private DataGridView dataSourceGridView;
     }
 }

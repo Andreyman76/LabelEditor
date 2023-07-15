@@ -15,9 +15,6 @@ public class PrinterLabel : ICloneable
     [DisplayName("Размер"), Category("Этикетка")]
     public PrintingSize Size { get; set; }
 
-    [Browsable(false)]
-    public int Count => Elements.Count;
-
     [XmlArrayItem(typeof(LabelText))]
     [XmlArrayItem(typeof(LabelImage))]
     [XmlArrayItem(typeof(LabelDataMatrix))]
@@ -25,10 +22,8 @@ public class PrinterLabel : ICloneable
     [XmlArrayItem(typeof(LabelEllipse))]
     [Browsable(false)]
     public List<LabelElementBase> Elements { get; set; } = new();
-    
 
-    [Browsable(false)]
-    public bool IsReadOnly => false;
+    private bool _printed = false;
 
     public Bitmap GetImage(Dpi dpi)
     {
@@ -49,17 +44,22 @@ public class PrinterLabel : ICloneable
 
         foreach (var element in Elements)
         {
+            if (element is LabelText)
+            {
+                SetLabelTextAutosize(element as LabelText);
+            }
+
             element.Draw(g);
         }
 
         return image;
     }
 
-    public void Replace(string variableName, string data)
+    public void Replace(string from, string to)
     {
         foreach (var element in Elements)
         {
-            element.Replace(variableName, data);
+            element.Replace(from, to);
         }
     }
 
@@ -72,7 +72,7 @@ public class PrinterLabel : ICloneable
 
         foreach (var element in Elements)
         {
-            result.Elements.Add(element.Clone() as LabelElementBase);
+            result.Elements.Add(element.Clone() as LabelElementBase ?? throw new Exception($"Cloning LabelElement {element.Name} failed"));
         }
 
         return result;
@@ -89,17 +89,20 @@ public class PrinterLabel : ICloneable
         return zpl;
     }
 
-    public void PrintToPdf(string printerName)
+    public bool PrintToPdf(string printerName)
     {
+        _printed = false;
         using var document = new PrintDocument();
         document.PrintPage += PrintPageHandler;
         document.PrinterSettings.PrinterName = printerName;
         document.Print();
+
+        return _printed;
     }
 
     private void PrintPageHandler(object sender, PrintPageEventArgs e)
     {
-        var g = e.Graphics;
+        using var g = e.Graphics;
 
         if (g == null)
         {
@@ -111,8 +114,27 @@ public class PrinterLabel : ICloneable
 
         foreach (var element in Elements)
         {
+            if (element is LabelText)
+            {
+                SetLabelTextAutosize(element as LabelText);
+            }
+
             element.Draw(g);
         }
+
+        _printed = true;
+    }
+
+    private void SetLabelTextAutosize(LabelText? labelText)
+    {
+        if(labelText == null)
+        {
+            throw new Exception("Set LabelText autosize failed");
+        }
+
+        var width = Size.Width - labelText.Position.X;
+        var height = Size.Height - labelText.Position.Y;
+        labelText.Size = new(width, height);
     }
 }
 

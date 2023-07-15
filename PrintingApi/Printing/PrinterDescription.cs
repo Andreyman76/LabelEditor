@@ -20,7 +20,7 @@ public class PrinterDescription
             {
                 Name = Name,
                 Dpi = Dpi,
-                PrinterName = PrinterName
+                PrinterName = PrinterName ?? throw new ArgumentNullException(nameof(PrinterName)),
             };
         }
         else
@@ -29,8 +29,8 @@ public class PrinterDescription
             {
                 Name = Name,
                 Dpi= Dpi,
-                Address = IPAddress.Parse(Address),
-                Port = Port.Value
+                Address = IPAddress.Parse(Address ?? throw new ArgumentException(nameof(Address))),
+                Port = Port ?? throw new ArgumentException(nameof(Port))
             };
         }
     }

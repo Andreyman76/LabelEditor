@@ -1,5 +1,4 @@
 ﻿using LabelApi;
-using System.Drawing;
 
 namespace PrintingApi;
 
@@ -15,10 +14,9 @@ public class UsbPrinter : IPrinter
 
     public bool Print(PrinterLabel label)
     {
-        if(Name == "toPDF")
+        if (Name.Contains("PDF"))
         {
-            label.PrintToPdf(Name);
-            return true;
+            return label.PrintToPdf(Name); 
         }
         else
         {

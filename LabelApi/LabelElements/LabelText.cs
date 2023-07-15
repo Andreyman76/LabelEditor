@@ -9,10 +9,10 @@ public class LabelText : LabelElementBase
 {
     [Browsable(false)]
     [XmlElement("Font")]
-    public LabelFont LabelFont 
+    public LabelFont LabelFont
     {
-        get 
-        { 
+        get
+        {
             return new()
             {
                 Family = Font.FontFamily.Name,
@@ -21,10 +21,10 @@ public class LabelText : LabelElementBase
             };
         }
 
-        set 
-        { 
+        set
+        {
             Font = new(value.Family, value.Size, value.Style);
-        } 
+        }
     }
 
     [Browsable(true)]
@@ -38,9 +38,18 @@ public class LabelText : LabelElementBase
     [XmlIgnore]
     public Font Font { get; set; } = new("Calibri", 11, FontStyle.Regular);
 
+    [Browsable(false)]
+    [XmlIgnore]
+    public PrintingSize Size { get; set; } = new(float.MaxValue, float.MaxValue);
+
     public override void Draw(Graphics g)
     {
-        g.DrawString(Text, Font, Brushes.Black, Position.X, Position.Y);
+        //g.DrawString(Text, Font, Brushes.Black, Position.X, Position.Y);
+
+        g.DrawString(Text, Font, Brushes.Black, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height), new StringFormat() {
+            Alignment = StringAlignment.Near,
+            LineAlignment = StringAlignment.Near
+        });
     }
 
     public override void Replace(string from, string to)
@@ -50,10 +59,10 @@ public class LabelText : LabelElementBase
 
     public override object Clone()
     {
-        return new LabelText
+        return new LabelText()
         {
             Position = Position,
-            Font = Font.Clone() as Font,
+            Font = Font.Clone() as Font ?? throw new Exception("Cloning Font failed"),
             Text = Text,
             Name = Name
         };

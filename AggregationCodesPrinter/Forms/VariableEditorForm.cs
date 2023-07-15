@@ -26,9 +26,9 @@ public partial class VariableEditorForm : Form
         if (classesListBox.SelectedIndex >= 0 && objectPropertiesGridView.SelectedCells.Count != 0)
         {
             var row = objectPropertiesGridView.SelectedCells[0].OwningRow;
-            var name = row.Cells["Name"].EditedFormattedValue.ToString();
+            var propertyName = row.Cells["Name"].EditedFormattedValue.ToString();
             var type = _editor.RegisteredTypes[classesListBox.SelectedIndex];
-            _editor.AddVariable(_editor.GetNewVariableName(), type, name);
+            _editor.AddVariable(type, propertyName);
             UpdateVariablesListBox();
             variablesListBox.SelectedIndex = variablesListBox.Items.Count - 1;
         }
@@ -37,7 +37,7 @@ public partial class VariableEditorForm : Form
     private void OnDeleteVariableButtonClick(object sender, EventArgs e)
     {
         var item = variablePropertyGrid.SelectedGridItem;
-        var name = item.PropertyDescriptor?.Name;
+        var name = item?.PropertyDescriptor?.Name;
 
         if (variablesListBox.SelectedIndex >= 0)
         {
@@ -78,6 +78,7 @@ public partial class VariableEditorForm : Form
         if (variablesListBox.SelectedIndex >= 0)
         {
             var variable = _editor.Variables[variablesListBox.SelectedIndex];
+
             variablePropertyGrid.SelectedObject = variable;
             variablePropertyGrid.Enabled = variable.IsBuiltIn == false;
         }
@@ -87,7 +88,7 @@ public partial class VariableEditorForm : Form
     {
         try
         {
-            _editor.RenameDublicates();
+            _editor.RenameVariableDublicates();
         }
         finally
         {

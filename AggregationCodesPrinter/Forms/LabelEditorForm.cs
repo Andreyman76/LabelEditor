@@ -1,29 +1,41 @@
 using LabelApi;
 using LabelEditorApi;
+using MySqlDbApi;
 
 namespace AggregationCodesPrinter;
 
 public partial class LabelEditorForm : Form
 {
-    private object[] _targetObjects = new object[] { new BuiltInVariables() };
+    private object? _selectedObject;
+    private IEnumerable<object> _testObjects;
+    private ILabelDataSource _labelDataSource;
+    private DataSourceSelectionForm _dataSourceSelectionForm;
 
-    private LabelEditor _editor = new()
+
+    private LabelEditor _editor = new();
+
+    public LabelEditorForm(ILabelDataSource labelDataSource)
     {
-        RegisteredTypes = new()
+        _labelDataSource = labelDataSource;
+        _testObjects = labelDataSource.TestObjects;
+
+        foreach (var testObject in _testObjects)
         {
-            typeof(BuiltInVariables),
-            typeof(Gtin),
-            typeof(Pallet)
+            _editor.RegisterType(testObject.GetType());
         }
-    };
 
-    public LabelEditorForm()
-    {
-        InitializeComponent();
         _editor.LoadVariablesFromJson();
         _editor.LoadPrintersFromJson();
+
+        _dataSourceSelectionForm = new(_labelDataSource);
+
+        InitializeComponent();
+
         labelPropertyGrid.SelectedObject = _editor.LabelTemplate;
+        dataSourceGridView.Columns.Add("Prompt", "Источник данных");
+        dataSourceGridView.Rows.Add("Не выбран");
         UpdateListOfPrinters();
+
         Redraw();
     }
 
@@ -66,6 +78,7 @@ public partial class LabelEditorForm : Form
         {
             var xml = File.ReadAllText(dialog.FileName);
             _editor.LoadLabelFromXml(xml);
+            labelPropertyGrid.SelectedObject = _editor.LabelTemplate;
         }
 
         UpdateListOfObjects();
@@ -81,6 +94,7 @@ public partial class LabelEditorForm : Form
 
         labelPropertyGrid.SelectedObject = _editor.LabelTemplate;
         labelElementPropertyGrid.SelectedObject = null;
+
         UpdateListOfObjects();
         Redraw();
     }
@@ -88,12 +102,13 @@ public partial class LabelEditorForm : Form
     private void OnAddTextButtonClick(object sender, EventArgs e)
     {
         _editor.LabelTemplate.Elements.Add(
-            new LabelText()
+            new LabelText
             {
                 Name = "Text",
                 Text = "1234567890"
             }
             );
+
         UpdateListOfObjects();
         Redraw();
     }
@@ -101,7 +116,7 @@ public partial class LabelEditorForm : Form
     private void OnAddDmButtonClick(object sender, EventArgs e)
     {
         _editor.LabelTemplate.Elements.Add(
-           new LabelDataMatrix()
+           new LabelDataMatrix
            {
                Name = "DataMatrix",
                Code = "${gs}0105449000203359215gHAvnw6TXwN4${gs}93dGVz",
@@ -116,7 +131,7 @@ public partial class LabelEditorForm : Form
     private void OnAddCode128ButtonClick(object sender, EventArgs e)
     {
         _editor.LabelTemplate.Elements.Add(
-           new LabelCode128()
+           new LabelCode128
            {
                Name = "Code128",
                Code = "0123456789",
@@ -139,7 +154,7 @@ public partial class LabelEditorForm : Form
             var imageBytes = File.ReadAllBytes(dialog.FileName);
 
             _editor.LabelTemplate.Elements.Add(
-            new LabelImage()
+            new LabelImage
             {
                 Name = "Image",
                 Size = new(20, 20),
@@ -155,7 +170,7 @@ public partial class LabelEditorForm : Form
     private void OnAddEllipseButtonClick(object sender, EventArgs e)
     {
         _editor.LabelTemplate.Elements.Add(
-           new LabelEllipse()
+           new LabelEllipse
            {
                Name = "Ellipse",
                Size = new(20, 20)
@@ -201,7 +216,7 @@ public partial class LabelEditorForm : Form
     private void Redraw()
     {
         renderedLabelPictureBox.BackColor = Color.Gray;
-        renderedLabelPictureBox.Image = _editor.GetCurrentLabel(_targetObjects).GetImage(new(600, 600));
+        renderedLabelPictureBox.Image = _editor.GetCurrentLabel(_testObjects).GetImage(new(600, 600));
     }
 
     private void OnLabelElementsListBoxSelectedIndexChanged(object sender, EventArgs e)
@@ -230,13 +245,39 @@ public partial class LabelEditorForm : Form
         if (printersListBox.SelectedIndex >= 0)
         {
             using var printer = _editor.Printers[printersListBox.SelectedIndex].CreatePrinter();
-            printer.Print(_editor.GetCurrentLabel(_targetObjects));
+
+            foreach (var data in _labelDataSource.GetLabelDataObjects(_selectedObject, (int)numericUpDown1.Value))
+            {
+                if (printer.Print(_editor.GetCurrentLabel(data)))
+                {
+                    _labelDataSource.OnSuccessPrint(data);
+                }
+            }
         }
     }
 
     private void OnDataSourceToolStripMenuItemClick(object sender, EventArgs e)
     {
-        var form = new DataSourceSelectionForm();
-        form.ShowDialog();
+        var result = _dataSourceSelectionForm.ShowDialog();
+
+        if (result == DialogResult.OK)
+        {
+            _selectedObject = _dataSourceSelectionForm.SelectedObject;
+
+            if (_selectedObject != null)
+            {
+                dataSourceGridView.Columns.Clear();
+                dataSourceGridView.Rows.Clear();
+
+                var properties = _selectedObject.GetType().GetProperties();
+
+                    foreach (var name in properties.Select(x => x.Name))
+                    {
+                        dataSourceGridView.Columns.Add(name, name);
+                    }
+                
+                dataSourceGridView.Rows.Add(properties.Select(x => x.GetValue(_selectedObject)).ToArray());
+            }
+        }
     }
 }

@@ -44,11 +44,7 @@ public struct PrintingSize
         }
     }
 
-    public PrintingSize()
-    {
-        Width = 0;
-        Height = 0;
-    }
+
 
     public PrintingSize(float width, float height)
     {

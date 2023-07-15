@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace LabelEditorApi;
 
@@ -25,7 +26,10 @@ public class LabelVariableBinding
     [Browsable(true)]
     [Description("Тип целевого объекта")]
     [DisplayName("Тип оъекта"), Category("Переменная")]
-    public string TargetType { get; set; } = "System.String";
+    public string TargetType { get; set; } = string.Empty;
+
+    [Browsable(false)]
+    public string TargetAssembly { get; set; } = string.Empty;
 
     [Browsable(true)]
     [Description("Описание переменной")]
@@ -33,11 +37,12 @@ public class LabelVariableBinding
     public string Description { get; set; } = string.Empty;
 
     [Browsable(false)]
+    [JsonIgnore]
     public bool IsBuiltIn { get; init; } = false;
 
     public string? GetStringFrom(object value)
     {
-        var type = Type.GetType(TargetType);
+        var type = Type.GetType(TargetType + ", " + TargetAssembly) ?? throw new Exception($"Type {TargetType} not found");
         var property = type.GetProperty(PropertyName)
             ?? throw new Exception($"Property {PropertyName} not found in {TargetType}");
 
@@ -70,8 +75,13 @@ public class LabelVariableBinding
         return toStringMethod.Invoke(propertyValue, new object[] { Format })?.ToString();
     }
 
-    private static string FormatString(string src, string format)
+    private static string FormatString(string? src, string format)
     {
+        if (string.IsNullOrEmpty(src))
+        {
+            return format;
+        }
+
         var sb = new StringBuilder();
         var i = src.Length - 1;
 

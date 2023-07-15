@@ -13,13 +13,13 @@ public class NetPrinterDescription : IPrinterDescription
 
     [Browsable(true)]
     [Description("IP адрес принтера")]
-    [DisplayName("IP"), Category("Принтер")]
+    [DisplayName("IP"), Category("Сеть")]
     [TypeConverter(typeof(IpAddressConverter))]
     public IPAddress Address { get; set; } = IPAddress.Any;
 
     [Browsable(true)]
     [Description("Порт принтера")]
-    [DisplayName("Порт"), Category("Принтер")]
+    [DisplayName("Порт"), Category("Сеть")]
     public int Port { get; set; }
 
     [Browsable(true)]

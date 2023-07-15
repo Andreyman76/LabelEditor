@@ -1,38 +1,5 @@
 [
   {
-    "Name": "TSC ML240P",
-    "Usb": true,
-    "Address": null,
-    "Port": null,
-    "PrinterName": "TSC ML240P",
-    "Dpi": {
-      "X": 203,
-      "Y": 203
-    }
-  },
-  {
-    "Name": "TSC Net",
-    "Usb": false,
-    "Address": "192.168.10.13",
-    "Port": 9100,
-    "PrinterName": null,
-    "Dpi": {
-      "X": 203,
-      "Y": 203
-    }
-  },
-  {
-    "Name": "Canon MF3200 Series",
-    "Usb": true,
-    "Address": null,
-    "Port": null,
-    "PrinterName": "\\\\ALPHASERVER\\Canon MF3200 Series",
-    "Dpi": {
-      "X": 300,
-      "Y": 300
-    }
-  },
-  {
     "Name": "Microsoft Print to PDF",
     "Usb": true,
     "Address": null,

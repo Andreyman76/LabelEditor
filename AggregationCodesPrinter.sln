@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AggregationCodesPrinter", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelApi", "LabelApi\LabelApi.csproj", "{5B36EE36-2E77-4660-98B0-525E398DF65A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlDbApi", "MySqlDbApi\MySqlDbApi.csproj", "{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5B36EE36-2E77-4660-98B0-525E398DF65A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B36EE36-2E77-4660-98B0-525E398DF65A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B36EE36-2E77-4660-98B0-525E398DF65A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

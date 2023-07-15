@@ -16,12 +16,6 @@ public struct PrintingPosition
     [DisplayName("Y")]
     public float Y { get; set; }
 
-    public PrintingPosition()
-    {
-        X = 0;
-        Y = 0;
-    }
-
     public PrintingPosition(float x, float y)
     {
         X = x;

@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LabelApi\LabelApi.csproj" />
     <ProjectReference Include="..\LabelEditorApi\LabelEditorApi.csproj" />
+    <ProjectReference Include="..\MySqlDbApi\MySqlDbApi.csproj" />
     <ProjectReference Include="..\PrintingApi\PrintingApi.csproj" />
   </ItemGroup>
 

@@ -53,7 +53,10 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
                 var nums = new float[strs.Length];
                 TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(float));
                 for (int i = 0; i < nums.Length; i++)
-                    nums[i] = (float)typeConverter.ConvertFromString(context, culture, strs[i]);
+                {
+                    var converted = typeConverter.ConvertFromString(context, culture, strs[i]) ?? throw new Exception($"Conversion failed on {nameof(PrintingSizeConverter)}");
+                    nums[i] = (float)converted;
+                }
 
                 return new PrintingSize(nums[0], nums[1]);
             }
@@ -85,15 +88,15 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(float));
             string[] strs = new string[2];
             int i = 0;
-            strs[i++] = typeConverter.ConvertToString(context, culture, size.Width);
-            strs[i++] = typeConverter.ConvertToString(context, culture, size.Height);
+            strs[i++] = typeConverter.ConvertToString(context, culture, size.Width) ?? throw new Exception("Can't conver Width to string");
+            strs[i++] = typeConverter.ConvertToString(context, culture, size.Height) ?? throw new Exception("Can't conver Height to string");
 
             return string.Join(str, strs);
         }
         if (destinationType == typeof(InstanceDescriptor) && value is PrintingSize)
         {
             var size = (PrintingSize)value;
-            ConstructorInfo constructorInfo = typeof(PrintingSize).GetConstructor(new Type[] { typeof(float), typeof(float) });
+            var constructorInfo = typeof(PrintingSize).GetConstructor(new Type[] { typeof(float), typeof(float) });
             if (constructorInfo != null)
                 return new InstanceDescriptor(constructorInfo, new object[] { size.Width, size.Height });
         }
@@ -102,7 +105,15 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
 
     public override object CreateInstance(ITypeDescriptorContext? context, IDictionary? propertyValues)
     {
-        return new PrintingSize((float)propertyValues["Width"], (float)propertyValues["Height"]);
+        if (propertyValues == null)
+        {
+            throw new ArgumentNullException(nameof(propertyValues));
+        }
+
+        var width = propertyValues["Width"] ?? throw new Exception("Width not found");
+        var height = propertyValues["Height"] ?? throw new Exception("Height not found");
+
+        return new PrintingSize((float)width, (float)height);
     }
 
     public override bool GetCreateInstanceSupported(ITypeDescriptorContext? context)

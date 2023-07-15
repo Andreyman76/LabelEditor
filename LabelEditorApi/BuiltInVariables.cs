@@ -1,6 +1,6 @@
 ﻿namespace LabelEditorApi;
 
-public class BuiltInVariables
+internal class BuiltInVariables
 {
     public DateTime CurrentDateTime { get => DateTime.Now; }
     public string GS { get => "\u001d"; }

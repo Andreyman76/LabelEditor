@@ -1,5 +1,6 @@
 ﻿using LabelApi;
 using PrintingApi;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Serialization;
@@ -8,9 +9,30 @@ namespace LabelEditorApi;
 
 public class LabelEditor
 {
-    public List<LabelVariableBinding> Variables { get; set; } = new();
-    public List<Type> RegisteredTypes { get; set; } = new();
-    public List<IPrinterDescription> Printers { get; set; } = new();
+    public ReadOnlyCollection<Type> RegisteredTypes { get => _registeredTypes.AsReadOnly(); }
+    public ReadOnlyCollection<LabelVariableBinding> Variables { get => _variables.AsReadOnly(); }
+    public ReadOnlyCollection<IPrinterDescription> Printers { get => _printers.AsReadOnly(); }
+
+    public string VariablesJsonFilePath = "LabelVariables.json";
+    public string PrintersJsonFilePath = "Printers.json";
+
+    private List<Type> _registeredTypes = new()
+    {
+        typeof(BuiltInVariables)
+    };
+
+    private List<LabelVariableBinding> _variables = new List<LabelVariableBinding>();
+    private List<IPrinterDescription> _printers = new List<IPrinterDescription>();
+    private LabelVariableBinding _gs = new LabelVariableBinding()
+    {
+        IsBuiltIn = true,
+        Description = "Разделитель ASCII 29",
+        Name = "gs",
+        TargetType = typeof(BuiltInVariables).FullName ?? throw new Exception($"Getting full name of target type {typeof(BuiltInVariables)} failed"),
+        TargetAssembly = typeof(BuiltInVariables).Assembly.FullName ?? throw new Exception($"Getting full name of target type {typeof(BuiltInVariables)} failed"),
+        PropertyName = nameof(BuiltInVariables.GS)
+    };
+    private BuiltInVariables _builtInVariables = new();
 
     /// <summary>
     /// Текущая этикетка редактора
@@ -24,51 +46,75 @@ public class LabelEditor
 
     public LabelEditor()
     {
-        AddVariable("date", typeof(BuiltInVariables), nameof(BuiltInVariables.CurrentDateTime), "dd.MM.yyyy");
-        AddVariable("gs", typeof(BuiltInVariables), nameof(BuiltInVariables.GS));
+        _variables.Add(_gs);
+    }
+
+    public void RegisterType(Type type)
+    {
+        if (_registeredTypes.Contains(type) == false)
+        {
+            _registeredTypes.Add(type);
+        }
+    }
+
+    public void UnregisterType(Type type)
+    {
+        _registeredTypes.Remove(type);
+    }
+
+    public void AddPrinter(IPrinterDescription printer)
+    {
+        _printers.Add(printer);
+    }
+
+    public void RemovePrinter(IPrinterDescription printer)
+    {
+        _printers.Remove(printer);
     }
 
     public void LoadVariablesFromJson()
     {
-        if (File.Exists("LabelVariables.json"))
+        if (File.Exists(VariablesJsonFilePath))
         {
-            var json = File.ReadAllText("LabelVariables.json", Encoding.UTF8);
-            var variables = JsonSerializer.Deserialize<List<LabelVariableBinding>>(json);
+            var json = File.ReadAllText(VariablesJsonFilePath, Encoding.UTF8);
+            var variables = JsonSerializer.Deserialize<List<LabelVariableBinding>>(json) ?? throw new Exception("Load variables from JSON failed");
 
-            Variables = variables;
+            _variables.Clear();
+            _variables.Add(_gs);
+            _variables.AddRange(variables);
         }
     }
 
     public void SaveVariablesToJson()
     {
-        var json = JsonSerializer.Serialize(Variables, new JsonSerializerOptions()
+        var json = JsonSerializer.Serialize(_variables.Where(x => x.IsBuiltIn == false), new JsonSerializerOptions()
         {
             WriteIndented = true
         });
 
-        File.WriteAllText("LabelVariables.json", json, Encoding.UTF8);
+        File.WriteAllText(VariablesJsonFilePath, json, Encoding.UTF8);
     }
 
     public void SavePrintersToJson()
     {
-        var printers = Printers.Select(x => x.GetPrinterDescription()).ToList();
+        var printers = _printers.Select(x => x.GetPrinterDescription()).ToList();
 
         var json = JsonSerializer.Serialize(printers, new JsonSerializerOptions()
         {
             WriteIndented = true
         });
 
-        File.WriteAllText("Printers.json", json);
+        File.WriteAllText(PrintersJsonFilePath, json);
     }
 
     public void LoadPrintersFromJson()
     {
-        if (File.Exists("Printers.json"))
+        if (File.Exists(PrintersJsonFilePath))
         {
-            var json = File.ReadAllText("Printers.json", Encoding.UTF8);
-            var printers = JsonSerializer.Deserialize<List<PrinterDescription>>(json);
+            var json = File.ReadAllText(PrintersJsonFilePath, Encoding.UTF8);
+            var printers = JsonSerializer.Deserialize<List<PrinterDescription>>(json) ?? throw new Exception("Load printers from JSON failed");
 
-            Printers = printers.Select( x => x.GetPrinterDescription()).ToList();
+            _printers = printers.Select( x => x.GetPrinterDescription()).ToList();
         }
     }
 
@@ -78,7 +124,7 @@ public class LabelEditor
     /// <returns>XML текст текущей этикетки</returns>
     public string SaveLabelToXml()
     {
-        var label = LabelTemplate.Clone() as PrinterLabel;
+        var label = LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning label failed");
         label.Replace("\u001d", "${gs}");
 
         using var stream = new MemoryStream();
@@ -95,7 +141,7 @@ public class LabelEditor
     {
         using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xmlText));
 
-        LabelTemplate = _serializer.Deserialize(stream) as PrinterLabel;
+        LabelTemplate = _serializer.Deserialize(stream) as PrinterLabel ?? throw new Exception("Load label from XML failed");
     }
 
     public PrinterLabel GetCurrentLabel(IEnumerable<object> targetObjects)
@@ -105,32 +151,35 @@ public class LabelEditor
         return label;
     }
 
-    public void AddVariable(string variableName, Type targetType, string propertyName, string? format = null)
+    public void AddVariable(Type targetType, string propertyName, string? variableName = null, string? format = null)
     {
-        Variables.Add(new()
+        var name = variableName ?? CreateNewVariableName();
+
+        _variables.Add(new()
         {
-            Name = variableName,
-            TargetType = targetType.FullName,
+            Name = name,
+            TargetType = targetType.FullName ?? throw new Exception($"Getting full name of target type {targetType} failed"),
+            TargetAssembly = targetType.Assembly.FullName ?? throw new Exception($"Getting assembly of target type {targetType} failed"),
             PropertyName = propertyName,
             Format = format
         });
 
-        RenameDublicates();
+        RenameVariableDublicates();
     }
 
     public void RemoveVariable(string variableName)
     {
-        Variables.RemoveAll(x => x.Name == variableName);
+        _variables.RemoveAll(x => x.Name == variableName && x.IsBuiltIn == false);
     }
 
-    public void RenameDublicates()
+    public void RenameVariableDublicates()
     {
-        foreach (var variable in Variables)
+        foreach (var variable in _variables)
         {
-            if (Variables.Count(x => x.Name == variable.Name) != 1)
+            if (_variables.Count(x => x.Name == variable.Name) != 1)
             {
-                var newName = GetNewVariableName();
-                Variables.Last(x => x.Name == variable.Name).Name = newName;
+                var newName = CreateNewVariableName();
+                _variables.Last(x => x.Name == variable.Name && x.IsBuiltIn == false).Name = newName;
 
                 throw new Exception($"Variable with name \"{variable.Name}\" is already exists (renamed to {newName})");
             }
@@ -142,13 +191,26 @@ public class LabelEditor
         return data.Insert(position, $"${{{variableName}}}");
     }
 
-    public PrinterLabel BindAllVariables(PrinterLabel template, IEnumerable<object> targetObjects)
+    private PrinterLabel BindAllVariables(PrinterLabel template, IEnumerable<object> targetObjects)
     {
-        var label = template.Clone() as PrinterLabel;
-
-        foreach(var target in targetObjects)
+        var label = template.Clone() as PrinterLabel ?? throw new Exception("Cloning label failed");
+        var objects = new List<object>()
         {
-            var variables = Variables.Where(x => x.TargetType == target.GetType().FullName);
+            _builtInVariables
+        };
+
+        objects.AddRange(targetObjects);
+
+        foreach(var target in objects)
+        {
+            var type = target.GetType();
+
+            if (_registeredTypes.Contains(type) == false)
+            {
+                throw new Exception($"Type {type.FullName} is not registered in {nameof(LabelEditor)}");
+            }
+
+            var variables = _variables.Where(x => x.TargetType == target.GetType().FullName);
 
             foreach(var variable in variables)
             {
@@ -159,15 +221,15 @@ public class LabelEditor
         return label;
     }
 
-    public string GetNewVariableName()
+    private string CreateNewVariableName()
     {
-        var i = Variables.Count - 1;
+        var i = _variables.Count - 1;
 
         while (true)
         {
             var name = "var" + i;
 
-            if (Variables.Count(x => x.Name == name) == 0)
+            if (_variables.Count(x => x.Name == name) == 0)
             {
                 return name;
             }

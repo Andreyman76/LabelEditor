@@ -1,3 +1,5 @@
+using MySqlDbApi;
+
 namespace AggregationCodesPrinter
 {
     internal static class Program
@@ -8,10 +10,11 @@ namespace AggregationCodesPrinter
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new LabelEditorForm());
+
+            var labelDataSource = new MySqlStorage2(ApplicationSettings.DbConnectionString);
+
+            Application.Run(new LabelEditorForm(labelDataSource));
         }
     }
 }

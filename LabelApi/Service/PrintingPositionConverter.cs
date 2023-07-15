@@ -53,7 +53,10 @@ internal class PrintingPositionConverter : ExpandableObjectConverter
                 var nums = new float[strs.Length];
                 TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(float));
                 for (int i = 0; i < nums.Length; i++)
-                    nums[i] = (float)typeConverter.ConvertFromString(context, culture, strs[i]);
+                {
+                    var converted = typeConverter.ConvertFromString(context, culture, strs[i]) ?? throw new Exception($"Conversion failed on {nameof(PrintingPositionConverter)}");
+                    nums[i] = (float)converted;
+                }
 
                 return new PrintingPosition(nums[0], nums[1]);
             }
@@ -85,15 +88,15 @@ internal class PrintingPositionConverter : ExpandableObjectConverter
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(float));
             string[] strs = new string[2];
             int i = 0;
-            strs[i++] = typeConverter.ConvertToString(context, culture, position.X);
-            strs[i++] = typeConverter.ConvertToString(context, culture, position.Y);
+            strs[i++] = typeConverter.ConvertToString(context, culture, position.X) ?? throw new Exception("Can't conver X to string"); ;
+            strs[i++] = typeConverter.ConvertToString(context, culture, position.Y) ?? throw new Exception("Can't conver Y to string"); ;
             
             return string.Join(str, strs);
         }
         if (destinationType == typeof(InstanceDescriptor) && value is PrintingPosition)
         {
             var position = (PrintingPosition)value;
-            ConstructorInfo constructorInfo = typeof(PrintingPosition).GetConstructor(new Type[] { typeof(float), typeof(float) });
+            var constructorInfo = typeof(PrintingPosition).GetConstructor(new Type[] { typeof(float), typeof(float) });
             if (constructorInfo != null)
                 return new InstanceDescriptor(constructorInfo, new object[] { position.X, position.Y });
         }
@@ -102,7 +105,15 @@ internal class PrintingPositionConverter : ExpandableObjectConverter
 
     public override object CreateInstance(ITypeDescriptorContext? context, IDictionary? propertyValues)
     {
-        return new PrintingPosition((float)propertyValues["X"], (float)propertyValues["Y"]);
+        if (propertyValues == null)
+        {
+            throw new ArgumentNullException(nameof(propertyValues));
+        }
+
+        var x = propertyValues["X"] ?? throw new Exception("X not found");
+        var y = propertyValues["Y"] ?? throw new Exception("Y not found");
+
+        return new PrintingPosition((float)x, (float)y);
     }
 
     public override bool GetCreateInstanceSupported(ITypeDescriptorContext? context)

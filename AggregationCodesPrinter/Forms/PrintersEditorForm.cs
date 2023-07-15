@@ -37,7 +37,7 @@ public partial class PrintersEditorForm : Form
             var dpiX = _printDialog.PrinterSettings.PrinterResolutions[lastIndex].X;
             var dpiY = _printDialog.PrinterSettings.PrinterResolutions[lastIndex].Y;
 
-            _editor.Printers.Add(new UsbPrinterDescription()
+            _editor.AddPrinter(new UsbPrinterDescription()
             {
                 Name = name,
                 PrinterName = name,
@@ -51,7 +51,7 @@ public partial class PrintersEditorForm : Form
 
     private void OnAddNetPrinterButtonClick(object sender, EventArgs e)
     {
-        _editor.Printers.Add(new NetPrinterDescription());
+        _editor.AddPrinter(new NetPrinterDescription());
         UpdatePrintersList();
         printerPropertyGrid.SelectedObject = _editor.Printers.Last();
         printersListBox.SelectedIndex = printersListBox.Items.Count - 1;
@@ -61,7 +61,8 @@ public partial class PrintersEditorForm : Form
     {
         if (printersListBox.SelectedIndex >= 0)
         {
-            _editor.Printers.RemoveAt(printersListBox.SelectedIndex);
+            var printer = _editor.Printers[printersListBox.SelectedIndex];
+            _editor.RemovePrinter(printer);
 
             printerPropertyGrid.SelectedObject = null;
             UpdatePrintersList();

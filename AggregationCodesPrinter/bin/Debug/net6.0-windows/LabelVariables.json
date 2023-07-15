@@ -1,18 +1,74 @@
 ﻿[
   {
-    "Name": "var-1",
-    "Format": null,
-    "PropertyName": "CurrentDateTime",
-    "TargetType": "LabelEditorApi.BuiltInVariables",
-    "Description": "",
-    "IsBuiltIn": false
+    "Name": "gtin",
+    "Format": "D14",
+    "PropertyName": "Id",
+    "TargetType": "MySqlDbApi.Gtin",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
   },
   {
-    "Name": "var0",
+    "Name": "name",
     "Format": null,
-    "PropertyName": "GS",
+    "PropertyName": "Name",
+    "TargetType": "MySqlDbApi.Gtin",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
+    "Name": "art",
+    "Format": null,
+    "PropertyName": "Article",
+    "TargetType": "MySqlDbApi.Gtin",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
+    "Name": "serial",
+    "Format": null,
+    "PropertyName": "SerialNumber",
+    "TargetType": "MySqlDbApi.Pallet",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
+    "Name": "batch",
+    "Format": null,
+    "PropertyName": "Batch",
+    "TargetType": "MySqlDbApi.Pallet",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
+    "Name": "lot",
+    "Format": null,
+    "PropertyName": "Lot",
+    "TargetType": "MySqlDbApi.Pallet",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
+    "Name": "count",
+    "Format": null,
+    "PropertyName": "Count",
+    "TargetType": "MySqlDbApi.Pallet",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
+    "Name": "wh",
+    "Format": null,
+    "PropertyName": "WarehouseId",
+    "TargetType": "MySqlDbApi.Pallet",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
+    "Name": "date",
+    "Format": "dd.MM.yyyy",
+    "PropertyName": "CurrentDateTime",
     "TargetType": "LabelEditorApi.BuiltInVariables",
-    "Description": "",
-    "IsBuiltIn": false
+    "TargetAssembly": "LabelEditorApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
   }
 ]
