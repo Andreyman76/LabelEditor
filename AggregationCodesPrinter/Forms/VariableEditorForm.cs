@@ -15,7 +15,7 @@ public partial class VariableEditorForm : Form
 
         foreach (var type in _editor.RegisteredTypes)
         {
-            classesListBox.Items.Add(type.FullName);
+            classesListBox.Items.Add(type.FullName ?? throw new Exception($"Getting full name of target type {type} failed"));
         }
 
         UpdateVariablesListBox();
@@ -26,7 +26,7 @@ public partial class VariableEditorForm : Form
         if (classesListBox.SelectedIndex >= 0 && objectPropertiesGridView.SelectedCells.Count != 0)
         {
             var row = objectPropertiesGridView.SelectedCells[0].OwningRow;
-            var propertyName = row.Cells["Name"].EditedFormattedValue.ToString();
+            var propertyName = row.Cells["Name"].EditedFormattedValue.ToString() ?? throw new Exception($"Getting property name from row failed");
             var type = _editor.RegisteredTypes[classesListBox.SelectedIndex];
             _editor.AddVariable(type, propertyName);
             UpdateVariablesListBox();
@@ -41,7 +41,8 @@ public partial class VariableEditorForm : Form
 
         if (variablesListBox.SelectedIndex >= 0)
         {
-            _editor.RemoveVariable(variablesListBox.Items[variablesListBox.SelectedIndex].ToString());
+            var variableName = variablesListBox.Items[variablesListBox.SelectedIndex].ToString();
+            _editor.RemoveVariable(variableName);
             variablePropertyGrid.SelectedObject = null;
             UpdateVariablesListBox();
         }
@@ -88,7 +89,7 @@ public partial class VariableEditorForm : Form
     {
         try
         {
-            _editor.RenameVariableDublicates();
+            _editor.RenameVariableDublicate();
         }
         finally
         {
@@ -98,6 +99,6 @@ public partial class VariableEditorForm : Form
 
     private void OnVariableEditorFormFormClosing(object sender, FormClosingEventArgs e)
     {
-        _editor.SaveVariablesToJson();
+        _editor.SaveVariablesToJson(ApplicationSettingsProvider.Settings.VariablesJsonFilePath);
     }
 }

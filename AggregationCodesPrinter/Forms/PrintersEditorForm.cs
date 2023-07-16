@@ -32,8 +32,8 @@ public partial class PrintersEditorForm : Form
         if (result == DialogResult.OK)
         {
             var name = _printDialog.PrinterSettings.PrinterName;
-
             var lastIndex = _printDialog.PrinterSettings.PrinterResolutions.Count - 1;
+
             var dpiX = _printDialog.PrinterSettings.PrinterResolutions[lastIndex].X;
             var dpiY = _printDialog.PrinterSettings.PrinterResolutions[lastIndex].Y;
 
@@ -84,6 +84,6 @@ public partial class PrintersEditorForm : Form
 
     private void OnPrintersEditorFormFormClosing(object sender, FormClosingEventArgs e)
     {
-       _editor.SavePrintersToJson();
+       _editor.SavePrintersToJson(ApplicationSettingsProvider.Settings.PrintersJsonFilePath);
     }
 }

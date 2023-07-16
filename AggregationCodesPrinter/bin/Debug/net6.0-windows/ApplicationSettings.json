@@ -1,0 +1,6 @@
+{
+  "DbConnectionString": "Server=127.0.0.1;Database=warehouses_db;port=3306;User Id=root;password=root; convert zero datetime=True; Connection Timeout=43200;SSL Mode=None;",
+  "Gln": "1234567890",
+  "VariablesJsonFilePath": "Variables.json",
+  "PrintersJsonFilePath": "Printers.json"
+}

@@ -4,13 +4,22 @@ using System.Drawing;
 namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
+/// <summary>
+/// Эллипс
+/// </summary>
 public class LabelEllipse : LabelElementBase
 {
+    /// <summary>
+    /// Размер элемента
+    /// </summary>
     [Browsable(true)]
     [Description("Размер эллипса в мм")]
     [DisplayName("Размер"), Category("Эллипс")]
     public PrintingSize Size { get; set; }
 
+    /// <summary>
+    /// Толщина линии
+    /// </summary>
     [Browsable(true)]
     [Description("Толщина эллипса в мм")]
     [DisplayName("Толщина"), Category("Эллипс")]
@@ -34,7 +43,7 @@ public class LabelEllipse : LabelElementBase
             Position = Position,
             Size = Size,
             Name = Name,
-            Width = Width,
+            Width = Width
         };
     }
 }

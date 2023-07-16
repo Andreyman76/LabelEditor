@@ -50,7 +50,7 @@ public class MySqlStorage2 : ILabelDataSource
             throw new ArgumentException($"Wrong data type as key: {type}");
         }
 
-        var gtin = key as Gtin;
+        var gtin = key as Gtin ?? throw new Exception($"Convert object to {nameof(Gtin)} failed");
         using var connection = new MySqlConnection(_connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -79,7 +79,7 @@ public class MySqlStorage2 : ILabelDataSource
         yield break;
     }
 
-    public IEnumerable<object> GetSelectableObjects()
+    public IEnumerable<object> GetKeyObjects()
     {
         using var connection = new MySqlConnection(_connectionString);
         connection.Open();

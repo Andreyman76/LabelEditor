@@ -28,11 +28,15 @@ public abstract class LabelElementBase : ICloneable
     public abstract void Draw(Graphics g);
 
     /// <summary>
-    /// Задать значение для переменной по ее имени
+    /// Заменить значение в текстовых данных элемента этикетки
     /// </summary>
-    /// <param name="from">Имя переменной</param>
-    /// <param name="to">Значение переменной</param>
+    /// <param name="from">Что заменить</param>
+    /// <param name="to">На что заменить</param>
     public abstract void Replace(string from, string to);
 
+    /// <summary>
+    /// Полное копирование элемента этикетки
+    /// </summary>
+    /// <returns>Полная копия элемента этикетки</returns>
     public abstract object Clone();
 }

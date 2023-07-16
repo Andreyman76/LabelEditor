@@ -47,7 +47,7 @@ public class MySqlStorage : ILabelDataSource
         yield break;
     }
 
-    public IEnumerable<object> GetSelectableObjects()
+    public IEnumerable<object> GetKeyObjects()
     {
         using var connection = new MySqlConnection(_connectionString);
         connection.Open();

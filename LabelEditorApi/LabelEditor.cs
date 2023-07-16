@@ -7,33 +7,11 @@ using System.Xml.Serialization;
 
 namespace LabelEditorApi;
 
+/// <summary>
+/// Редактор этикеток
+/// </summary>
 public class LabelEditor
 {
-    public ReadOnlyCollection<Type> RegisteredTypes { get => _registeredTypes.AsReadOnly(); }
-    public ReadOnlyCollection<LabelVariableBinding> Variables { get => _variables.AsReadOnly(); }
-    public ReadOnlyCollection<IPrinterDescription> Printers { get => _printers.AsReadOnly(); }
-
-    public string VariablesJsonFilePath = "LabelVariables.json";
-    public string PrintersJsonFilePath = "Printers.json";
-
-    private List<Type> _registeredTypes = new()
-    {
-        typeof(BuiltInVariables)
-    };
-
-    private List<LabelVariableBinding> _variables = new List<LabelVariableBinding>();
-    private List<IPrinterDescription> _printers = new List<IPrinterDescription>();
-    private LabelVariableBinding _gs = new LabelVariableBinding()
-    {
-        IsBuiltIn = true,
-        Description = "Разделитель ASCII 29",
-        Name = "gs",
-        TargetType = typeof(BuiltInVariables).FullName ?? throw new Exception($"Getting full name of target type {typeof(BuiltInVariables)} failed"),
-        TargetAssembly = typeof(BuiltInVariables).Assembly.FullName ?? throw new Exception($"Getting full name of target type {typeof(BuiltInVariables)} failed"),
-        PropertyName = nameof(BuiltInVariables.GS)
-    };
-    private BuiltInVariables _builtInVariables = new();
-
     /// <summary>
     /// Текущая этикетка редактора
     /// </summary>
@@ -42,13 +20,50 @@ public class LabelEditor
         Size = new(22, 22)
     };
 
+    /// <summary>
+    /// Зарегистрированные типы данных
+    /// </summary>
+    public ReadOnlyCollection<Type> RegisteredTypes { get => _registeredTypes.AsReadOnly(); }
+
+    /// <summary>
+    /// Переменные
+    /// </summary>
+    public ReadOnlyCollection<LabelVariable> Variables { get => _variables.AsReadOnly(); }
+
+    /// <summary>
+    /// Дескрипторы принтеров
+    /// </summary>
+    public ReadOnlyCollection<IPrinterDescription> Printers { get => _printers.AsReadOnly(); }
+
+    private BuiltInVariables _builtInVariables = new();
     private XmlSerializer _serializer = new(typeof(PrinterLabel));
+    private List<LabelVariable> _variables = new List<LabelVariable>();
+    private List<IPrinterDescription> _printers = new List<IPrinterDescription>();
+
+    private LabelVariable _gs = new LabelVariable()
+    {
+        IsBuiltIn = true,
+        Description = "Разделитель ASCII 29",
+        Name = "gs",
+        TargetType = typeof(BuiltInVariables).FullName ?? throw new Exception($"Getting full name of target type {typeof(BuiltInVariables)} failed"),
+        TargetAssembly = typeof(BuiltInVariables).Assembly.FullName ?? throw new Exception($"Getting full name of target type {typeof(BuiltInVariables)} failed"),
+        PropertyName = nameof(BuiltInVariables.GS)
+    };
+
+    private List<Type> _registeredTypes = new()
+    {
+        typeof(BuiltInVariables)
+    };
 
     public LabelEditor()
     {
         _variables.Add(_gs);
     }
 
+    /// <summary>
+    /// Зарегистрировать тип
+    /// </summary>
+    /// <param name="type">Тип данных</param>
     public void RegisterType(Type type)
     {
         if (_registeredTypes.Contains(type) == false)
@@ -57,27 +72,58 @@ public class LabelEditor
         }
     }
 
+    /// <summary>
+    /// Удалить тип
+    /// </summary>
+    /// <param name="type">Тип данных</param>
     public void UnregisterType(Type type)
     {
         _registeredTypes.Remove(type);
     }
 
+    /// <summary>
+    /// Добавить принтер
+    /// </summary>
+    /// <param name="printer">Дескриптор принтера</param>
     public void AddPrinter(IPrinterDescription printer)
     {
         _printers.Add(printer);
     }
 
+    /// <summary>
+    /// Удалить принтер
+    /// </summary>
+    /// <param name="printer">Дескриптор принтера</param>
     public void RemovePrinter(IPrinterDescription printer)
     {
         _printers.Remove(printer);
     }
 
-    public void LoadVariablesFromJson()
+    /// <summary>
+    /// Сохранить переменные в JSON файл
+    /// </summary>
+    /// <param name="filePath">Путь к JSON файлу</param>
+    public void SaveVariablesToJson(string filePath)
     {
-        if (File.Exists(VariablesJsonFilePath))
+        var json = JsonSerializer.Serialize(_variables.Where(x => x.IsBuiltIn == false), new JsonSerializerOptions()
         {
-            var json = File.ReadAllText(VariablesJsonFilePath, Encoding.UTF8);
-            var variables = JsonSerializer.Deserialize<List<LabelVariableBinding>>(json) ?? throw new Exception("Load variables from JSON failed");
+            WriteIndented = true
+        });
+
+        File.WriteAllText(filePath, json, Encoding.UTF8);
+    }
+
+    /// <summary>
+    /// Загрузить переменные из JSON файла
+    /// </summary>
+    /// <param name="filePath">Путь к JSON файлу</param>
+    /// <exception cref="Exception"></exception>
+    public void LoadVariablesFromJson(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            var json = File.ReadAllText(filePath, Encoding.UTF8);
+            var variables = JsonSerializer.Deserialize<List<LabelVariable>>(json) ?? throw new Exception("Load variables from JSON failed");
 
             _variables.Clear();
             _variables.Add(_gs);
@@ -85,17 +131,11 @@ public class LabelEditor
         }
     }
 
-    public void SaveVariablesToJson()
-    {
-        var json = JsonSerializer.Serialize(_variables.Where(x => x.IsBuiltIn == false), new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        });
-
-        File.WriteAllText(VariablesJsonFilePath, json, Encoding.UTF8);
-    }
-
-    public void SavePrintersToJson()
+    /// <summary>
+    /// Сохранить принтеры в JSON файл
+    /// </summary>
+    /// <param name="filePath">Путь к JSON файлу</param>
+    public void SavePrintersToJson(string filePath)
     {
         var printers = _printers.Select(x => x.GetPrinterDescription()).ToList();
 
@@ -104,25 +144,31 @@ public class LabelEditor
             WriteIndented = true
         });
 
-        File.WriteAllText(PrintersJsonFilePath, json);
+        File.WriteAllText(filePath, json);
     }
 
-    public void LoadPrintersFromJson()
+    /// <summary>
+    /// Загрузить принтеры из JSON файла
+    /// </summary>
+    /// <param name="filePath">Путь к JSON файлу</param>
+    /// <exception cref="Exception"></exception>
+    public void LoadPrintersFromJson(string filePath)
     {
-        if (File.Exists(PrintersJsonFilePath))
+        if (File.Exists(filePath))
         {
-            var json = File.ReadAllText(PrintersJsonFilePath, Encoding.UTF8);
+            var json = File.ReadAllText(filePath, Encoding.UTF8);
             var printers = JsonSerializer.Deserialize<List<PrinterDescription>>(json) ?? throw new Exception("Load printers from JSON failed");
 
-            _printers = printers.Select( x => x.GetPrinterDescription()).ToList();
+            _printers = printers.Select(x => x.GetPrinterDescription()).ToList();
         }
     }
 
     /// <summary>
-    /// Получить XML текст для текущей этикетки
+    /// Сохранить текущую этикетку в XML файл
     /// </summary>
-    /// <returns>XML текст текущей этикетки</returns>
-    public string SaveLabelToXml()
+    /// <param name="filePath">Путь к XML файлу</param>
+    /// <exception cref="Exception"></exception>
+    public void SaveLabelToXml(string filePath)
     {
         var label = LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning label failed");
         label.Replace("\u001d", "${gs}");
@@ -130,20 +176,28 @@ public class LabelEditor
         using var stream = new MemoryStream();
         _serializer.Serialize(stream, label);
 
-        return Encoding.UTF8.GetString(stream.ToArray());
+        var xml = Encoding.UTF8.GetString(stream.ToArray());
+        File.WriteAllText(filePath, xml);
     }
 
     /// <summary>
-    /// Загрузить текущую этикетку из XML текста
+    /// Загрузить текущую этикетку из XML файла
     /// </summary>
-    /// <param name="xmlText">XML текст сериализованной этикетки</param>
-    public void LoadLabelFromXml(string xmlText)
+    /// <param name="filePath">Путь к XML файлу</param>
+    /// <exception cref="Exception"></exception>
+    public void LoadLabelFromXml(string filePath)
     {
-        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xmlText));
+        var xml = File.ReadAllText(filePath);
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
 
         LabelTemplate = _serializer.Deserialize(stream) as PrinterLabel ?? throw new Exception("Load label from XML failed");
     }
 
+    /// <summary>
+    /// Получить текущую этикетку с установленными значениями переменных
+    /// </summary>
+    /// <param name="targetObjects"></param>
+    /// <returns></returns>
     public PrinterLabel GetCurrentLabel(IEnumerable<object> targetObjects)
     {
         var label = BindAllVariables(LabelTemplate, targetObjects);
@@ -151,6 +205,14 @@ public class LabelEditor
         return label;
     }
 
+    /// <summary>
+    /// Добавить переменную
+    /// </summary>
+    /// <param name="targetType">Тип целевого объекта</param>
+    /// <param name="propertyName">Свойство целевого объекта</param>
+    /// <param name="variableName">Имя переменной</param>
+    /// <param name="format">Формат строки для значения свойства</param>
+    /// <exception cref="Exception"></exception>
     public void AddVariable(Type targetType, string propertyName, string? variableName = null, string? format = null)
     {
         var name = variableName ?? CreateNewVariableName();
@@ -164,15 +226,23 @@ public class LabelEditor
             Format = format
         });
 
-        RenameVariableDublicates();
+        RenameVariableDublicate();
     }
 
-    public void RemoveVariable(string variableName)
+    /// <summary>
+    /// Удалить переменную
+    /// </summary>
+    /// <param name="variableName">Имя переменной</param>
+    public void RemoveVariable(string? variableName)
     {
         _variables.RemoveAll(x => x.Name == variableName && x.IsBuiltIn == false);
     }
 
-    public void RenameVariableDublicates()
+    /// <summary>
+    /// Переименовать дубликат переменной
+    /// </summary>
+    /// <exception cref="Exception"></exception>
+    public void RenameVariableDublicate()
     {
         foreach (var variable in _variables)
         {
@@ -186,11 +256,13 @@ public class LabelEditor
         }
     }
 
-    public string InsertVariable(string data, int position, string variableName)
-    {
-        return data.Insert(position, $"${{{variableName}}}");
-    }
-
+    /// <summary>
+    /// Установить значения всем переменным для этикетки
+    /// </summary>
+    /// <param name="template">Шаблон этикетки</param>
+    /// <param name="targetObjects">Объекты, из которых берутся значения переменных (тип объекта должен быть зарегистрирован)</param>
+    /// <returns>Этикетка с установленными значениями всех переменных</returns>
+    /// <exception cref="Exception"></exception>
     private PrinterLabel BindAllVariables(PrinterLabel template, IEnumerable<object> targetObjects)
     {
         var label = template.Clone() as PrinterLabel ?? throw new Exception("Cloning label failed");
@@ -201,7 +273,7 @@ public class LabelEditor
 
         objects.AddRange(targetObjects);
 
-        foreach(var target in objects)
+        foreach (var target in objects)
         {
             var type = target.GetType();
 
@@ -212,7 +284,7 @@ public class LabelEditor
 
             var variables = _variables.Where(x => x.TargetType == target.GetType().FullName);
 
-            foreach(var variable in variables)
+            foreach (var variable in variables)
             {
                 label.Replace($"${{{variable.Name}}}", variable.GetStringFrom(target) ?? string.Empty);
             }
@@ -221,6 +293,10 @@ public class LabelEditor
         return label;
     }
 
+    /// <summary>
+    /// Создать новое уникальное имя для переменной
+    /// </summary>
+    /// <returns>Уникальное имя переменной</returns>
     private string CreateNewVariableName()
     {
         var i = _variables.Count - 1;

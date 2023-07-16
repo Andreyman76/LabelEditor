@@ -24,8 +24,8 @@ public partial class LabelEditorForm : Form
             _editor.RegisterType(testObject.GetType());
         }
 
-        _editor.LoadVariablesFromJson();
-        _editor.LoadPrintersFromJson();
+        _editor.LoadVariablesFromJson(ApplicationSettingsProvider.Settings.VariablesJsonFilePath);
+        _editor.LoadPrintersFromJson(ApplicationSettingsProvider.Settings.PrintersJsonFilePath);
 
         _dataSourceSelectionForm = new(_labelDataSource);
 
@@ -59,8 +59,8 @@ public partial class LabelEditorForm : Form
 
         if (result == DialogResult.OK)
         {
-            var xml = _editor.SaveLabelToXml();
-            File.WriteAllText(dialog.FileName, xml);
+            _editor.SaveLabelToXml(dialog.FileName);
+           
         }
     }
 
@@ -76,8 +76,7 @@ public partial class LabelEditorForm : Form
 
         if (result == DialogResult.OK)
         {
-            var xml = File.ReadAllText(dialog.FileName);
-            _editor.LoadLabelFromXml(xml);
+            _editor.LoadLabelFromXml(dialog.FileName);
             labelPropertyGrid.SelectedObject = _editor.LabelTemplate;
         }
 

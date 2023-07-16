@@ -8,18 +8,31 @@ using System.ComponentModel;
 namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
+
+/// <summary>
+/// Code128
+/// </summary>
 public class LabelCode128 : LabelElementBase
 {
+    /// <summary>
+    /// Код
+    /// </summary>
     [Browsable(true)]
     [Description("Значение кода")]
     [DisplayName("Код"), Category("Code128")]
     public string Code { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Размер элемента
+    /// </summary>
     [Browsable(true)]
     [Description("Размер кода в мм")]
     [DisplayName("Размер"), Category("Code128")]
     public PrintingSize Size { get; set; }
 
+    /// <summary>
+    /// Использование префикса GS1
+    /// </summary>
     [Browsable(true)]
     [Description("Формат GS1")]
     [DisplayName("GS1"), Category("Code128")]
@@ -48,6 +61,12 @@ public class LabelCode128 : LabelElementBase
         };
     }
 
+    /// <summary>
+    /// Генерация изображения Code128 с помощью ZXing.SkiaSharp
+    /// </summary>
+    /// <param name="code">Значение кода</param>
+    /// <param name="gs1">Использование префикса GS1</param>
+    /// <returns>Изображение Code128</returns>
     private static Bitmap CreateCode128Image(string code, bool gs1)
     {
         var writer = new BarcodeWriter
@@ -59,7 +78,7 @@ public class LabelCode128 : LabelElementBase
                 PureBarcode = true,
                 GS1Format = gs1,
                 Margin = 0
-            },
+            }
         };
 
         using var bitmap = writer.Write(code);

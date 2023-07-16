@@ -14,7 +14,7 @@ public partial class DataSourceSelectionForm : Form
         _dataSource = dataSource;
         var first = true;
 
-        foreach(var data in dataSource.GetSelectableObjects())
+        foreach(var data in dataSource.GetKeyObjects())
         {
             var properties = data.GetType().GetProperties();
 

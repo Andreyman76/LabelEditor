@@ -9,13 +9,22 @@ using ZXing.SkiaSharp;
 namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
+/// <summary>
+/// DataMatrix
+/// </summary>
 public class LabelDataMatrix : LabelElementBase
 {
+    /// <summary>
+    /// Код
+    /// </summary>
     [Browsable(true)]
     [Description("Значение кода")]
     [DisplayName("Код"), Category("Datamatrix")]
     public string Code { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Размер элемента
+    /// </summary>
     [Browsable(true)]
     [Description("Размер кода в мм")]
     [DisplayName("Размер"), Category("Datamatrix")]
@@ -43,6 +52,11 @@ public class LabelDataMatrix : LabelElementBase
         };
     }
 
+    /// <summary>
+    /// Генерация изображения DataMatrix с помощью ZXing.SkiaSharp
+    /// </summary>
+    /// <param name="code">Значение кода</param>
+    /// <returns>Изображение DataMatrix</returns>
     private static Bitmap CreateDMImage(string code)
     {
         var writer = new BarcodeWriter

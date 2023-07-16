@@ -1,13 +1,13 @@
 [
   {
-    "Name": "Microsoft Print to PDF",
-    "Usb": true,
-    "Address": null,
-    "Port": null,
-    "PrinterName": "Microsoft Print to PDF",
+    "Name": "New Printer",
+    "Usb": false,
+    "Address": "0.0.0.0",
+    "Port": 0,
+    "PrinterName": null,
     "Dpi": {
-      "X": 600,
-      "Y": 600
+      "X": 203,
+      "Y": 203
     }
   }
 ]
