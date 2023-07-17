@@ -1,11 +1,11 @@
 ﻿using LabelEditorApi;
 namespace AggregationCodesPrinter;
 
-public partial class VariableEditorForm : Form
+public partial class VariablesEditorForm : Form
 {
-    private LabelEditor _editor;
+    private readonly LabelEditor _editor;
 
-    public VariableEditorForm(LabelEditor editor)
+    public VariablesEditorForm(LabelEditor editor)
     {
         InitializeComponent();
         objectPropertiesGridView.Columns.Add("Name", "Имя");
@@ -36,9 +36,6 @@ public partial class VariableEditorForm : Form
 
     private void OnDeleteVariableButtonClick(object sender, EventArgs e)
     {
-        var item = variablePropertyGrid.SelectedGridItem;
-        var name = item?.PropertyDescriptor?.Name;
-
         if (variablesListBox.SelectedIndex >= 0)
         {
             var variableName = variablesListBox.Items[variablesListBox.SelectedIndex].ToString();
@@ -99,6 +96,6 @@ public partial class VariableEditorForm : Form
 
     private void OnVariableEditorFormFormClosing(object sender, FormClosingEventArgs e)
     {
-        _editor.SaveVariablesToJson(ApplicationSettingsProvider.Settings.VariablesJsonFilePath);
+        _editor.SaveVariablesToJson(Program.Settings.VariablesJsonFilePath);
     }
 }

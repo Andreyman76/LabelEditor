@@ -5,6 +5,11 @@ namespace AggregationCodesPrinter
 {
     internal static class Program
     {
+        /// <summary>
+        /// Настройки приложения
+        /// </summary>
+        public static ApplicationSettings Settings { get; set; } = new ApplicationSettings();
+
         [STAThread]
         static void Main()
         {
@@ -14,7 +19,7 @@ namespace AggregationCodesPrinter
             if (File.Exists(settingsPath))
             {
                 var json = File.ReadAllText(settingsPath);
-                ApplicationSettingsProvider.Settings = JsonSerializer.Deserialize<ApplicationSettings>(json) ?? throw new Exception($"Deserialization of {nameof(ApplicationSettings)} failed");
+                Settings = JsonSerializer.Deserialize<ApplicationSettings>(json) ?? throw new Exception($"Deserialization of {nameof(ApplicationSettings)} failed");
             }
             else
             {
@@ -29,13 +34,11 @@ namespace AggregationCodesPrinter
 
             ApplicationConfiguration.Initialize();
 
-
-
             // Источник данных для этикеток
-            // Для изменения необходимо создать свой класс, реализующий интерфейс ILabelDataSource
-            var labelDataSource = new MySqlStorage2(ApplicationSettingsProvider.Settings.DbConnectionString);
+            // Для изменения необходимо создать свой класс, реализующий интерфейс IPrintingDataSource
+            var dataSource = new MySqlStorage(Settings.DbConnectionString);
 
-            Application.Run(new LabelEditorForm(labelDataSource));
+            Application.Run(new LabelEditorForm(dataSource));
         }
     }
 }

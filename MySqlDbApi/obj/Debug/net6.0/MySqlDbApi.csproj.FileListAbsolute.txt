@@ -10,3 +10,15 @@ C:\Users\Andrey\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.
 C:\Users\Andrey\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\refint\MySqlDbApi.dll
 C:\Users\Andrey\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.pdb
 C:\Users\Andrey\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\ref\MySqlDbApi.dll
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\bin\Debug\net6.0\MySqlDbApi.deps.json
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\bin\Debug\net6.0\MySqlDbApi.dll
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\bin\Debug\net6.0\MySqlDbApi.pdb
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.csproj.AssemblyReference.cache
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.AssemblyInfoInputs.cache
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.AssemblyInfo.cs
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.csproj.CoreCompileInputs.cache
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.dll
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\refint\MySqlDbApi.dll
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\MySqlDbApi.pdb
+C:\Users\VP\source\repos\LabelEditor\MySqlDbApi\obj\Debug\net6.0\ref\MySqlDbApi.dll

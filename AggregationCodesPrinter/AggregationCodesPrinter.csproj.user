@@ -10,7 +10,7 @@
     <Compile Update="Forms\PrintersEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\VariableEditorForm.cs">
+    <Compile Update="Forms\VariablesEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

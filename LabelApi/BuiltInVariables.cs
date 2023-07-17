@@ -1,9 +1,9 @@
-﻿namespace LabelEditorApi;
+﻿namespace LabelApi;
 
 /// <summary>
-/// Встроенные переменные редактора
+/// Встроенные переменные этикетки
 /// </summary>
-internal class BuiltInVariables
+public class BuiltInVariables
 {
     /// <summary>
     /// Текущие дата и время

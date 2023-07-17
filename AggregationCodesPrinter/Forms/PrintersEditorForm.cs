@@ -5,8 +5,8 @@ namespace AggregationCodesPrinter;
 
 public partial class PrintersEditorForm : Form
 {
-    private LabelEditor _editor;
-    private PrintDialog _printDialog = new();
+    private readonly LabelEditor _editor;
+    private readonly PrintDialog _printDialog = new();
 
     public PrintersEditorForm(LabelEditor editor)
     {
@@ -84,6 +84,6 @@ public partial class PrintersEditorForm : Form
 
     private void OnPrintersEditorFormFormClosing(object sender, FormClosingEventArgs e)
     {
-       _editor.SavePrintersToJson(ApplicationSettingsProvider.Settings.PrintersJsonFilePath);
+       _editor.SavePrintersToJson(Program.Settings.PrintersJsonFilePath);
     }
 }

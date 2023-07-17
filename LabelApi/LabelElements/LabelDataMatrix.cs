@@ -10,7 +10,7 @@ namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
 /// <summary>
-/// DataMatrix
+/// Элемент этикетки DataMatrix
 /// </summary>
 public class LabelDataMatrix : LabelElementBase
 {

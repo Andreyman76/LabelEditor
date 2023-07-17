@@ -2,26 +2,36 @@
 
 namespace PrintingApi;
 
+/// <summary>
+/// Принтер, подключенный по USB
+/// </summary>
 public class UsbPrinter : IPrinter
 {
-    public string Name { get; init; }
+    /// <summary>
+    /// Имя принтера в системе
+    /// </summary>
+    public string PrinterName { get; init; }
     public Dpi Dpi { get; set; } = new(203, 203);
 
-    public UsbPrinter(string name)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="printerName">Имя принтера в системе</param>
+    public UsbPrinter(string printerName)
     {
-        Name = name;
+        PrinterName = printerName;
     }
 
     public bool Print(PrinterLabel label)
     {
-        if (Name.Contains("PDF"))
+        if (PrinterName.Contains("PDF"))
         {
-            return label.PrintToPdf(Name); 
+            return label.PrintToPdf(PrinterName); 
         }
         else
         {
             var zpl = label.GetZpl(Dpi);
-            return RawPrinterHelper.SendStringToPrinter(Name, zpl);
+            return RawPrinterHelper.SendStringToPrinter(PrinterName, zpl);
         }
     }
 

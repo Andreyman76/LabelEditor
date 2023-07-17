@@ -32,11 +32,11 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
 
     public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
     {
-        if (value is string)
+        if (value is string valueAsString)
         {
             try
             {
-                var str = ((string)value).Trim();
+                var str = valueAsString.Trim();
 
                 if (str.Length == 0)
                 {
@@ -44,11 +44,11 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
                 }
                     
                 culture ??= CultureInfo.CurrentCulture;
-                string[] strings = ((string)value).Split(culture.TextInfo.ListSeparator[0]);
+                string[] strings = valueAsString.Split(culture.TextInfo.ListSeparator[0]);
 
                 if (strings.Length != 2)
                 {
-                    throw new ArgumentException("Can not convert '" + (string)value + $"' to type {nameof(PrintingSize)}");
+                    throw new ArgumentException("Can not convert '" + valueAsString + $"' to type {nameof(PrintingSize)}");
                 }
                     
                 var numbers = new float[strings.Length];
@@ -64,7 +64,7 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
             }
             catch
             {
-                throw new ArgumentException("Can not convert '" + (string)value + $"' to type {nameof(PrintingSize)}");
+                throw new ArgumentException("Can not convert '" + valueAsString + $"' to type {nameof(PrintingSize)}");
             }
         }
 
@@ -73,9 +73,9 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
 
     public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destinationType)
     {
-        if (destinationType == typeof(string) && value is PrintingSize)
+        if (destinationType == typeof(string) && value is PrintingSize valueAsPrintingSize1)
         {
-            var size = (PrintingSize)value;
+            var size = valueAsPrintingSize1;
             culture ??= CultureInfo.CurrentCulture;
 
             string str = string.Concat(culture.TextInfo.ListSeparator, " ");
@@ -87,9 +87,9 @@ internal class PrintingSizeConverter : ExpandableObjectConverter
 
             return string.Join(str, strings);
         }
-        if (destinationType == typeof(InstanceDescriptor) && value is PrintingSize)
+        if (destinationType == typeof(InstanceDescriptor) && value is PrintingSize valueAsPrintingSize2)
         {
-            var size = (PrintingSize)value;
+            var size = valueAsPrintingSize2;
             var constructorInfo = typeof(PrintingSize).GetConstructor(new Type[] { typeof(float), typeof(float) });
             
             if (constructorInfo != null)

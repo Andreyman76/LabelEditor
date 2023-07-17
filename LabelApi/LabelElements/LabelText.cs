@@ -6,7 +6,7 @@ namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
 /// <summary>
-/// Текст
+/// Элемент этикетки Текст
 /// </summary>
 public class LabelText : LabelElementBase
 {

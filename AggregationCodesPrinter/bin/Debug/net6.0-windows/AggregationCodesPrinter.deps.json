@@ -482,7 +482,8 @@
       },
       "PrintingApi/1.0.0": {
         "dependencies": {
-          "LabelApi": "1.0.0"
+          "LabelApi": "1.0.0",
+          "MySqlDbApi": "1.0.0"
         },
         "runtime": {
           "PrintingApi.dll": {}

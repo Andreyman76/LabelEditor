@@ -4,14 +4,13 @@ namespace AggregationCodesPrinter;
 
 public partial class DataSourceSelectionForm : Form
 {
-    private ILabelDataSource _dataSource;
-    private List<object> _dataSourceList = new();
+    private readonly List<object> _dataSourceList = new();
     public object? SelectedObject { get; private set; } = null;
 
-    public DataSourceSelectionForm(ILabelDataSource dataSource)
+    public DataSourceSelectionForm(IPrintingDataSource dataSource)
     {
         InitializeComponent();
-        _dataSource = dataSource;
+        
         var first = true;
 
         foreach(var data in dataSource.GetKeyObjects())

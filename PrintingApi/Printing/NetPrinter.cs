@@ -6,20 +6,35 @@ using System.Text;
 
 namespace PrintingApi;
 
+/// <summary>
+/// Принтер, подключенный по сети
+/// </summary>
 public class NetPrinter : IPrinter
 {
     public Dpi Dpi { get; set; } = new(203, 203);
     public bool IsConnected => _tcpClient?.Connected ?? false;
     private TcpClient? _tcpClient;
+
+    /// <summary>
+    /// IP адрес и порт принтера
+    /// </summary>
     public IPEndPoint PrinterEndpoint { get; init; }
 
     private bool _disposed = false;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="printerEndpoint">IP адрес и порт принтера</param>
     public NetPrinter(IPEndPoint printerEndpoint)
     {
         PrinterEndpoint = printerEndpoint;
     }
 
+    /// <summary>
+    /// Подключиться к принтеру
+    /// </summary>
+    /// <exception cref="Exception"></exception>
     public void Connect()
     {
         if (IsConnected)
@@ -39,6 +54,9 @@ public class NetPrinter : IPrinter
         _tcpClient.Connect(PrinterEndpoint);
     }
 
+    /// <summary>
+    /// Отключиться от принтера
+    /// </summary>
     public void Disconnect()
     {
         _tcpClient?.Close();

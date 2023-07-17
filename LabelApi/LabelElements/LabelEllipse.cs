@@ -5,7 +5,7 @@ namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
 /// <summary>
-/// Эллипс
+/// Элемент этикетки Эллипс
 /// </summary>
 public class LabelEllipse : LabelElementBase
 {

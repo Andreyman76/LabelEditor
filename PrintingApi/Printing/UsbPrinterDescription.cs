@@ -1,8 +1,12 @@
 ﻿using LabelApi;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace PrintingApi;
 
+/// <summary>
+/// Дескриптор принтера, подключенного по USB
+/// </summary>
 public class UsbPrinterDescription : IPrinterDescription
 {
     [Browsable(true)]
@@ -10,6 +14,9 @@ public class UsbPrinterDescription : IPrinterDescription
     [DisplayName("Имя"), Category("Принтер")]
     public string Name { get; set; } = "New Printer";
 
+    /// <summary>
+    /// Имя принтера в системе
+    /// </summary>
     [ReadOnly(true)]
     [Browsable(true)]
     [Description("Имя принтера в системе")]
@@ -21,7 +28,11 @@ public class UsbPrinterDescription : IPrinterDescription
     [DisplayName("Разрешение"), Category("Принтер")]
     public Dpi Dpi { get; set; } = new(203, 203);
 
-    public PrinterDescription GetPrinterDescription()
+    [JsonIgnore]
+    [Browsable(false)]
+    public PrintingTask? CurrentTask { get; set; }
+
+    public SerialaziblePrinterDescription GetPrinterDescription()
     {
         return new()
         {
@@ -40,5 +51,17 @@ public class UsbPrinterDescription : IPrinterDescription
         };
 
         return printer;
+    }
+
+    public string GetNameAndTask()
+    {
+        var result = Name;
+
+        if (CurrentTask != null)
+        {
+            result += $" - Задача {CurrentTask.Count} шт";
+        }
+
+        return result;
     }
 }

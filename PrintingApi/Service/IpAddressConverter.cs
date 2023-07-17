@@ -4,6 +4,9 @@ using System.Net;
 
 namespace PrintingApi;
 
+/// <summary>
+/// Класс, для конвертирования IP адреса, обеспечивающий корректное отображение объекта в PropertyGridView
+/// </summary>
 internal class IpAddressConverter : TypeConverter
 {
     public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
@@ -13,8 +16,8 @@ internal class IpAddressConverter : TypeConverter
     }
     public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
     {
-        if (value is string)
-            return IPAddress.Parse((string)value);
+        if (value is string valueAsString)
+            return IPAddress.Parse(valueAsString);
         return base.ConvertFrom(context, culture, value);
     }
 }

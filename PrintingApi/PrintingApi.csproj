@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LabelApi\LabelApi.csproj" />
+    <ProjectReference Include="..\MySqlDbApi\MySqlDbApi.csproj" />
   </ItemGroup>
 
 </Project>

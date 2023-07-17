@@ -1,13 +1,5 @@
 ﻿[
   {
-    "Name": "gtin",
-    "Format": "D14",
-    "PropertyName": "Id",
-    "TargetType": "MySqlDbApi.Gtin",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
     "Name": "name",
     "Format": null,
     "PropertyName": "Name",
@@ -64,11 +56,19 @@
     "Description": ""
   },
   {
+    "Name": "gtin",
+    "Format": null,
+    "PropertyName": "Id",
+    "TargetType": "MySqlDbApi.Gtin",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
+  },
+  {
     "Name": "date",
     "Format": "dd.MM.yyyy",
     "PropertyName": "CurrentDateTime",
-    "TargetType": "LabelEditorApi.BuiltInVariables",
-    "TargetAssembly": "LabelEditorApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "TargetType": "LabelApi.BuiltInVariables",
+    "TargetAssembly": "LabelApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Description": ""
   }
 ]

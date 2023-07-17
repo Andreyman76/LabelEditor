@@ -8,14 +8,14 @@ namespace PrintingApi;
 public interface IPrinter : IDisposable
 {
     /// <summary>
-    /// Разрешение печати
+    /// Разрешение печати принтера
     /// </summary>
     Dpi Dpi { get; set; }
 
     /// <summary>
     /// Метод печати этикетки
     /// </summary>
-    /// <param name="label"></param>
+    /// <param name="label">Этикетка</param>
     /// <returns></returns>
     bool Print(PrinterLabel label); 
 }

@@ -1,9 +1,20 @@
 [
   {
-    "Name": "New Printer",
+    "Name": "TSC TE200",
+    "Usb": true,
+    "Address": null,
+    "Port": null,
+    "PrinterName": "TSC TE200",
+    "Dpi": {
+      "X": 203,
+      "Y": 203
+    }
+  },
+  {
+    "Name": "TSC Net",
     "Usb": false,
-    "Address": "0.0.0.0",
-    "Port": 0,
+    "Address": "192.168.10.13",
+    "Port": 9100,
     "PrinterName": null,
     "Dpi": {
       "X": 203,

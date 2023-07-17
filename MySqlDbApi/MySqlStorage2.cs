@@ -2,9 +2,9 @@
 
 namespace MySqlDbApi;
 
-public class MySqlStorage2 : ILabelDataSource
+public class MySqlStorage2 : IPrintingDataSource
 {
-    private string _connectionString;
+    private readonly string _connectionString;
 
     public MySqlStorage2(string connectionString)
     {

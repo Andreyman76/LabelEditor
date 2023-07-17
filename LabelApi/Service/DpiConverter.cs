@@ -32,11 +32,11 @@ internal class DpiConverter : ExpandableObjectConverter
 
     public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
     {
-        if (value is string)
+        if (value is string valueAsString)
         {
             try
             {
-                var str = ((string)value).Trim();
+                var str = valueAsString.Trim();
 
                 if (str.Length == 0)
                 {
@@ -44,11 +44,11 @@ internal class DpiConverter : ExpandableObjectConverter
                 }
 
                 culture ??= CultureInfo.CurrentCulture;
-                string[] strings = ((string)value).Split(culture.TextInfo.ListSeparator[0]);
+                string[] strings = valueAsString.Split(culture.TextInfo.ListSeparator[0]);
 
                 if (strings.Length != 2)
                 {
-                    throw new ArgumentException("Can not convert '" + (string)value + $"' to type {nameof(Dpi)}");
+                    throw new ArgumentException("Can not convert '" + valueAsString + $"' to type {nameof(Dpi)}");
                 }
 
                 var numbers = new int[strings.Length];
@@ -64,7 +64,7 @@ internal class DpiConverter : ExpandableObjectConverter
             }
             catch
             {
-                throw new ArgumentException("Can not convert '" + (string)value + $"' to type {nameof(Dpi)}");
+                throw new ArgumentException("Can not convert '" + valueAsString + $"' to type {nameof(Dpi)}");
             }
         }
 
@@ -73,9 +73,9 @@ internal class DpiConverter : ExpandableObjectConverter
 
     public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destinationType)
     {
-        if (destinationType == typeof(string) && value is Dpi)
+        if (destinationType == typeof(string) && value is Dpi valueAsDpi1)
         {
-            var dpi = (Dpi)value;
+            var dpi = valueAsDpi1;
             culture ??= CultureInfo.CurrentCulture;
 
             string str = string.Concat(culture.TextInfo.ListSeparator, " ");
@@ -87,9 +87,9 @@ internal class DpiConverter : ExpandableObjectConverter
 
             return string.Join(str, strings);
         }
-        if (destinationType == typeof(InstanceDescriptor) && value is Dpi)
+        if (destinationType == typeof(InstanceDescriptor) && value is Dpi valueAsDpi2)
         {
-            var dpi = (Dpi)value;
+            var dpi = valueAsDpi2;
             var constructorInfo = typeof(Dpi).GetConstructor(new Type[] { typeof(int), typeof(int) });
 
             if (constructorInfo != null)

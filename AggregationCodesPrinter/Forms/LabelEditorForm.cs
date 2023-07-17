@@ -1,33 +1,51 @@
 using LabelApi;
 using LabelEditorApi;
 using MySqlDbApi;
+using PrintingApi;
 
 namespace AggregationCodesPrinter;
 
 public partial class LabelEditorForm : Form
 {
     private object? _selectedObject;
-    private IEnumerable<object> _testObjects;
-    private ILabelDataSource _labelDataSource;
-    private DataSourceSelectionForm _dataSourceSelectionForm;
+    private readonly IEnumerable<object> _testObjects;
+    private readonly IPrintingDataSource _dataSource;
+    private readonly DataSourceSelectionForm _dataSourceSelectionForm;
+    private readonly VariablesEditorForm _variablesEditorForm;
+    private readonly PrintersEditorForm _printersEditorForm;
+    private readonly PrintingDispatcher _printingDispatcher;
 
-
-    private LabelEditor _editor = new();
-
-    public LabelEditorForm(ILabelDataSource labelDataSource)
+    private readonly OpenFileDialog _openFileDialog = new()
     {
-        _labelDataSource = labelDataSource;
-        _testObjects = labelDataSource.TestObjects;
+        DefaultExt = "xml",
+        Filter = "XML Files|*.xml;"
+    };
+
+    private readonly SaveFileDialog _saveFileDialog = new()
+    {
+        DefaultExt = "xml",
+        Filter = "XML Files|*.xml;"
+    };
+
+    private readonly LabelEditor _editor = new();
+
+    public LabelEditorForm(IPrintingDataSource dataSource)
+    {
+        _dataSource = dataSource;
+        _testObjects = dataSource.TestObjects;
+        _printingDispatcher = new(dataSource);
 
         foreach (var testObject in _testObjects)
         {
             _editor.RegisterType(testObject.GetType());
         }
 
-        _editor.LoadVariablesFromJson(ApplicationSettingsProvider.Settings.VariablesJsonFilePath);
-        _editor.LoadPrintersFromJson(ApplicationSettingsProvider.Settings.PrintersJsonFilePath);
+        _editor.LoadVariablesFromJson(Program.Settings.VariablesJsonFilePath);
+        _editor.LoadPrintersFromJson(Program.Settings.PrintersJsonFilePath);
 
-        _dataSourceSelectionForm = new(_labelDataSource);
+        _dataSourceSelectionForm = new(_dataSource);
+        _variablesEditorForm = new(_editor);
+        _printersEditorForm = new(_editor);
 
         InitializeComponent();
 
@@ -36,51 +54,6 @@ public partial class LabelEditorForm : Form
         dataSourceGridView.Rows.Add("Не выбран");
         UpdateListOfPrinters();
 
-        Redraw();
-    }
-
-    private void OnPrintersToolStripMenuItemClick(object sender, EventArgs e)
-    {
-        var form = new PrintersEditorForm(_editor);
-        form.ShowDialog();
-
-        UpdateListOfPrinters();
-    }
-
-    private void OnSaveToolStripMenuItemClick(object sender, EventArgs e)
-    {
-        var dialog = new SaveFileDialog()
-        {
-            DefaultExt = "xml",
-            Filter = "XML Files|*.xml;"
-        };
-
-        var result = dialog.ShowDialog(this);
-
-        if (result == DialogResult.OK)
-        {
-            _editor.SaveLabelToXml(dialog.FileName);
-           
-        }
-    }
-
-    private void OnLoadToolStripMenuItemClick(object sender, EventArgs e)
-    {
-        var dialog = new OpenFileDialog()
-        {
-            DefaultExt = "xml",
-            Filter = "XML Files|*.xml;"
-        };
-
-        var result = dialog.ShowDialog(this);
-
-        if (result == DialogResult.OK)
-        {
-            _editor.LoadLabelFromXml(dialog.FileName);
-            labelPropertyGrid.SelectedObject = _editor.LabelTemplate;
-        }
-
-        UpdateListOfObjects();
         Redraw();
     }
 
@@ -96,6 +69,69 @@ public partial class LabelEditorForm : Form
 
         UpdateListOfObjects();
         Redraw();
+    }
+
+    private void OnSaveToolStripMenuItemClick(object sender, EventArgs e)
+    {
+        var result = _saveFileDialog.ShowDialog(this);
+
+        if (result == DialogResult.OK)
+        {
+            _editor.SaveLabelToXml(_saveFileDialog.FileName);
+
+        }
+    }
+
+    private void OnLoadToolStripMenuItemClick(object sender, EventArgs e)
+    {
+        var result = _openFileDialog.ShowDialog(this);
+
+        if (result == DialogResult.OK)
+        {
+            _editor.LoadLabelFromXml(_openFileDialog.FileName);
+            labelPropertyGrid.SelectedObject = _editor.LabelTemplate;
+        }
+
+        UpdateListOfObjects();
+        Redraw();
+    }
+
+    private void OnPrintersToolStripMenuItemClick(object sender, EventArgs e)
+    {
+        _printersEditorForm.ShowDialog();
+
+        UpdateListOfPrinters();
+    }
+
+    private void OnEditVariablesToolStripMenuItemClick(object sender, EventArgs e)
+    {
+        _variablesEditorForm.ShowDialog();
+        Redraw();
+    }
+
+    private void OnDataSourceToolStripMenuItemClick(object sender, EventArgs e)
+    {
+        var result = _dataSourceSelectionForm.ShowDialog();
+
+        if (result == DialogResult.OK)
+        {
+            _selectedObject = _dataSourceSelectionForm.SelectedObject;
+
+            if (_selectedObject != null)
+            {
+                dataSourceGridView.Columns.Clear();
+                dataSourceGridView.Rows.Clear();
+
+                var properties = _selectedObject.GetType().GetProperties();
+
+                foreach (var name in properties.Select(x => x.Name))
+                {
+                    dataSourceGridView.Columns.Add(name, name);
+                }
+
+                dataSourceGridView.Rows.Add(properties.Select(x => x.GetValue(_selectedObject)).ToArray());
+            }
+        }
     }
 
     private void OnAddTextButtonClick(object sender, EventArgs e)
@@ -206,9 +242,9 @@ public partial class LabelEditorForm : Form
     {
         printersListBox.Items.Clear();
 
-        foreach (var name in _editor.Printers.Select(x => x.Name))
+        foreach (var printer in _editor.Printers)
         {
-            printersListBox.Items.Add(name);
+            printersListBox.Items.Add(printer.GetNameAndTask());
         }
     }
 
@@ -231,52 +267,43 @@ public partial class LabelEditorForm : Form
         Redraw();
     }
 
-    private void OnEditVariablesToolStripMenuItemClick(object sender, EventArgs e)
+    private void OnPrintButtonClick(object sender, EventArgs e)
     {
-        var varEditor = new VariableEditorForm(_editor);
-
-        varEditor.ShowDialog();
-        Redraw();
+        _printingDispatcher.RunAllPrinters();
+        UpdateListOfPrinters();
     }
 
-    private void OnPrintButtonClick(object sender, EventArgs e)
+    private void OnAddTaskButtonClick(object sender, EventArgs e)
     {
         if (printersListBox.SelectedIndex >= 0)
         {
-            using var printer = _editor.Printers[printersListBox.SelectedIndex].CreatePrinter();
+            var printer = _editor.Printers[printersListBox.SelectedIndex];
 
-            foreach (var data in _labelDataSource.GetLabelDataObjects(_selectedObject, (int)numericUpDown1.Value))
+            printer.CurrentTask = new()
             {
-                if (printer.Print(_editor.GetCurrentLabel(data)))
-                {
-                    _labelDataSource.OnSuccessPrint(data);
-                }
-            }
+                Key = _selectedObject,
+                Count = (int)numericUpDown1.Value,
+                LabelTemplate = _editor.LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning PrinterLabel fail"),
+                LabelVariables = _editor.Variables,
+                Printer = _editor.Printers[printersListBox.SelectedIndex]
+            };
+
+            _printingDispatcher.AddPrinter(printer);
         }
+
+        UpdateListOfPrinters();
     }
 
-    private void OnDataSourceToolStripMenuItemClick(object sender, EventArgs e)
+    private void OnRemoveTaskButtonClick(object sender, EventArgs e)
     {
-        var result = _dataSourceSelectionForm.ShowDialog();
-
-        if (result == DialogResult.OK)
+        if (printersListBox.SelectedIndex >= 0)
         {
-            _selectedObject = _dataSourceSelectionForm.SelectedObject;
+            var printer = _editor.Printers[printersListBox.SelectedIndex];
 
-            if (_selectedObject != null)
-            {
-                dataSourceGridView.Columns.Clear();
-                dataSourceGridView.Rows.Clear();
-
-                var properties = _selectedObject.GetType().GetProperties();
-
-                    foreach (var name in properties.Select(x => x.Name))
-                    {
-                        dataSourceGridView.Columns.Add(name, name);
-                    }
-                
-                dataSourceGridView.Rows.Add(properties.Select(x => x.GetValue(_selectedObject)).ToArray());
-            }
+            printer.CurrentTask = null;
+            _printingDispatcher.RemovePrinter(printer);
         }
+
+        UpdateListOfPrinters();
     }
 }

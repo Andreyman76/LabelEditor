@@ -1,6 +1,6 @@
 ﻿namespace AggregationCodesPrinter
 {
-    partial class VariableEditorForm
+    partial class VariablesEditorForm
     {
         /// <summary>
         /// Required designer variable.

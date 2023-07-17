@@ -10,7 +10,7 @@ namespace LabelApi;
 
 
 /// <summary>
-/// Code128
+/// Элемент этикетки Code128
 /// </summary>
 public class LabelCode128 : LabelElementBase
 {

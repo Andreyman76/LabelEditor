@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace LabelApi;
 
+/// <summary>
+/// Элемент этикетки
+/// </summary>
 public abstract class LabelElementBase : ICloneable
 {
     /// <summary>

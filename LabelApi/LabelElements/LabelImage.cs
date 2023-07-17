@@ -5,7 +5,7 @@ namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
 /// <summary>
-/// Изображение
+/// Элемент этикетки Изображение
 /// </summary>
 public class LabelImage : LabelElementBase
 {

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace LabelEditorApi;
+namespace LabelApi;
 
 /// <summary>
 /// Переменная этикетки
@@ -97,12 +97,9 @@ public class LabelVariable
 
         var toStringMethod = propertyType.GetMethod("ToString", new[] { typeof(string) });
 
-        if (toStringMethod == null)
-        {
-            throw new Exception($"{propertyType.FullName} does not have a formatted ToString method");
-        }
-
-        return toStringMethod.Invoke(propertyValue, new object[] { Format })?.ToString();
+        return toStringMethod == null
+            ? throw new Exception($"{propertyType.FullName} does not have a formatted ToString method")
+            : (toStringMethod.Invoke(propertyValue, new object[] { Format })?.ToString());
     }
 
     /// <summary>

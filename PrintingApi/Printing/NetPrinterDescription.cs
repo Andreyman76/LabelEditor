@@ -1,9 +1,13 @@
 ﻿using LabelApi;
 using System.ComponentModel;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace PrintingApi;
 
+/// <summary>
+/// Дескриптор принтера, подключенного по сети
+/// </summary>
 public class NetPrinterDescription : IPrinterDescription
 {
     [Browsable(true)]
@@ -11,12 +15,18 @@ public class NetPrinterDescription : IPrinterDescription
     [DisplayName("Имя"), Category("Принтер")]
     public string Name { get; set; } = "New Printer";
 
+    /// <summary>
+    /// IP адрес принтера
+    /// </summary>
     [Browsable(true)]
     [Description("IP адрес принтера")]
     [DisplayName("IP"), Category("Сеть")]
     [TypeConverter(typeof(IpAddressConverter))]
     public IPAddress Address { get; set; } = IPAddress.Any;
 
+    /// <summary>
+    /// Порт принтера
+    /// </summary>
     [Browsable(true)]
     [Description("Порт принтера")]
     [DisplayName("Порт"), Category("Сеть")]
@@ -27,7 +37,11 @@ public class NetPrinterDescription : IPrinterDescription
     [DisplayName("Разрешение"), Category("Принтер")]
     public Dpi Dpi { get; set; } = new(203, 203);
 
-    public PrinterDescription GetPrinterDescription()
+    [JsonIgnore]
+    [Browsable(false)]
+    public PrintingTask? CurrentTask { get; set; }
+
+    public SerialaziblePrinterDescription GetPrinterDescription()
     {
         return new()
         {
@@ -47,5 +61,17 @@ public class NetPrinterDescription : IPrinterDescription
         };
 
         return printer;
+    }
+
+    public string GetNameAndTask()
+    {
+        var result = Name;
+
+        if (CurrentTask != null)
+        {
+            result += $" - Задача {CurrentTask.Count} шт";
+        }
+
+        return result;
     }
 }

@@ -2,7 +2,9 @@
 using PrintingApi;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Xml.Serialization;
 
 namespace LabelEditorApi;
@@ -35,12 +37,12 @@ public class LabelEditor
     /// </summary>
     public ReadOnlyCollection<IPrinterDescription> Printers { get => _printers.AsReadOnly(); }
 
-    private BuiltInVariables _builtInVariables = new();
-    private XmlSerializer _serializer = new(typeof(PrinterLabel));
-    private List<LabelVariable> _variables = new List<LabelVariable>();
-    private List<IPrinterDescription> _printers = new List<IPrinterDescription>();
+    private readonly BuiltInVariables _builtInVariables = new();
+    private readonly XmlSerializer _serializer = new(typeof(PrinterLabel));
+    private readonly List<LabelVariable> _variables = new();
+    private List<IPrinterDescription> _printers = new();
 
-    private LabelVariable _gs = new LabelVariable()
+    private readonly LabelVariable _gs = new()
     {
         IsBuiltIn = true,
         Description = "Разделитель ASCII 29",
@@ -50,9 +52,15 @@ public class LabelEditor
         PropertyName = nameof(BuiltInVariables.GS)
     };
 
-    private List<Type> _registeredTypes = new()
+    private readonly List<Type> _registeredTypes = new()
     {
         typeof(BuiltInVariables)
+    };
+
+    private readonly JsonSerializerOptions _serializerOptions = new()
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+        WriteIndented = true
     };
 
     public LabelEditor()
@@ -105,10 +113,7 @@ public class LabelEditor
     /// <param name="filePath">Путь к JSON файлу</param>
     public void SaveVariablesToJson(string filePath)
     {
-        var json = JsonSerializer.Serialize(_variables.Where(x => x.IsBuiltIn == false), new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        });
+        var json = JsonSerializer.Serialize(_variables.Where(x => x.IsBuiltIn == false), _serializerOptions);
 
         File.WriteAllText(filePath, json, Encoding.UTF8);
     }
@@ -139,10 +144,7 @@ public class LabelEditor
     {
         var printers = _printers.Select(x => x.GetPrinterDescription()).ToList();
 
-        var json = JsonSerializer.Serialize(printers, new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        });
+        var json = JsonSerializer.Serialize(printers, _serializerOptions);
 
         File.WriteAllText(filePath, json);
     }
@@ -157,7 +159,7 @@ public class LabelEditor
         if (File.Exists(filePath))
         {
             var json = File.ReadAllText(filePath, Encoding.UTF8);
-            var printers = JsonSerializer.Deserialize<List<PrinterDescription>>(json) ?? throw new Exception("Load printers from JSON failed");
+            var printers = JsonSerializer.Deserialize<List<SerialaziblePrinterDescription>>(json) ?? throw new Exception("Load printers from JSON failed");
 
             _printers = printers.Select(x => x.GetPrinterDescription()).ToList();
         }
@@ -265,15 +267,7 @@ public class LabelEditor
     /// <exception cref="Exception"></exception>
     private PrinterLabel BindAllVariables(PrinterLabel template, IEnumerable<object> targetObjects)
     {
-        var label = template.Clone() as PrinterLabel ?? throw new Exception("Cloning label failed");
-        var objects = new List<object>()
-        {
-            _builtInVariables
-        };
-
-        objects.AddRange(targetObjects);
-
-        foreach (var target in objects)
+        foreach (var target in targetObjects)
         {
             var type = target.GetType();
 
@@ -281,15 +275,11 @@ public class LabelEditor
             {
                 throw new Exception($"Type {type.FullName} is not registered in {nameof(LabelEditor)}");
             }
-
-            var variables = _variables.Where(x => x.TargetType == target.GetType().FullName);
-
-            foreach (var variable in variables)
-            {
-                label.Replace($"${{{variable.Name}}}", variable.GetStringFrom(target) ?? string.Empty);
-            }
         }
 
+        var label = template.Clone() as PrinterLabel ?? throw new Exception("Cloning label failed");
+        label.BindVariables(Variables, targetObjects);
+      
         return label;
     }
 
@@ -305,7 +295,7 @@ public class LabelEditor
         {
             var name = "var" + i;
 
-            if (_variables.Count(x => x.Name == name) == 0)
+            if (_variables.Any(x => x.Name == name) == false)
             {
                 return name;
             }

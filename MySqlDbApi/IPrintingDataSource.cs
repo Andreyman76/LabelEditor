@@ -1,6 +1,9 @@
 ﻿namespace MySqlDbApi;
 
-public interface ILabelDataSource
+/// <summary>
+/// Источник данных для этикетки
+/// </summary>
+public interface IPrintingDataSource
 {
     /// <summary>
     /// Тестовые объекты, отображаемые в редакторе

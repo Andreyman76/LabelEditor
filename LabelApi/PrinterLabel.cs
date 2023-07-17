@@ -33,6 +33,7 @@ public class PrinterLabel : ICloneable
     public List<LabelElementBase> Elements { get; set; } = new();
 
     private bool _printed = false;
+    private static readonly BuiltInVariables _builtInVariables = new();
 
     /// <summary>
     /// Получить срендеренное изображение этикетки
@@ -133,6 +134,27 @@ public class PrinterLabel : ICloneable
         return _printed;
     }
 
+    public void BindVariables(IEnumerable<LabelVariable> variables, IEnumerable<object> targetObjects)
+    {
+        var objects = new List<object>()
+        {
+            _builtInVariables
+        };
+
+        objects.AddRange(targetObjects);
+
+        foreach (var target in objects)
+        {
+            var type = target.GetType();
+            var vars = variables.Where(x => x.TargetType == target.GetType().FullName);
+
+            foreach (var variable in vars)
+            {
+                Replace($"${{{variable.Name}}}", variable.GetStringFrom(target) ?? string.Empty);
+            }
+        }
+    }
+
     /// <summary>
     /// Обработчик PrintDocument.PrintPage
     /// </summary>
@@ -141,13 +163,7 @@ public class PrinterLabel : ICloneable
     /// <exception cref="Exception"></exception>
     private void PrintPageHandler(object sender, PrintPageEventArgs e)
     {
-        using var g = e.Graphics;
-
-        if (g == null)
-        {
-            throw new Exception("PrintPageEventArgs contains Graphics with null value");
-        }
-
+        using var g = e.Graphics ?? throw new Exception("PrintPageEventArgs contains Graphics with null value");
         g.Clear(Color.White);
         g.PageUnit = GraphicsUnit.Millimeter;
 

@@ -2,9 +2,10 @@
 
 namespace MySqlDbApi;
 
-public class MySqlStorage : ILabelDataSource
+public class MySqlStorage : IPrintingDataSource
 {
-    private string _connectionString;
+    private readonly string _connectionString;
+
     public IEnumerable<object> TestObjects => new object[]
     {
         new Gtin()
