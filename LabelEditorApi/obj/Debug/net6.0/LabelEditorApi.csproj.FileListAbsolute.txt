@@ -34,3 +34,5 @@ C:\Users\VP\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\LabelEditor
 C:\Users\VP\source\repos\LabelEditor\LabelEditorApi\obj\Debug\net6.0\ref\LabelEditorApi.dll
 C:\Users\VP\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\MySqlDbApi.dll
 C:\Users\VP\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\MySqlDbApi.pdb
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\MySqlDbApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\LabelEditorApi\bin\Debug\net6.0\MySqlDbApi.pdb

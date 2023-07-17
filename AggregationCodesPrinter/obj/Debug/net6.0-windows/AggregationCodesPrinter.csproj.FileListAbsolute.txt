@@ -96,7 +96,6 @@ C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.
 C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.DataSourceSelectionForm.resources
 C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.LabelEditorForm.resources
 C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.PrintersEditorForm.resources
-C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.VariableEditorForm.resources
 C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.csproj.GenerateResource.cache
 C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.AssemblyInfoInputs.cache
@@ -197,3 +196,4 @@ C:\Users\VP\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-wi
 C:\Users\VP\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.genruntimeconfig.cache
 C:\Users\VP\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\ref\AggregationCodesPrinter.dll
 C:\Users\VP\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.VariablesEditorForm.resources
+C:\Users\Andrey\source\repos\LabelEditor\AggregationCodesPrinter\obj\Debug\net6.0-windows\AggregationCodesPrinter.VariablesEditorForm.resources

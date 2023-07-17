@@ -14,6 +14,7 @@ public partial class LabelEditorForm : Form
     private readonly VariablesEditorForm _variablesEditorForm;
     private readonly PrintersEditorForm _printersEditorForm;
     private readonly PrintingDispatcher _printingDispatcher;
+    private readonly LabelEditor _editor = new();
 
     private readonly OpenFileDialog _openFileDialog = new()
     {
@@ -26,8 +27,6 @@ public partial class LabelEditorForm : Form
         DefaultExt = "xml",
         Filter = "XML Files|*.xml;"
     };
-
-    private readonly LabelEditor _editor = new();
 
     public LabelEditorForm(IPrintingDataSource dataSource)
     {
@@ -244,7 +243,16 @@ public partial class LabelEditorForm : Form
 
         foreach (var printer in _editor.Printers)
         {
-            printersListBox.Items.Add(printer.GetNameAndTask());
+            var printerTitle = printer.Name;
+
+            var task = _printingDispatcher.Tasks.FirstOrDefault(x => x.Printer == printer);
+
+            if (task != null)
+            {
+                printerTitle += $" - Задача {task.Count} шт";
+            }
+
+            printersListBox.Items.Add(printerTitle);
         }
     }
 
@@ -278,17 +286,16 @@ public partial class LabelEditorForm : Form
         if (printersListBox.SelectedIndex >= 0)
         {
             var printer = _editor.Printers[printersListBox.SelectedIndex];
+            var template = _editor.LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning PrinterLabel fail");
+            
+            var task = new PrinterTask(
+                printer,
+                template,
+                _editor.Variables,
+                _selectedObject,
+                (int)numericUpDown1.Value);
 
-            printer.CurrentTask = new()
-            {
-                Key = _selectedObject,
-                Count = (int)numericUpDown1.Value,
-                LabelTemplate = _editor.LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning PrinterLabel fail"),
-                LabelVariables = _editor.Variables,
-                Printer = _editor.Printers[printersListBox.SelectedIndex]
-            };
-
-            _printingDispatcher.AddPrinter(printer);
+            _printingDispatcher.AddTask(task);
         }
 
         UpdateListOfPrinters();
@@ -299,9 +306,12 @@ public partial class LabelEditorForm : Form
         if (printersListBox.SelectedIndex >= 0)
         {
             var printer = _editor.Printers[printersListBox.SelectedIndex];
+            var task = _printingDispatcher.Tasks.FirstOrDefault(x => x.Printer == printer);
 
-            printer.CurrentTask = null;
-            _printingDispatcher.RemovePrinter(printer);
+            if(task != null)
+            {
+                _printingDispatcher.RemoveTask(task);
+            }
         }
 
         UpdateListOfPrinters();

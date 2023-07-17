@@ -1,5 +1,6 @@
 ﻿using LabelApi;
 using MySqlDbApi;
+using System.Collections.ObjectModel;
 
 namespace PrintingApi;
 
@@ -8,8 +9,10 @@ namespace PrintingApi;
 /// </summary>
 public class PrintingDispatcher
 {
+    public ReadOnlyCollection<PrinterTask> Tasks { get => _tasks.AsReadOnly(); }
+
     private readonly IPrintingDataSource _dataSource;
-    private readonly List<IPrinterDescription> _printers = new();
+    private readonly List<PrinterTask> _tasks = new();
 
     /// <summary>
     /// 
@@ -21,52 +24,43 @@ public class PrintingDispatcher
     }
 
     /// <summary>
-    /// Добавить принтер
+    /// Добавить задачу
     /// </summary>
-    /// <param name="printer">Дескриптор принтера</param>
-    public void AddPrinter(IPrinterDescription printer)
+    /// <param name="task">Задача принтера</param>
+    public void AddTask(PrinterTask task)
     {
-        _printers.Add(printer);
+        _tasks.Add(task);
     }
 
     /// <summary>
-    /// Удалить принтер
+    /// Удалить задачу
     /// </summary>
-    /// <param name="printer">Дескриптор принтера</param>
-    public void RemovePrinter(IPrinterDescription printer)
+    /// <param name="task">Задача принтера</param>
+    public void RemoveTask(PrinterTask task)
     {
-        _printers.Remove(printer);
+        _tasks.Remove(task);
     }
 
     /// <summary>
-    /// Запустить задачи на всех принтерах
+    /// Запустить все задачи
     /// </summary>
     /// <exception cref="Exception"></exception>
     public void RunAllPrinters()
     {
-        foreach(var printerDescription in _printers)
+        foreach(var task in _tasks)
         {
-            if(printerDescription.CurrentTask == null)
-            {
-                continue;
-            }
-
-            using var printer = printerDescription.CreatePrinter();
+            using var printer = task.Printer.CreatePrinter();
             
-            foreach(var targetObjects in _dataSource.GetLabelDataObjects(printerDescription.CurrentTask.Key, printerDescription.CurrentTask.Count))
+            foreach(var targetObjects in _dataSource.GetLabelDataObjects(task.Key, task.Count))
             {
-                var label = printerDescription.CurrentTask.LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning PrinterLabel failed");
-                label.BindVariables(printerDescription.CurrentTask.LabelVariables, targetObjects);
+                var label = task.LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning PrinterLabel failed");
+                label.BindVariables(task.LabelVariables, targetObjects);
 
-                if (printer.Print(label))
-                {
-                    _dataSource.OnSuccessPrint(targetObjects);
-                }
+                _dataSource.AfterPrint(targetObjects, printer.Print(label));
+                
             }
-
-            printerDescription.CurrentTask = null;
         }
 
-        _printers.Clear();
+        _tasks.Clear();
     }
 }

@@ -29,7 +29,6 @@ public partial class DataSourceSelectionForm : Form
             _dataSourceList.Add(data);
             first = false;
         }
-         
     }
 
     private void OnSelectButtonClick(object sender, EventArgs e)

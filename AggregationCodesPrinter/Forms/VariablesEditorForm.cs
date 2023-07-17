@@ -1,4 +1,5 @@
 ﻿using LabelEditorApi;
+
 namespace AggregationCodesPrinter;
 
 public partial class VariablesEditorForm : Form

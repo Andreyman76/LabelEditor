@@ -159,7 +159,7 @@ public class LabelEditor
         if (File.Exists(filePath))
         {
             var json = File.ReadAllText(filePath, Encoding.UTF8);
-            var printers = JsonSerializer.Deserialize<List<SerialaziblePrinterDescription>>(json) ?? throw new Exception("Load printers from JSON failed");
+            var printers = JsonSerializer.Deserialize<List<SerialazablePrinterDescription>>(json) ?? throw new Exception("Load printers from JSON failed");
 
             _printers = printers.Select(x => x.GetPrinterDescription()).ToList();
         }

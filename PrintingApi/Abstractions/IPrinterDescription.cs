@@ -13,11 +13,6 @@ public interface IPrinterDescription
     string Name { get; set; }
 
     /// <summary>
-    /// Текущее задание принтера
-    /// </summary>
-    PrintingTask? CurrentTask { get; set; }
-
-    /// <summary>
     /// Разрешение печати принтера
     /// </summary>
     Dpi Dpi { get; set; }
@@ -26,17 +21,11 @@ public interface IPrinterDescription
     /// Получить дескриптор принтера для сериализации
     /// </summary>
     /// <returns></returns>
-    SerialaziblePrinterDescription GetPrinterDescription();
+    SerialazablePrinterDescription GetPrinterDescription();
 
     /// <summary>
     /// Создать экземляр принтера на основании дескриптора
     /// </summary>
     /// <returns></returns>
     IPrinter CreatePrinter();
-
-    /// <summary>
-    /// Получить строку, содержащую имя принтера и описание текущей задачи
-    /// </summary>
-    /// <returns>Строка, содержащая имя принтера и описание текущей задачи</returns>
-    string GetNameAndTask();
 }

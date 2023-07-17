@@ -6,7 +6,7 @@ namespace PrintingApi;
 /// <summary>
 /// Сериализуемый дескриптор принтера
 /// </summary>
-public class SerialaziblePrinterDescription
+public class SerialazablePrinterDescription
 {
     /// <summary>
     /// Отображаемое имя принтера

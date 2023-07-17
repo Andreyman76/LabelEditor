@@ -25,8 +25,9 @@ public interface IPrintingDataSource
     IEnumerable<object[]> GetLabelDataObjects(object? key, int count);
 
     /// <summary>
-    /// Действия при успешной печати этикетки
+    /// Действия после печати этикетки
     /// </summary>
     /// <param name="printedObjects">Список объектов, использованных при печати</param>
-    void OnSuccessPrint(object[] printedObjects);
+    /// <param name="isSuccess">Была ли печать успешной</param>
+    void AfterPrint(object[] printedObjects, bool isSuccess);
 }

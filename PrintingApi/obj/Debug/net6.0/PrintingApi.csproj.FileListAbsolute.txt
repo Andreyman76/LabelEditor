@@ -30,3 +30,5 @@ C:\Users\VP\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\PrintingApi.pd
 C:\Users\VP\source\repos\LabelEditor\PrintingApi\obj\Debug\net6.0\ref\PrintingApi.dll
 C:\Users\VP\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\MySqlDbApi.dll
 C:\Users\VP\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\MySqlDbApi.pdb
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\MySqlDbApi.dll
+C:\Users\Andrey\source\repos\LabelEditor\PrintingApi\bin\Debug\net6.0\MySqlDbApi.pdb

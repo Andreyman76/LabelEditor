@@ -100,7 +100,7 @@ public class MySqlStorage2 : IPrintingDataSource
         }
     }
 
-    public void OnSuccessPrint(object[] printedObjects)
+    public void AfterPrint(object[] printedObjects, bool isSuccess)
     {
 
     }
