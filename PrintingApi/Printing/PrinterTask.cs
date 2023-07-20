@@ -32,7 +32,6 @@ public class PrinterTask
     /// </summary>
     public int Count { get; set; }
 
-
     /// <summary>
     /// 
     /// </summary>

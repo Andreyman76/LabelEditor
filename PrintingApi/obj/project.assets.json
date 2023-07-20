@@ -2361,19 +2361,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Andrey\\.nuget\\packages\\": {}
+    "C:\\Users\\VP\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\PrintingApi\\PrintingApi.csproj",
+      "projectUniqueName": "C:\\Users\\VP\\source\\repos\\LabelEditor\\PrintingApi\\PrintingApi.csproj",
       "projectName": "PrintingApi",
-      "projectPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\PrintingApi\\PrintingApi.csproj",
-      "packagesPath": "C:\\Users\\Andrey\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\PrintingApi\\obj\\",
+      "projectPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\PrintingApi\\PrintingApi.csproj",
+      "packagesPath": "C:\\Users\\VP\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\PrintingApi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Andrey\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\VP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2381,17 +2386,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelApi\\LabelApi.csproj": {
-              "projectPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\LabelApi\\LabelApi.csproj"
+            "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelApi\\LabelApi.csproj": {
+              "projectPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\LabelApi\\LabelApi.csproj"
             },
-            "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\MySqlDbApi\\MySqlDbApi.csproj": {
-              "projectPath": "C:\\Users\\Andrey\\source\\repos\\LabelEditor\\MySqlDbApi\\MySqlDbApi.csproj"
+            "C:\\Users\\VP\\source\\repos\\LabelEditor\\MySqlDbApi\\MySqlDbApi.csproj": {
+              "projectPath": "C:\\Users\\VP\\source\\repos\\LabelEditor\\MySqlDbApi\\MySqlDbApi.csproj"
             }
           }
         }
@@ -2421,7 +2427,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

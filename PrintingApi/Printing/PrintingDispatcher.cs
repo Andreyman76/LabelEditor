@@ -29,6 +29,7 @@ public class PrintingDispatcher
     /// <param name="task">Задача принтера</param>
     public void AddTask(PrinterTask task)
     {
+        _tasks.RemoveAll(x => x.Printer == task.Printer);
         _tasks.Add(task);
     }
 
@@ -45,7 +46,7 @@ public class PrintingDispatcher
     /// Запустить все задачи
     /// </summary>
     /// <exception cref="Exception"></exception>
-    public void RunAllPrinters()
+    public void RunAllTasks()
     {
         foreach(var task in _tasks)
         {

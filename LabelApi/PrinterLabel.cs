@@ -25,9 +25,10 @@ public class PrinterLabel : ICloneable
     /// Элементы этикетки
     /// </summary>
     [XmlArrayItem(typeof(LabelText))]
-    [XmlArrayItem(typeof(LabelImage))]
     [XmlArrayItem(typeof(LabelDataMatrix))]
     [XmlArrayItem(typeof(LabelCode128))]
+    [XmlArrayItem(typeof(LabelImage))]
+    [XmlArrayItem(typeof(LabelRectangle))]
     [XmlArrayItem(typeof(LabelEllipse))]
     [Browsable(false)]
     public List<LabelElementBase> Elements { get; set; } = new();
@@ -134,6 +135,12 @@ public class PrinterLabel : ICloneable
         return _printed;
     }
 
+    /// <summary>
+    /// <para>Установить значения всем переменным</para>
+    /// <para>Заменяемые значения в текстовых данных должны иметь вид: ${name}, где name - имя переменной (LabelVariable.Name)</para>
+    /// </summary>
+    /// <param name="variables">Переменные</param>
+    /// <param name="targetObjects">Объекты, из которых переменные берут данные</param>
     public void BindVariables(IEnumerable<LabelVariable> variables, IEnumerable<object> targetObjects)
     {
         var objects = new List<object>()
@@ -192,8 +199,29 @@ public class PrinterLabel : ICloneable
             throw new Exception("Set LabelText autosize failed");
         }
 
-        var width = Size.Width - labelText.Position.X;
-        var height = Size.Height - labelText.Position.Y;
+        float width;
+        float height;
+
+        switch (labelText.RotationType)
+        {
+            case LabelElementRotationType.Rotate90:
+                width = Size.Height - labelText.Position.Y;
+                height = labelText.Position.X;
+                break;
+            case LabelElementRotationType.Rotate180:
+                width = labelText.Position.X;
+                height = labelText.Position.Y;
+                break;
+            case LabelElementRotationType.Rotate270:
+                width = labelText.Position.Y;
+                height = Size.Width - labelText.Position.X;
+                break;
+            default:
+                width = Size.Width - labelText.Position.X;
+                height = Size.Height - labelText.Position.Y;
+                break;
+        }
+
         labelText.Size = new(width, height);
     }
 }

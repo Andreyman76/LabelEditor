@@ -56,7 +56,7 @@ public class SerialazablePrinterDescription
         }
         else
         {
-            return new NetPrinterDescription()
+            return new NetworkPrinterDescription()
             {
                 Name = Name,
                 Dpi= Dpi,

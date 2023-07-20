@@ -51,7 +51,7 @@ public partial class PrintersEditorForm : Form
 
     private void OnAddNetPrinterButtonClick(object sender, EventArgs e)
     {
-        _editor.AddPrinter(new NetPrinterDescription());
+        _editor.AddPrinter(new NetworkPrinterDescription());
         UpdatePrintersList();
         printerPropertyGrid.SelectedObject = _editor.Printers.Last();
         printersListBox.SelectedIndex = printersListBox.Items.Count - 1;

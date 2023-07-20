@@ -1,72 +1,32 @@
 ﻿[
   {
-    "Name": "name",
+    "Name": "sscc",
     "Format": null,
-    "PropertyName": "Name",
-    "TargetType": "MySqlDbApi.Gtin",
+    "PropertyName": "Sscc",
+    "TargetType": "MySqlDbApi.DbData",
     "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
+    "Description": "SSCC код"
   },
   {
-    "Name": "art",
-    "Format": null,
-    "PropertyName": "Article",
-    "TargetType": "MySqlDbApi.Gtin",
+    "Name": "sscc_text",
+    "Format": "(00)000000000000000000",
+    "PropertyName": "Sscc",
+    "TargetType": "MySqlDbApi.DbData",
     "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
-    "Name": "serial",
-    "Format": null,
-    "PropertyName": "SerialNumber",
-    "TargetType": "MySqlDbApi.Pallet",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
-    "Name": "batch",
-    "Format": null,
-    "PropertyName": "Batch",
-    "TargetType": "MySqlDbApi.Pallet",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
-    "Name": "lot",
-    "Format": null,
-    "PropertyName": "Lot",
-    "TargetType": "MySqlDbApi.Pallet",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
-    "Name": "count",
-    "Format": null,
-    "PropertyName": "Count",
-    "TargetType": "MySqlDbApi.Pallet",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
-    "Name": "wh",
-    "Format": null,
-    "PropertyName": "WarehouseId",
-    "TargetType": "MySqlDbApi.Pallet",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
-    "Name": "gtin",
-    "Format": null,
-    "PropertyName": "Id",
-    "TargetType": "MySqlDbApi.Gtin",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
+    "Description": "SSCC в форматированном виде"
   },
   {
     "Name": "date",
     "Format": "dd.MM.yyyy",
     "PropertyName": "CurrentDateTime",
+    "TargetType": "LabelApi.BuiltInVariables",
+    "TargetAssembly": "LabelApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": "Текущие дата и время компьютера"
+  },
+  {
+    "Name": "n",
+    "Format": null,
+    "PropertyName": "Endl",
     "TargetType": "LabelApi.BuiltInVariables",
     "TargetAssembly": "LabelApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Description": ""

@@ -38,10 +38,43 @@ public class LabelCode128 : LabelElementBase
     [DisplayName("GS1"), Category("Code128")]
     public bool GS1 { get; set; } = false;
 
+    /// <summary>
+    /// Поворот
+    /// </summary>
+    [Browsable(true)]
+    [Description("Поворот кода")]
+    [DisplayName("Поворот"), Category("Code128")]
+    public LabelElementRotationType RotationType { get; set; }
+
     public override void Draw(Graphics g)
     {
-        var code128 = CreateCode128Image(Code, GS1);
-        g.DrawImage(code128, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
+        using var code128 = CreateCode128Image(Code, GS1);
+
+        switch (RotationType)
+        {
+            case LabelElementRotationType.Rotate90: 
+                code128.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                break;
+            case LabelElementRotationType.Rotate180:
+                code128.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                break;
+            case LabelElementRotationType.Rotate270: 
+                code128.RotateFlip(RotateFlipType.Rotate270FlipNone); 
+                break;
+            default: 
+                break;
+        }
+
+        var width = Size.Width;
+        var height = Size.Height;
+
+        if (RotationType == LabelElementRotationType.Rotate90 || RotationType == LabelElementRotationType.Rotate270)
+        {
+            width = Size.Height;
+            height = Size.Width;
+        }
+
+        g.DrawImage(code128, new RectangleF(Position.X, Position.Y, width, height));
     }
 
     public override void Replace(string from, string to)
@@ -57,7 +90,8 @@ public class LabelCode128 : LabelElementBase
             Code = Code,
             Size = Size,
             Name = Name,
-            GS1 = GS1
+            GS1 = GS1,
+            RotationType = RotationType
         };
     }
 

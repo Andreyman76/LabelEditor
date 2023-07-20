@@ -9,28 +9,13 @@ namespace LabelApi;
 [TypeConverter(typeof(PrintingSizeConverter))]
 public struct PrintingSize
 {
-    private float _width = default;
-    private float _height = default;
-
     /// <summary>
     /// Размер по горизонтали
     /// </summary>
     [Browsable(true)]
     [Description("Размер по горизонтали")]
     [DisplayName("Ширина")]
-    public float Width
-    {
-        get => _width;
-        set
-        {
-            if (value <= 0f)
-            {
-                throw new ArgumentException("Width must be greater than zero");
-            }
-
-            _width = value;
-        }
-    }
+    public float Width { get; set; }
 
     /// <summary>
     /// Размер по вертикали
@@ -38,19 +23,7 @@ public struct PrintingSize
     [Browsable(true)]
     [Description("Размер по вертикали")]
     [DisplayName("Высота")]
-    public float Height
-    {
-        get => _height;
-        set
-        {
-            if (value <= 0f)
-            {
-                throw new ArgumentException("Height must be greater than zero");
-            }
-
-            _height = value;
-        }
-    }
+    public float Height { get; set; }
 
     /// <summary>
     /// 

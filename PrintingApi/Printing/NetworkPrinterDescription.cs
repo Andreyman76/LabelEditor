@@ -1,14 +1,13 @@
 ﻿using LabelApi;
 using System.ComponentModel;
 using System.Net;
-using System.Text.Json.Serialization;
 
 namespace PrintingApi;
 
 /// <summary>
 /// Дескриптор принтера, подключенного по сети
 /// </summary>
-public class NetPrinterDescription : IPrinterDescription
+public class NetworkPrinterDescription : IPrinterDescription
 {
     [Browsable(true)]
     [Description("Отображаемое имя объекта")]
@@ -51,7 +50,7 @@ public class NetPrinterDescription : IPrinterDescription
 
     public IPrinter CreatePrinter()
     {
-        var printer = new NetPrinter(new(Address, Port))
+        var printer = new NetworkPrinter(new(Address, Port))
         {
             Dpi = Dpi
         };

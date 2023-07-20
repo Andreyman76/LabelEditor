@@ -9,5 +9,16 @@
       "X": 203,
       "Y": 203
     }
+  },
+  {
+    "Name": "toPDF",
+    "Usb": true,
+    "Address": null,
+    "Port": null,
+    "PrinterName": "toPDF",
+    "Dpi": {
+      "X": 600,
+      "Y": 600
+    }
   }
 ]

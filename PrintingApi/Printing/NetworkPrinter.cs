@@ -9,7 +9,7 @@ namespace PrintingApi;
 /// <summary>
 /// Принтер, подключенный по сети
 /// </summary>
-public class NetPrinter : IPrinter
+public class NetworkPrinter : IPrinter
 {
     public Dpi Dpi { get; set; } = new(203, 203);
     public bool IsConnected => _tcpClient?.Connected ?? false;
@@ -26,7 +26,7 @@ public class NetPrinter : IPrinter
     /// 
     /// </summary>
     /// <param name="printerEndpoint">IP адрес и порт принтера</param>
-    public NetPrinter(IPEndPoint printerEndpoint)
+    public NetworkPrinter(IPEndPoint printerEndpoint)
     {
         PrinterEndpoint = printerEndpoint;
     }

@@ -55,6 +55,7 @@
             label1 = new Label();
             numericUpDown1 = new NumericUpDown();
             addTaskButton = new Button();
+            addRectangleButton = new Button();
             menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataSourceGridView).BeginInit();
@@ -211,8 +212,9 @@
             // 
             tableLayoutPanel2.ColumnCount = 1;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Controls.Add(addEllipseButton, 0, 4);
-            tableLayoutPanel2.Controls.Add(deleteElementButton, 0, 5);
+            tableLayoutPanel2.Controls.Add(addRectangleButton, 0, 4);
+            tableLayoutPanel2.Controls.Add(addEllipseButton, 0, 5);
+            tableLayoutPanel2.Controls.Add(deleteElementButton, 0, 6);
             tableLayoutPanel2.Controls.Add(addImageButton, 0, 3);
             tableLayoutPanel2.Controls.Add(addCode128Button, 0, 2);
             tableLayoutPanel2.Controls.Add(addDmButton, 0, 1);
@@ -220,14 +222,15 @@
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(887, 3);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 6;
+            tableLayoutPanel2.RowCount = 7;
             tableLayoutPanel1.SetRowSpan(tableLayoutPanel2, 2);
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel2.Size = new Size(120, 542);
             tableLayoutPanel2.TabIndex = 1;
@@ -235,9 +238,9 @@
             // addEllipseButton
             // 
             addEllipseButton.Dock = DockStyle.Fill;
-            addEllipseButton.Location = new Point(3, 363);
+            addEllipseButton.Location = new Point(3, 388);
             addEllipseButton.Name = "addEllipseButton";
-            addEllipseButton.Size = new Size(114, 84);
+            addEllipseButton.Size = new Size(114, 71);
             addEllipseButton.TabIndex = 5;
             addEllipseButton.Text = "Эллипс";
             addEllipseButton.UseVisualStyleBackColor = true;
@@ -246,9 +249,9 @@
             // deleteElementButton
             // 
             deleteElementButton.Dock = DockStyle.Fill;
-            deleteElementButton.Location = new Point(3, 453);
+            deleteElementButton.Location = new Point(3, 465);
             deleteElementButton.Name = "deleteElementButton";
-            deleteElementButton.Size = new Size(114, 86);
+            deleteElementButton.Size = new Size(114, 74);
             deleteElementButton.TabIndex = 4;
             deleteElementButton.Text = "Удалить";
             deleteElementButton.UseVisualStyleBackColor = true;
@@ -257,9 +260,9 @@
             // addImageButton
             // 
             addImageButton.Dock = DockStyle.Fill;
-            addImageButton.Location = new Point(3, 273);
+            addImageButton.Location = new Point(3, 234);
             addImageButton.Name = "addImageButton";
-            addImageButton.Size = new Size(114, 84);
+            addImageButton.Size = new Size(114, 71);
             addImageButton.TabIndex = 3;
             addImageButton.Text = "Изображение";
             addImageButton.UseVisualStyleBackColor = true;
@@ -268,9 +271,9 @@
             // addCode128Button
             // 
             addCode128Button.Dock = DockStyle.Fill;
-            addCode128Button.Location = new Point(3, 183);
+            addCode128Button.Location = new Point(3, 157);
             addCode128Button.Name = "addCode128Button";
-            addCode128Button.Size = new Size(114, 84);
+            addCode128Button.Size = new Size(114, 71);
             addCode128Button.TabIndex = 2;
             addCode128Button.Text = "Code128";
             addCode128Button.UseVisualStyleBackColor = true;
@@ -279,11 +282,11 @@
             // addDmButton
             // 
             addDmButton.Dock = DockStyle.Fill;
-            addDmButton.Location = new Point(3, 93);
+            addDmButton.Location = new Point(3, 80);
             addDmButton.Name = "addDmButton";
-            addDmButton.Size = new Size(114, 84);
+            addDmButton.Size = new Size(114, 71);
             addDmButton.TabIndex = 1;
-            addDmButton.Text = "Datamatrix";
+            addDmButton.Text = "DataMatrix";
             addDmButton.UseVisualStyleBackColor = true;
             addDmButton.Click += OnAddDmButtonClick;
             // 
@@ -292,7 +295,7 @@
             addTextButton.Dock = DockStyle.Fill;
             addTextButton.Location = new Point(3, 3);
             addTextButton.Name = "addTextButton";
-            addTextButton.Size = new Size(114, 84);
+            addTextButton.Size = new Size(114, 71);
             addTextButton.TabIndex = 0;
             addTextButton.Text = "Текст";
             addTextButton.UseVisualStyleBackColor = true;
@@ -372,6 +375,17 @@
             addTaskButton.UseVisualStyleBackColor = true;
             addTaskButton.Click += OnAddTaskButtonClick;
             // 
+            // addRectangleButton
+            // 
+            addRectangleButton.Dock = DockStyle.Fill;
+            addRectangleButton.Location = new Point(3, 311);
+            addRectangleButton.Name = "addRectangleButton";
+            addRectangleButton.Size = new Size(114, 71);
+            addRectangleButton.TabIndex = 6;
+            addRectangleButton.Text = "Прямоугольник";
+            addRectangleButton.UseVisualStyleBackColor = true;
+            addRectangleButton.Click += OnAddRectangleButtonClick;
+            // 
             // LabelEditorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -423,5 +437,6 @@
         private DataGridView dataSourceGridView;
         private Button addTaskButton;
         private Button removeTaskButton;
+        private Button addRectangleButton;
     }
 }

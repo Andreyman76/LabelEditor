@@ -10,7 +10,7 @@ namespace LabelApi;
 public class LabelVariable
 {
     /// <summary>
-    /// Отображаемое имя
+    /// Имя переменной
     /// </summary>
     [Browsable(true)]
     [Description("Отображаемое имя")]

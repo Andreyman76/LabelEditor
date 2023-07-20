@@ -5,30 +5,30 @@ namespace LabelApi;
 #pragma warning disable CA1416 // Проверка совместимости платформы
 
 /// <summary>
-/// Элемент этикетки Эллипс
+/// Элемент этикетки Прямоугольник
 /// </summary>
-public class LabelEllipse : LabelElementBase
+public class LabelRectangle : LabelElementBase
 {
     /// <summary>
     /// Размер элемента
     /// </summary>
     [Browsable(true)]
-    [Description("Размер эллипса в мм")]
-    [DisplayName("Размер"), Category("Эллипс")]
+    [Description("Размер прямоугольника в мм")]
+    [DisplayName("Размер"), Category("Прямоугольник")]
     public PrintingSize Size { get; set; }
 
     /// <summary>
     /// Толщина линии
     /// </summary>
     [Browsable(true)]
-    [Description("Толщина эллипса в мм")]
-    [DisplayName("Толщина"), Category("Эллипс")]
+    [Description("Толщина прямоугольника в мм")]
+    [DisplayName("Толщина"), Category("Прямоугольник")]
     public float Width { get; set; } = 1f;
 
     public override void Draw(Graphics g)
     {
         using var pen = new Pen(Color.Black, Width);
-        g.DrawEllipse(pen, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
+        g.DrawRectangle(pen, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
     }
 
     public override void Replace(string from, string to)
@@ -38,7 +38,7 @@ public class LabelEllipse : LabelElementBase
 
     public override object Clone()
     {
-        return new LabelEllipse
+        return new LabelRectangle
         {
             Position = Position,
             Size = Size,

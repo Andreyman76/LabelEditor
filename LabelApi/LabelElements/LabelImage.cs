@@ -23,10 +23,34 @@ public class LabelImage : LabelElementBase
     [DisplayName("Размер"), Category("Изображение")]
     public PrintingSize Size { get; set; }
 
+    /// <summary>
+    /// Поворот
+    /// </summary>
+    [Browsable(true)]
+    [Description("Поворот изображения")]
+    [DisplayName("Поворот"), Category("Изображение")]
+    public LabelElementRotationType RotationType { get; set; }
+
     public override void Draw(Graphics g)
     {
         using var stream = new MemoryStream(ImageBytes);
         using var img = new Bitmap(stream);
+
+        switch (RotationType)
+        {
+            case LabelElementRotationType.Rotate90:
+                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                break;
+            case LabelElementRotationType.Rotate180:
+                img.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                break;
+            case LabelElementRotationType.Rotate270:
+                img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                break;
+            default:
+                break;
+        }
+
         g.DrawImage(img, new RectangleF(Position.X, Position.Y, Size.Width, Size.Height));
     }
 
@@ -42,7 +66,8 @@ public class LabelImage : LabelElementBase
             ImageBytes = ImageBytes.Clone() as byte[] ?? throw new Exception("Cloning ImageBytes failed"),
             Name = Name,
             Position = Position,
-            Size = Size
+            Size = Size,
+            RotationType = RotationType
         };
     }
 }

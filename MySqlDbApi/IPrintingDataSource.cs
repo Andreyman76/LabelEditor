@@ -8,7 +8,7 @@ public interface IPrintingDataSource
     /// <summary>
     /// Тестовые объекты, отображаемые в редакторе
     /// </summary>
-    IEnumerable<object> TestObjects { get; }
+    IEnumerable<object> ExampleObjects { get; }
 
     /// <summary>
     /// Получить список ключевых объектов, на основании которых делается последующая выборка

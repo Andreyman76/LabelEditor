@@ -19,7 +19,7 @@ public class LabelDataMatrix : LabelElementBase
     /// </summary>
     [Browsable(true)]
     [Description("Значение кода")]
-    [DisplayName("Код"), Category("Datamatrix")]
+    [DisplayName("Код"), Category("DataMatrix")]
     public string Code { get; set; } = string.Empty;
 
     /// <summary>
@@ -27,12 +27,36 @@ public class LabelDataMatrix : LabelElementBase
     /// </summary>
     [Browsable(true)]
     [Description("Размер кода в мм")]
-    [DisplayName("Размер"), Category("Datamatrix")]
+    [DisplayName("Размер"), Category("DataMatrix")]
     public int Size { get; set; }
+
+    /// <summary>
+    /// Поворот
+    /// </summary>
+    [Browsable(true)]
+    [Description("Поворот кода")]
+    [DisplayName("Поворот"), Category("DataMatrix")]
+    public LabelElementRotationType RotationType { get; set; }
 
     public override void Draw(Graphics g)
     {
-        var dm = CreateDMImage(Code);
+        using var dm = CreateDMImage(Code);
+
+        switch (RotationType)
+        {
+            case LabelElementRotationType.Rotate90:
+                dm.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                break;
+            case LabelElementRotationType.Rotate180:
+                dm.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                break;
+            case LabelElementRotationType.Rotate270:
+                dm.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                break;
+            default:
+                break;
+        }
+
         g.DrawImage(dm, new RectangleF(Position.X, Position.Y, Size, Size));
     }
 
@@ -48,7 +72,8 @@ public class LabelDataMatrix : LabelElementBase
             Position = Position,
             Code = Code,
             Size = Size,
-            Name = Name
+            Name = Name,
+            RotationType = RotationType
         };
     }
 

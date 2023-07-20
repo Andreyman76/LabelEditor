@@ -8,7 +8,7 @@ namespace AggregationCodesPrinter;
 public partial class LabelEditorForm : Form
 {
     private object? _selectedObject;
-    private readonly IEnumerable<object> _testObjects;
+    private readonly IEnumerable<object> _exampleObjects;
     private readonly IPrintingDataSource _dataSource;
     private readonly DataSourceSelectionForm _dataSourceSelectionForm;
     private readonly VariablesEditorForm _variablesEditorForm;
@@ -31,12 +31,12 @@ public partial class LabelEditorForm : Form
     public LabelEditorForm(IPrintingDataSource dataSource)
     {
         _dataSource = dataSource;
-        _testObjects = dataSource.TestObjects;
+        _exampleObjects = dataSource.ExampleObjects;
         _printingDispatcher = new(dataSource);
 
-        foreach (var testObject in _testObjects)
+        foreach (var example in _exampleObjects)
         {
-            _editor.RegisterType(testObject.GetType());
+            _editor.RegisterType(example.GetType());
         }
 
         _editor.LoadVariablesFromJson(Program.Settings.VariablesJsonFilePath);
@@ -201,6 +201,20 @@ public partial class LabelEditorForm : Form
         }
     }
 
+    private void OnAddRectangleButtonClick(object sender, EventArgs e)
+    {
+        _editor.LabelTemplate.Elements.Add(
+           new LabelRectangle
+           {
+               Name = "Rectangle",
+               Size = new(20, 20)
+           }
+           );
+
+        UpdateListOfObjects();
+        Redraw();
+    }
+
     private void OnAddEllipseButtonClick(object sender, EventArgs e)
     {
         _editor.LabelTemplate.Elements.Add(
@@ -259,7 +273,7 @@ public partial class LabelEditorForm : Form
     private void Redraw()
     {
         renderedLabelPictureBox.BackColor = Color.Gray;
-        renderedLabelPictureBox.Image = _editor.GetCurrentLabel(_testObjects).GetImage(new(600, 600));
+        renderedLabelPictureBox.Image = _editor.GetCurrentLabel(_exampleObjects).GetImage(new(600, 600));
     }
 
     private void OnLabelElementsListBoxSelectedIndexChanged(object sender, EventArgs e)
@@ -277,7 +291,7 @@ public partial class LabelEditorForm : Form
 
     private void OnPrintButtonClick(object sender, EventArgs e)
     {
-        _printingDispatcher.RunAllPrinters();
+        _printingDispatcher.RunAllTasks();
         UpdateListOfPrinters();
     }
 
@@ -287,7 +301,7 @@ public partial class LabelEditorForm : Form
         {
             var printer = _editor.Printers[printersListBox.SelectedIndex];
             var template = _editor.LabelTemplate.Clone() as PrinterLabel ?? throw new Exception("Cloning PrinterLabel fail");
-            
+
             var task = new PrinterTask(
                 printer,
                 template,
@@ -308,7 +322,7 @@ public partial class LabelEditorForm : Form
             var printer = _editor.Printers[printersListBox.SelectedIndex];
             var task = _printingDispatcher.Tasks.FirstOrDefault(x => x.Printer == printer);
 
-            if(task != null)
+            if (task != null)
             {
                 _printingDispatcher.RemoveTask(task);
             }
