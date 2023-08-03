@@ -12,10 +12,7 @@ public class MySqlStorage : IPrintingDataSource
     {
         new DbData
         {
-            Sscc = "00112345678900000019",
-            Gtin = 04607013365261,
-            Article = "667м",
-            Name = "Пломбир шоколадный с бельгийским шоколадом"
+            Sscc = "00112345678900000019"
         }
     };
 
@@ -39,35 +36,15 @@ public class MySqlStorage : IPrintingDataSource
 
     public IEnumerable<object[]> GetLabelDataObjects(object? key, int count)
     {
-        if (key == null)
+        var serial = GetNextSerialNumber();
+        var data = new DbData
         {
-            for (int i = 0; i < count; i++)
-            {
-                yield return Array.Empty<object>();
-            }
+            Sscc = CreateSsccCode(1, _gln, serial),
+        };
 
-            yield break;
-        }
-
-        if (key is Gtin gtin)
+        for (int i = 0; i < count; i++)
         {
-            var serial = GetNextSerialNumber();
-            var data = new DbData
-            {
-                Gtin = gtin.Id,
-                Article = gtin.Article,
-                Name = gtin.Name,
-                Sscc = CreateSsccCode(1, _gln, serial),
-            };
-
-            for (int i = 0; i < count; i++)
-            {
-                yield return new[] { key, data };
-            }
-        }
-        else
-        {
-            throw new ArgumentException($"Wrong data type as key: {key.GetType()}");
+            yield return new[] { data };
         }
 
         yield break;
@@ -75,23 +52,7 @@ public class MySqlStorage : IPrintingDataSource
 
     public IEnumerable<object> GetKeyObjects()
     {
-        using var connection = new MySqlConnection(_connectionString);
-        connection.Open();
-
-        using var command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM gtin;";
-
-        using var reader = command.ExecuteReader();
-
-        while (reader.Read())
-        {
-            yield return new Gtin()
-            {
-                Id = reader.GetUInt64("Id"),
-                Name = reader.GetString("Name"),
-                Article = reader.GetString("Article")
-            };
-        }
+        return Array.Empty<object>();
     }
 
     public void AfterPrint(object[] printedObjects, bool isSuccess)

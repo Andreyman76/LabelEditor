@@ -1,5 +1,6 @@
 ﻿using LabelApi;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace PrintingApi;
 
@@ -39,6 +40,12 @@ public class SerialazablePrinterDescription
     public Dpi Dpi { get; set; } = new(203, 203);
 
     /// <summary>
+    /// Способ обмена данными с принтером
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public UsbPrinterCommunicationType CommunicationType { get; set; }
+
+    /// <summary>
     /// Получить дескриптор принтера
     /// </summary>
     /// <returns>Дескриптор принтера</returns>
@@ -52,6 +59,7 @@ public class SerialazablePrinterDescription
                 Name = Name,
                 Dpi = Dpi,
                 PrinterName = PrinterName ?? throw new ArgumentNullException(nameof(PrinterName)),
+                CommunicationType = CommunicationType
             };
         }
         else

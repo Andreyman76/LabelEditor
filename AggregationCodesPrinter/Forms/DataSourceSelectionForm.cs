@@ -33,9 +33,12 @@ public partial class DataSourceSelectionForm : Form
 
     private void OnSelectButtonClick(object sender, EventArgs e)
     {
-        var index = dataSourceGridView.SelectedRows[0].Index;
+        if(dataSourceGridView.SelectedRows.Count != 0)
+        {
+            var index = dataSourceGridView.SelectedRows[0].Index;
 
-        SelectedObject = _dataSourceList[index];
+            SelectedObject = _dataSourceList[index];
+        }
         
         Close();
         DialogResult = DialogResult.OK;

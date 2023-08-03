@@ -298,6 +298,7 @@ public partial class LabelEditorForm : Form
     private void OnPropertyGridPropertyValueChanged(object s, PropertyValueChangedEventArgs e)
     {
         Redraw();
+        UpdateListOfObjects();
     }
 
     private void OnPrintButtonClick(object sender, EventArgs e)

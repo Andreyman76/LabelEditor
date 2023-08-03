@@ -1,6 +1,5 @@
 ﻿using LabelApi;
 using System.ComponentModel;
-using System.Text.Json.Serialization;
 
 namespace PrintingApi;
 
@@ -28,6 +27,14 @@ public class UsbPrinterDescription : IPrinterDescription
     [DisplayName("Разрешение"), Category("Принтер")]
     public Dpi Dpi { get; set; } = new(203, 203);
 
+    /// <summary>
+    /// Способ обмена данными с принтером
+    /// </summary>
+    [Browsable(true)]
+    [Description("Способ обмена данными с принтером")]
+    [DisplayName("Протокол"), Category("Принтер")]
+    public UsbPrinterCommunicationType CommunicationType { get; set; } = UsbPrinterCommunicationType.ZPL;
+
     public SerialazablePrinterDescription GetPrinterDescription()
     {
         return new()
@@ -35,7 +42,8 @@ public class UsbPrinterDescription : IPrinterDescription
             Name = Name,
             PrinterName = PrinterName,
             Usb = true,
-            Dpi = Dpi
+            Dpi = Dpi,
+            CommunicationType = CommunicationType
         };
     }
 
@@ -43,7 +51,8 @@ public class UsbPrinterDescription : IPrinterDescription
     {
         var printer = new UsbPrinter(PrinterName)
         {
-            Dpi = Dpi
+            Dpi = Dpi,
+            CommunicationType = CommunicationType
         };
 
         return printer;

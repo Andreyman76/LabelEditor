@@ -14,6 +14,11 @@ public class UsbPrinter : IPrinter
     public Dpi Dpi { get; set; } = new(203, 203);
 
     /// <summary>
+    /// Способ обмена данными с принтером
+    /// </summary>
+    public UsbPrinterCommunicationType CommunicationType { get; set; }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="printerName">Имя принтера в системе</param>
@@ -24,7 +29,7 @@ public class UsbPrinter : IPrinter
 
     public bool Print(PrinterLabel label)
     {
-        if (PrinterName.Contains("PDF"))
+        if (CommunicationType == UsbPrinterCommunicationType.PDF)
         {
             return label.PrintToPdf(PrinterName); 
         }

@@ -171,19 +171,9 @@ public class PrinterLabel : ICloneable
     private void PrintPageHandler(object sender, PrintPageEventArgs e)
     {
         using var g = e.Graphics ?? throw new Exception("PrintPageEventArgs contains Graphics with null value");
-        g.Clear(Color.White);
-        g.PageUnit = GraphicsUnit.Millimeter;
-
-        foreach (var element in Elements)
-        {
-            if (element is LabelText)
-            {
-                SetLabelTextAutosize(element as LabelText);
-            }
-
-            element.Draw(g);
-        }
-
+        var dpi = new Dpi(e.PageSettings.PrinterResolution.X, e.PageSettings.PrinterResolution.Y);
+        var image = GetImage(dpi);
+        e.Graphics.DrawImage(image, new Point());
         _printed = true;
     }
 
