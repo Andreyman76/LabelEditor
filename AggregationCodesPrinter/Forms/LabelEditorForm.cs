@@ -42,9 +42,20 @@ public partial class LabelEditorForm : Form
         _editor.LoadVariablesFromJson(Program.Settings.VariablesJsonFilePath);
         _editor.LoadPrintersFromJson(Program.Settings.PrintersJsonFilePath);
 
-        _dataSourceSelectionForm = new(_dataSource);
-        _variablesEditorForm = new(_editor);
-        _printersEditorForm = new(_editor);
+        _dataSourceSelectionForm = new(_dataSource)
+        {
+            WindowState = FormWindowState.Maximized
+        };
+
+        _variablesEditorForm = new(_editor)
+        {
+            WindowState = FormWindowState.Maximized
+        };
+
+        _printersEditorForm = new(_editor)
+        {
+            WindowState = FormWindowState.Maximized
+        };
 
         InitializeComponent();
 

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AggregationCodesPrinter", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelApi", "LabelApi\LabelApi.csproj", "{5B36EE36-2E77-4660-98B0-525E398DF65A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlDbApi", "MySqlDbApi\MySqlDbApi.csproj", "{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlDbApi", "MySqlDbApi\MySqlDbApi.csproj", "{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AT.AlphaMark.AlphaMarkLabel", "AT.AlphaMark.AlphaMarkLabel\AT.AlphaMark.AlphaMarkLabel.vdproj", "{34C7B70B-2A63-476D-A644-78FB98FDD690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,8 @@ Global
 		{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2CC98D6-D11A-4C76-9AAF-A7A6F204F320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C7B70B-2A63-476D-A644-78FB98FDD690}.Debug|Any CPU.ActiveCfg = Debug
+		{34C7B70B-2A63-476D-A644-78FB98FDD690}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

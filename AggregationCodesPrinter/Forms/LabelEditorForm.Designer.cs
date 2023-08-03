@@ -42,6 +42,7 @@
             labelPropertyGrid = new PropertyGrid();
             renderedLabelPictureBox = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
+            addRectangleButton = new Button();
             addEllipseButton = new Button();
             deleteElementButton = new Button();
             addImageButton = new Button();
@@ -55,7 +56,6 @@
             label1 = new Label();
             numericUpDown1 = new NumericUpDown();
             addTaskButton = new Button();
-            addRectangleButton = new Button();
             menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataSourceGridView).BeginInit();
@@ -235,6 +235,17 @@
             tableLayoutPanel2.Size = new Size(120, 542);
             tableLayoutPanel2.TabIndex = 1;
             // 
+            // addRectangleButton
+            // 
+            addRectangleButton.Dock = DockStyle.Fill;
+            addRectangleButton.Location = new Point(3, 311);
+            addRectangleButton.Name = "addRectangleButton";
+            addRectangleButton.Size = new Size(114, 71);
+            addRectangleButton.TabIndex = 4;
+            addRectangleButton.Text = "Прямоугольник";
+            addRectangleButton.UseVisualStyleBackColor = true;
+            addRectangleButton.Click += OnAddRectangleButtonClick;
+            // 
             // addEllipseButton
             // 
             addEllipseButton.Dock = DockStyle.Fill;
@@ -252,7 +263,7 @@
             deleteElementButton.Location = new Point(3, 465);
             deleteElementButton.Name = "deleteElementButton";
             deleteElementButton.Size = new Size(114, 74);
-            deleteElementButton.TabIndex = 4;
+            deleteElementButton.TabIndex = 6;
             deleteElementButton.Text = "Удалить";
             deleteElementButton.UseVisualStyleBackColor = true;
             deleteElementButton.Click += OnDeleteElementButtonClick;
@@ -371,20 +382,9 @@
             addTaskButton.Name = "addTaskButton";
             addTaskButton.Size = new Size(246, 24);
             addTaskButton.TabIndex = 16;
-            addTaskButton.Text = "Добавить задачу";
+            addTaskButton.Text = "Установить задачу";
             addTaskButton.UseVisualStyleBackColor = true;
             addTaskButton.Click += OnAddTaskButtonClick;
-            // 
-            // addRectangleButton
-            // 
-            addRectangleButton.Dock = DockStyle.Fill;
-            addRectangleButton.Location = new Point(3, 311);
-            addRectangleButton.Name = "addRectangleButton";
-            addRectangleButton.Size = new Size(114, 71);
-            addRectangleButton.TabIndex = 6;
-            addRectangleButton.Text = "Прямоугольник";
-            addRectangleButton.UseVisualStyleBackColor = true;
-            addRectangleButton.Click += OnAddRectangleButtonClick;
             // 
             // LabelEditorForm
             // 

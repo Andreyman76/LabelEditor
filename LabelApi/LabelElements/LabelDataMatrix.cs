@@ -28,7 +28,7 @@ public class LabelDataMatrix : LabelElementBase
     [Browsable(true)]
     [Description("Размер кода в мм")]
     [DisplayName("Размер"), Category("DataMatrix")]
-    public int Size { get; set; }
+    public float Size { get; set; }
 
     /// <summary>
     /// Поворот

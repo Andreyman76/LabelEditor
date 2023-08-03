@@ -20,5 +20,16 @@
       "X": 600,
       "Y": 600
     }
+  },
+  {
+    "Name": "TSC ",
+    "Usb": false,
+    "Address": "192.168.10.13",
+    "Port": 9100,
+    "PrinterName": null,
+    "Dpi": {
+      "X": 203,
+      "Y": 203
+    }
   }
 ]

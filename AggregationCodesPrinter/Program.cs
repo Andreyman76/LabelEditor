@@ -39,6 +39,11 @@ internal static class Program
         // Для изменения необходимо создать свой класс, реализующий интерфейс IPrintingDataSource
         var dataSource = new MySqlStorage(Settings.DbConnectionString);
 
-        Application.Run(new LabelEditorForm(dataSource));
+        var form = new LabelEditorForm(dataSource)
+        {
+            WindowState = FormWindowState.Maximized
+        };
+
+        Application.Run(form);
     }
 }

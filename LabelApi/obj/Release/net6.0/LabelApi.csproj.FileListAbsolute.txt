@@ -1,0 +1,12 @@
+C:\Users\VP\source\repos\LabelEditor\LabelApi\bin\Release\net6.0\LabelApi.deps.json
+C:\Users\VP\source\repos\LabelEditor\LabelApi\bin\Release\net6.0\LabelApi.dll
+C:\Users\VP\source\repos\LabelEditor\LabelApi\bin\Release\net6.0\LabelApi.pdb
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\LabelApi.csproj.AssemblyReference.cache
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\LabelApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\LabelApi.AssemblyInfoInputs.cache
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\LabelApi.AssemblyInfo.cs
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\LabelApi.csproj.CoreCompileInputs.cache
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\LabelApi.dll
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\refint\LabelApi.dll
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\LabelApi.pdb
+C:\Users\VP\source\repos\LabelEditor\LabelApi\obj\Release\net6.0\ref\LabelApi.dll

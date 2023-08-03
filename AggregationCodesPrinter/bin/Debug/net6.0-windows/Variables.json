@@ -14,21 +14,5 @@
     "TargetType": "MySqlDbApi.DbData",
     "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Description": "SSCC в форматированном виде"
-  },
-  {
-    "Name": "date",
-    "Format": "dd.MM.yyyy",
-    "PropertyName": "CurrentDateTime",
-    "TargetType": "LabelApi.BuiltInVariables",
-    "TargetAssembly": "LabelApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": "Текущие дата и время компьютера"
-  },
-  {
-    "Name": "n",
-    "Format": null,
-    "PropertyName": "Endl",
-    "TargetType": "LabelApi.BuiltInVariables",
-    "TargetAssembly": "LabelApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
   }
 ]
