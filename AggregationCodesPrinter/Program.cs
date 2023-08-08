@@ -37,7 +37,7 @@ internal static class Program
 
         // Источник данных для этикеток
         // Для изменения необходимо создать свой класс, реализующий интерфейс IPrintingDataSource
-        var dataSource = new MySqlStorage(Settings.DbConnectionString);
+        var dataSource = new GeneralDbStorage(Settings.DbConnectionString);
 
         var form = new LabelEditorForm(dataSource)
         {

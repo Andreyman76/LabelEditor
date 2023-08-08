@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "Name": "TSC MH241",
+    "Usb": true,
+    "Address": null,
+    "Port": null,
+    "PrinterName": "TSC MH241",
+    "Dpi": {
+      "X": 203,
+      "Y": 203
+    },
+    "CommunicationType": "ZPL"
+  }
+]

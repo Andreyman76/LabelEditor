@@ -29,7 +29,7 @@ public class NetworkPrinterDescription : IPrinterDescription
     [Browsable(true)]
     [Description("Порт принтера")]
     [DisplayName("Порт"), Category("Сеть")]
-    public int Port { get; set; }
+    public int Port { get; set; } = 9100;
 
     [Browsable(true)]
     [Description("Разрешение печати (точек на дюйм)")]

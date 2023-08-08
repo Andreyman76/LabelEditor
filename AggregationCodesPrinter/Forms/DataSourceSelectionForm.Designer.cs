@@ -38,10 +38,9 @@
             // selectButton
             // 
             selectButton.Dock = DockStyle.Fill;
-            selectButton.Location = new Point(368, 544);
-            selectButton.Margin = new Padding(3, 4, 3, 4);
+            selectButton.Location = new Point(323, 408);
             selectButton.Name = "selectButton";
-            selectButton.Size = new Size(176, 52);
+            selectButton.Size = new Size(154, 39);
             selectButton.TabIndex = 0;
             selectButton.Text = "Выбрать";
             selectButton.UseVisualStyleBackColor = true;
@@ -57,13 +56,12 @@
             tableLayoutPanel1.Controls.Add(selectButton, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 90F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(914, 600);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
+            tableLayoutPanel1.Size = new Size(800, 450);
             tableLayoutPanel1.TabIndex = 1;
             // 
             // dataSourceGridView
@@ -75,7 +73,8 @@
             tableLayoutPanel1.SetColumnSpan(dataSourceGridView, 3);
             dataSourceGridView.Dock = DockStyle.Fill;
             dataSourceGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
-            dataSourceGridView.Location = new Point(3, 3);
+            dataSourceGridView.Location = new Point(3, 2);
+            dataSourceGridView.Margin = new Padding(3, 2, 3, 2);
             dataSourceGridView.MultiSelect = false;
             dataSourceGridView.Name = "dataSourceGridView";
             dataSourceGridView.ReadOnly = true;
@@ -83,19 +82,19 @@
             dataSourceGridView.RowTemplate.Height = 29;
             dataSourceGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataSourceGridView.ShowEditingIcon = false;
-            dataSourceGridView.Size = new Size(908, 534);
+            dataSourceGridView.Size = new Size(794, 401);
             dataSourceGridView.TabIndex = 14;
             // 
             // DataSourceSelectionForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(tableLayoutPanel1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "DataSourceSelectionForm";
             Text = "Data source selection";
             FormClosing += OnDataSourceSelectionFormClosing;
+            Shown += DataSourceSelectionForm_Shown;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataSourceGridView).EndInit();
             ResumeLayout(false);

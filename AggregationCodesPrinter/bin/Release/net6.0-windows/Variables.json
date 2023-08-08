@@ -14,5 +14,13 @@
     "TargetType": "MySqlDbApi.DbData",
     "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Description": ""
+  },
+  {
+    "Name": "code",
+    "Format": null,
+    "PropertyName": "Code",
+    "TargetType": "MySqlDbApi.GeneralDbData",
+    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Description": ""
   }
 ]
