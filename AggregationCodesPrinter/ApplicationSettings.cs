@@ -1,4 +1,6 @@
-﻿namespace AggregationCodesPrinter;
+﻿using System.Text.Json.Serialization;
+
+namespace AggregationCodesPrinter;
 
 /// <summary>
 /// Настройки приложения
@@ -19,4 +21,7 @@ public class ApplicationSettings
     /// Путь к JSON файлу для сериализации/десериализации дескрипторов принтеров
     /// </summary>
     public string PrintersJsonFilePath { get; set; } = "Printers.json";
+
+    [JsonIgnore]
+    public static string SettingPath => "ApplicationSettings.json";
 }

@@ -37,7 +37,7 @@ public partial class DataSourceSelectionForm : Form
         }
     }
 
-    private void DataSourceSelectionForm_Shown(object sender, EventArgs e)
+    private void OnDataSourceSelectionFormShown(object sender, EventArgs e)
     {
         dataSourceGridView.Rows.Clear();
         dataSourceGridView.Columns.Clear();

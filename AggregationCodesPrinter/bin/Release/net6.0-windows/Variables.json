@@ -3,7 +3,7 @@
     "Name": "sscc",
     "Format": null,
     "PropertyName": "Sscc",
-    "TargetType": "MySqlDbApi.DbData",
+    "TargetType": "MySqlDbApi.VulcanicaDbData",
     "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Description": ""
   },
@@ -11,15 +11,7 @@
     "Name": "sscc_text",
     "Format": "(00)000000000000000000",
     "PropertyName": "Sscc",
-    "TargetType": "MySqlDbApi.DbData",
-    "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "Description": ""
-  },
-  {
-    "Name": "code",
-    "Format": null,
-    "PropertyName": "Code",
-    "TargetType": "MySqlDbApi.GeneralDbData",
+    "TargetType": "MySqlDbApi.VulcanicaDbData",
     "TargetAssembly": "MySqlDbApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Description": ""
   }

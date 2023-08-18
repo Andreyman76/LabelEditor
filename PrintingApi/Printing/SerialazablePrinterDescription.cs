@@ -43,7 +43,7 @@ public class SerialazablePrinterDescription
     /// Способ обмена данными с принтером
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public UsbPrinterCommunicationType CommunicationType { get; set; }
+    public UsbPrinterCommunicationType CommunicationType { get; set; } = UsbPrinterCommunicationType.ZPL;
 
     /// <summary>
     /// Получить дескриптор принтера

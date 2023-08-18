@@ -15,11 +15,9 @@ internal static class Program
     {
         #region Чтение настроек приложения из файла
 
-        var settingsPath = "ApplicationSettings.json";
-
-        if (File.Exists(settingsPath))
+        if (File.Exists(ApplicationSettings.SettingPath))
         {
-            var json = File.ReadAllText(settingsPath);
+            var json = File.ReadAllText(ApplicationSettings.SettingPath);
             Settings = JsonSerializer.Deserialize<ApplicationSettings>(json) ?? throw new Exception($"Deserialization of {nameof(ApplicationSettings)} failed");
         }
         else
@@ -28,7 +26,7 @@ internal static class Program
             {
                 WriteIndented = true
             });
-            File.WriteAllText(settingsPath, json);
+            File.WriteAllText(ApplicationSettings.SettingPath, json);
         }
 
         #endregion
@@ -37,7 +35,7 @@ internal static class Program
 
         // Источник данных для этикеток
         // Для изменения необходимо создать свой класс, реализующий интерфейс IPrintingDataSource
-        var dataSource = new GeneralDbStorage(Settings.DbConnectionString);
+        var dataSource = new VulkanicaStorage(Settings.DbConnectionString);
 
         var form = new LabelEditorForm(dataSource)
         {

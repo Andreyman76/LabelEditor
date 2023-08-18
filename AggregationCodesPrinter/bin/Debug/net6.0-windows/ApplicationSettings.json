@@ -1,5 +1,0 @@
-{
-  "DbConnectionString": "Server=127.0.0.1;Database=test_generaldb_second;port=5566;User Id=root;password=83233608; convert zero datetime=True; Connection Timeout=43200;SSL Mode=None;",
-  "VariablesJsonFilePath": "Variables.json",
-  "PrintersJsonFilePath": "Printers.json"
-}

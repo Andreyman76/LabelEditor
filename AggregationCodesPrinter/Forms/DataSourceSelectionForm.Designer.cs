@@ -94,7 +94,7 @@
             Name = "DataSourceSelectionForm";
             Text = "Data source selection";
             FormClosing += OnDataSourceSelectionFormClosing;
-            Shown += DataSourceSelectionForm_Shown;
+            Shown += OnDataSourceSelectionFormShown;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataSourceGridView).EndInit();
             ResumeLayout(false);
